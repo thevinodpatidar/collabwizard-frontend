@@ -1,8 +1,13 @@
 import React from 'react';
-import Routes from './Routes';
-
+import  AdminModule  from './Admin/index';
+import { Switch, Route } from 'react-router-dom';
 const Module = () => {
-  return <Routes />;
+
+  return (
+    <Switch>
+      <Route path="/" component={AdminModule} />
+    </Switch>
+  )
 };
 
 export default Module;
