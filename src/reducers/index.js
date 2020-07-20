@@ -1,10 +1,6 @@
 import { combineReducers } from "redux";
-// import login from "./login";
-// import register from "./register";
-// import visibilityFilter  from "./visibilityFilter";
+import auth from "../modules/Admin/Auth/reducers";
 
 export default combineReducers({
-    // visibilityFilter,
-    // login,
-    // register
+    auth
 })

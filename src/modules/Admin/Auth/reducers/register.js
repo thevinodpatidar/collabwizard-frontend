@@ -1,6 +1,13 @@
-import * as types from '../actions';
+import * as types from '../actions/actionTypes';
 
-export default function(state = [], action) {
+export default function(state = {
+    response : {
+        success : "",
+        code : "",
+        message : "",
+        data : {}
+      }
+}, action) {
   let response = action.response;
   
   switch(action.type) {
