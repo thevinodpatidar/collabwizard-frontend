@@ -6,9 +6,9 @@ import LandingPage from '../../components/LandingPage';
 import LoginPage from './Auth/Login';
 import Signup from './Auth/Signup';
 import ForgotPassword from './Auth/ForgotPassword';
-import ProtectedRoute from '../../components/ProtectedRoute';
+import ProtectedRoute from '../../components/ProtectedRoute';   
 
-export default function AdminModule() {
+export default function AdminModule() { 
     const match = useRouteMatch();
     return (
         <Switch>

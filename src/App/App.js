@@ -15,7 +15,7 @@ const Error = () => {
 function App() {
   return (
       <Col span={24} >
-        <Layout >
+        <Layout>
           <Switch>
               <Route path='/' component={Module} />
               {/* <Route path='/admin' component={AdminModule} /> */}

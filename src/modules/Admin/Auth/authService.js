@@ -37,14 +37,14 @@ export const registerUserService = (request) => {
 
     export const logoutUserService = (request) => {
     const LOGOUT_API_ENDPOINT = 'http://localhost:4000/api/logout';
-  
     const parameters = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + request.token
+        'Access-Control-Allow-Origin' : "*",
+        'Authorization': 'Bearer ' +request.token.token
       },
-      body: JSON.stringify(request.token)
+      // body: JSON.stringify(request.token)
     };
   
     return fetch(LOGOUT_API_ENDPOINT, parameters)

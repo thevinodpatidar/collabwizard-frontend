@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import "./Navbar.scss";
-import { Link, useHistory, Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Row, Col, Drawer, Button } from 'antd';
 import { MenuOutlined, UserAddOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { logoutUserAction } from '../../../Admin/Auth/actions';
 
-const Navbar = props =>{
+const Navbar = (props) =>{
 
     const [isVisibile, setIsVisibile] = useState(false)
     const [isAuthenticated, setisAuthenticated] = useState(true);
-        // let isAuthenticated;
-    const history = useHistory();
-    if(!localStorage.getItem("token") === null){
-        setisAuthenticated(true);
-    }
+    let token = false;
+    
     useEffect(()=>{
-        
-    },[isAuthenticated,props.isAuthenticate])
-
+            if(localStorage.getItem("token")){
+                setisAuthenticated(false);
+            }
+    },[props.state,token]);
+    
     const showDrawer = () => {
       setIsVisibile(true)
     };
@@ -32,10 +31,11 @@ const Navbar = props =>{
         const token = localStorage.getItem("token");
         localStorage.removeItem("token");
         setisAuthenticated(false);
-        // props.dispatch(logoutUserAction({token}));
+        props.dispatch(logoutUserAction({token}));
+        window.history.go(0);
     }
 
-    if(isAuthenticated){
+    if(!isAuthenticated){
 
         return (
             <nav className="navbar">
