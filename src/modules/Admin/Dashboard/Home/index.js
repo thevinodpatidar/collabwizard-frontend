@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Row, Col } from 'antd'
+import { Row, Col } from 'antd'
 
 function Home() {
     return (

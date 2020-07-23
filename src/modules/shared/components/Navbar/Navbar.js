@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./Navbar.scss";
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Row, Col, Drawer, Button } from 'antd';
 import { MenuOutlined, UserAddOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
@@ -39,7 +39,7 @@ const Navbar = (props) =>{
 
         return (
             <nav className="navbar">
-            <Link to="/" >
+            <Link to="/dashboard" >
                 <h2>School Tribe</h2>
                 {/* <img src="" alt="" /> */}
             </Link> 

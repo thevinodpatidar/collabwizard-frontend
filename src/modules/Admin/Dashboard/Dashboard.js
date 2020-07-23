@@ -1,12 +1,8 @@
 import React from 'react'
-import { Layout, Breadcrumb } from 'antd';
+import { Layout } from 'antd';
 import SideBar from '../../shared/components/Sidebar/Sidebar';
-import Navbar from '../../shared/components/Navbar/Navbar';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import ProtectedRoute from '../../../components/ProtectedRoute';
-import Resources from './Resources';
 
-const {Content,Sider,Header,Footer} = Layout;
+const {Content,Sider,Footer} = Layout;
 
 function Dashboard({children}) {
     // const match = useRouteMatch();
