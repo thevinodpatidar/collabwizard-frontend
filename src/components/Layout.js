@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from "../modules/shared/components/Navbar/Navbar";
 
-function Layout({ children }) {
+function AppLayout({ children }) {
     return (
         <div>
             <Navbar></Navbar>
@@ -10,4 +10,4 @@ function Layout({ children }) {
     )
 }
 
-export default Layout
+export default AppLayout

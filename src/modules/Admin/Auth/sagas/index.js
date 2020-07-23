@@ -1,5 +1,5 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
-import { registerUserService, loginUserService, logoutUserService } from '../authService';
+import { registerUserService, loginUserService, logoutUserService } from "../../../../api/authentication";
 
 import * as types from '../actions/actionTypes'
 

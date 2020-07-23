@@ -4,8 +4,9 @@ import { Route, Switch } from 'react-router-dom';
 import 'antd/dist/antd.css';
 
 import Module from '../modules/index';
-import Layout from '../components/Layout';
+import AppLayout from '../components/Layout';
 import { Col } from 'antd';
+import AdminModule from '../modules/Admin';
 
 // import UserModule from '../modules/index';
 
@@ -15,13 +16,13 @@ const Error = () => {
 function App() {
   return (
       <Col span={24} >
-        <Layout>
+        <AppLayout>
           <Switch>
-              <Route path='/' component={Module} />
+              <Route path="/" component={AdminModule} />
               {/* <Route path='/admin' component={AdminModule} /> */}
               <Route path="*" component={Error} />
           </Switch>
-        </Layout>
+        </AppLayout>
       </Col>
   );
 }

@@ -80,7 +80,7 @@ const Navbar = (props) =>{
     }else{
     return (
         <nav className="navbar">
-            <Redirect to="/login" />
+            {/* <Redirect to="/login" /> */}
             <Link to="/" >
                 <h2>School Tribe</h2>
                 {/* <img src="" alt="" /> */}
