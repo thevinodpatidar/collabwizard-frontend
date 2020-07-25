@@ -23,7 +23,7 @@ const Signup = props => {
         <div className="signup-form">
         <div>
           <h1 className="title">School Tribe</h1>
-          <p className="center">A community for growth</p>
+          <p className="center"><b>"Teach better, together"</b></p>
           <h2 className="center">Register</h2>
         </div>
         {!success ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : <Redirect to='/login' />}

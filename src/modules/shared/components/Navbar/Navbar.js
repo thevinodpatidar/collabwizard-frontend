@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import "./Navbar.scss";
 import { Link } from 'react-router-dom';
 import { Row, Col, Drawer, Button } from 'antd';
-import { MenuOutlined, UserAddOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons';
+import { MenuOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { logoutUserAction } from '../../../Admin/Auth/actions';
+import LoggedIn from './LoggedIn';
 
 const Navbar = (props) =>{
 
-    const [isVisibile, setIsVisibile] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
     const [isAuthenticated, setisAuthenticated] = useState(true);
     let token = false;
     
@@ -19,10 +20,10 @@ const Navbar = (props) =>{
     },[props.state,token]);
     
     const showDrawer = () => {
-      setIsVisibile(true)
+      setIsVisible(true)
     };
     const onClose = () => {
-      setIsVisibile(false)
+      setIsVisible(false)
     };
 
     console.log(isAuthenticated);
@@ -38,44 +39,7 @@ const Navbar = (props) =>{
     if(!isAuthenticated){
 
         return (
-            <nav className="navbar">
-            <Link to="/dashboard" >
-                <h2>School Tribe</h2>
-                {/* <img src="" alt="" /> */}
-            </Link> 
-        <div className="desktop">
-            <Row className="buttons" gutter={24}>
-                <Button onClick={logout} type="primary"  className="signup-form-button link" ><Col>
-                    <UserOutlined style={{ color: '#fff' }} /> Logout
-                </Col>
-                </Button>
-            </Row>
-        </div>
-        <div className="mobile">
-        <Button className="barsMenu" onClick={showDrawer}>
-          <MenuOutlined style={{ color: '#08c',outline :"none" }} />
-        </Button>
-        <Drawer 
-          placement="right"
-          closable={false}
-          onClose={onClose}
-          visible={isVisibile}
-          onClick={onClose}
-
-        >
-          <div className="links">
-          <Row className="row" gutter={24}>
-                <Col className="col" span={24} >
-                <LogoutOutlined style={{ color: '#08c' }} /> 
-                <Link onClick={logout} to="/login"  className="link">
-                    Logout
-                </Link>
-                </Col>
-            </Row>
-          </div>
-        </Drawer>
-        </div>
-        </nav>
+            <LoggedIn showDrawer={showDrawer} logout={logout} onClose={onClose} Visible={isVisible} props={props.state}/>
         )
     }else{
     return (
@@ -105,7 +69,7 @@ const Navbar = (props) =>{
           placement="right"
           closable={false}
           onClose={onClose}
-          visible={isVisibile}
+          visible={isVisible}
           onClick={onClose}
 
         >

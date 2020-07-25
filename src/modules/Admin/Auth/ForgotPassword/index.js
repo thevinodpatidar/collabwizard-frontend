@@ -13,7 +13,7 @@ const ForgotPassword = () => {
     <div className="forgotPassword-form">
          <div>
           <h1 className="title">School Tribe</h1>
-          <p className="center">A community for growth</p>
+          <p className="center"><b>"Teach better, together"</b></p>
           <h2 className="center">ForgotPassword</h2>
         </div>
     <Form

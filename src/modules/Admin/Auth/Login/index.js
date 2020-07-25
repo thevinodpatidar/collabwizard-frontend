@@ -34,7 +34,7 @@ const Login = props => {
     <div className="login-form">
          <div>
           <h1 className="title">School Tribe</h1>
-          <p className="center">A community for growth</p>
+          <p className="center"><b>"Teach better, together"</b></p>
           <h2 className="center">Login</h2>
         </div>
         {!success ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : <Redirect to='/dashboard' />}
