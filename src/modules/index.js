@@ -1,6 +1,7 @@
 import React from 'react';
 import  AdminModule  from './Admin/index';
 import { Switch, Route } from 'react-router-dom';
+
 const Module = () => {
 
   return (

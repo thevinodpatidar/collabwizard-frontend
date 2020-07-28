@@ -1,9 +1,9 @@
 import React from 'react'
 import { Col, Row, Button, Drawer } from 'antd'
 import { Link } from 'react-router-dom'
-import { UserOutlined, MenuOutlined, LogoutOutlined } from '@ant-design/icons'
+import { MenuOutlined, LogoutOutlined } from '@ant-design/icons'
 
-function LoggedIn({showDrawer,logout,onClose,Visible}) {
+function LoggedIn({showDrawer,logout,onClose,Visible,props}) {
     return (
         <nav className="navbar">
         <Link to="/dashboard" >
@@ -12,11 +12,10 @@ function LoggedIn({showDrawer,logout,onClose,Visible}) {
         </Link> 
     <div className="desktop">
         <Row className="buttons" gutter={24}>
-            <Col>
-            <Link to="/login" onClick={logout} className="signup-form-button link" >
+            <Link to="/login" onClick={logout} className="signup-form-button link" ><Col>
                 Logout <LogoutOutlined style={{ color: '#08c' }} />
-            </Link>
             </Col>
+            </Link>
         </Row>
     </div>
     <div className="mobile">

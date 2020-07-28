@@ -5,21 +5,24 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUserAction } from '../actions';
+import { setCookie } from "../../../../utils/cookies";
 
 const Login = props => {
+
   const onFinish = values => {
     delete values.remember;
 
     props.dispatch(loginUserAction(values));
   };
 
-  
     let success, message;
     success = props.state.auth.login.response.success;
     message = props.state.auth.login.response.message;
     if (success) {
       localStorage.setItem("token",props.state.auth.login.response.data.token);
       // <Redirect to="/dashboard" />
+      setCookie("token",props.state.auth.login.response.data.token,{domain:'localhost',path:'/'})
+
     }
     let isAuthenticate;
     if(localStorage.getItem("token")){
