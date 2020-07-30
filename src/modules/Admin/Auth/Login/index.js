@@ -18,9 +18,9 @@ const Login = props => {
     let success, message;
     success = props.state.auth.login.response.success;
     message = props.state.auth.login.response.message;
+    
     if (success) {
       localStorage.setItem("token",props.state.auth.login.response.data.token);
-      // <Redirect to="/dashboard" />
       setCookie("token",props.state.auth.login.response.data.token,{domain:'localhost',path:'/'})
 
     }

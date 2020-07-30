@@ -44,51 +44,49 @@ const Navbar = (props) =>{
     }else{
     return (
         <nav className="navbar">
-            {/* <Redirect to="/login" /> */}
             <Link to="/" >
                 <h2>School Tribe</h2>
-                {/* <img src="" alt="" /> */}
             </Link> 
-        <div className="desktop">
-            <Row className="buttons" gutter={24}>
-                <Link style={{color :"#fff"}} to="/login" > <Col className="button">
-                    <UserOutlined style={{ color: '#fff' }} /> Login
-                </Col>
-                </Link>
-                <Link style={{color :"#fff"}}to="/signup" ><Col className="button" >
-                    <UserAddOutlined style={{ color: '#fff' }} /> Signup
-                </Col>
-                </Link>
-            </Row>
-        </div>
-        <div className="mobile">
-        <Button className="barsMenu" onClick={showDrawer}>
-          <MenuOutlined style={{ color: '#08c',outline :"none" }} />
-        </Button>
-        <Drawer 
-          placement="right"
-          closable={false}
-          onClose={onClose}
-          visible={isVisible}
-          onClick={onClose}
+            <div className="desktop">
+                <Row className="buttons" gutter={24}>
+                    <Link style={{color :"#fff"}} to="/login" > <Col className="button">
+                        <UserOutlined style={{ color: '#fff' }} /> Login
+                    </Col>
+                    </Link>
+                    <Link style={{color :"#fff"}}to="/signup" ><Col className="button" >
+                        <UserAddOutlined style={{ color: '#fff' }} /> Signup
+                    </Col>
+                    </Link>
+                </Row>
+            </div>
+            <div className="mobile">
+                <Button className="barsMenu" onClick={showDrawer}>
+                    <MenuOutlined style={{ color: '#08c',outline :"none" }} />
+                </Button>
+                <Drawer 
+                placement="right"
+                closable={false}
+                onClose={onClose}
+                visible={isVisible}
+                onClick={onClose}
 
-        >
-          <div className="links">
-          <Row className="row" gutter={24}>
-                <Col className="col" span={24} >
-                <UserOutlined style={{ color: '#08c' }} /> 
-                <Link className="link" to="/login">
-                    Login
-                </Link>
-                </Col>
-                <Col className="col" span={24} >
-                    <UserAddOutlined style={{ color: '#08c' }} />
-                    <Link className="link" to="/signup" >Signup</Link>
-                </Col>
-            </Row>
-          </div>
-        </Drawer>
-        </div>
+                >
+                    <div className="links">
+                        <Row className="row" gutter={24}>
+                            <Col className="col" span={24} >
+                                <UserOutlined style={{ color: '#08c' }} /> 
+                                <Link className="link" to="/login">
+                                Login
+                                </Link>
+                            </Col>
+                            <Col className="col" span={24} >
+                                <UserAddOutlined style={{ color: '#08c' }} />
+                                <Link className="link" to="/signup" >Signup</Link>
+                            </Col>
+                        </Row>
+                    </div>
+                </Drawer>
+            </div>
         </nav>
     )
     }
