@@ -1,0 +1,64 @@
+.navbar{
+    padding: 0 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4rem;
+}
+
+
+.desktop{
+    display: flex;
+    justify-content: center;
+    .buttons{
+        margin: 5px;
+        // padding: 10px;
+    }
+    .button {
+        background-color: dodgerblue;
+        color: white;
+        padding: 5px 10px;
+        margin: 10px;
+        border-radius: 3px;
+    }
+}
+.mobile{
+    display: none !important;
+}
+
+
+
+@media(max-width:768px){
+    .navbar{
+        padding:0 1.25rem;
+    }
+    .mobile{
+        display: flex !important;
+        justify-content: center !important;
+    }
+    .row{
+        display: flex;
+        justify-content: center;
+    }
+    .col{
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 20px;
+        padding-left: 40px;
+    }
+    .link{
+        display: flex;
+        padding-left: 2rem;
+        float: right;
+        width: 100%;
+    }
+    .desktop{
+        display: none !important;
+    }
+    .barsMenu{
+        border: none;
+        outline: none;
+    }
+}

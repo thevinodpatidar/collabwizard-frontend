@@ -1,27 +1,30 @@
-import React from 'react';
-import "./index.scss";
+import React, { Component } from 'react'
+import styles from "./ForgotPassword.module.scss";
 import { Form, Input, Button} from 'antd';
 import { MailOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
-const ForgotPassword = () => {
-  const onFinish = values => {
+
+export class ForgotPassword extends Component {
+
+  onFinish = values => {
     console.log('Received values of form: ', values);
   };
 
-  return (
-    <div className="forgotPassword-form">
-         <div>
-          <h1 className="title">School Tribe</h1>
-          <p className="center"><b>"Teach better, together"</b></p>
-          <h2 className="center">ForgotPassword</h2>
-        </div>
+  render() {
+    return (
+      <div className={styles.forgotPasswordForm}>
+      <div>
+        <h1 className={styles.title}>School Tribe</h1>
+        <p className={styles.center}><b>"Teach better, together"</b></p>
+        <h2 className={styles.center}>ForgotPassword</h2>
+      </div>
     <Form
       name="normal_forgotPassword"
       initialValues={{
         remember: true,
       }}
-      onFinish={onFinish}
+      onFinish={this.onFinish}
     >
       <Form.Item
         name="email"
@@ -39,17 +42,17 @@ const ForgotPassword = () => {
         <Input prefix={<MailOutlined className="site-form-item-icon" />} placeholder="Email" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="forgotPassword-form-button">
+        <Button type="primary" htmlType="submit" className={styles.forgotPasswordFormButton}>
           Send me link
         </Button>
       </Form.Item>
-        <div className="center">              
+        <div className={styles.center}>              
           <Link to="/login">Back to Login</Link>
         </div>
     </Form>
     </div>
-  );
-};
+    )
+  }
+}
 
-// const mapPropsTo
 export default ForgotPassword;

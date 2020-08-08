@@ -1,5 +1,5 @@
 import React from 'react';
-import "./index.scss";
+import styles from "./Signup.module.scss";
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Link, Redirect } from 'react-router-dom';
@@ -20,11 +20,11 @@ const Signup = props => {
       message = props.state.auth.signup.response.message;
     
       return (
-        <div className="signup-form">
+        <div className={styles.signupForm}>
         <div>
-          <h1 className="title">School Tribe</h1>
-          <p className="center"><b>"Teach better, together"</b></p>
-          <h2 className="center">Register</h2>
+          <h1 className={styles.title}>School Tribe</h1>
+          <p className={styles.center}><b>"Teach better, together"</b></p>
+          <h2 className={styles.center}>Register</h2>
         </div>
         {!success ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : <Redirect to='/login' />}
         <Form 
@@ -92,11 +92,11 @@ const Signup = props => {
           </Form.Item>
     
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="signup-form-button">
+            <Button type="primary" htmlType="submit" className={styles.signupFormButton}>
               Register
             </Button>
           </Form.Item>
-          <div className="center">              
+          <div className={styles.center}>              
             <Link to="/login">Login now!</Link>
           </div>
         </Form>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import "./Navbar.scss";
+import styles from "./Navbar.module.scss";
 import { Link } from 'react-router-dom';
 import { Row, Col, Drawer, Button } from 'antd';
 import { MenuOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
@@ -43,24 +43,24 @@ const Navbar = (props) =>{
         )
     }else{
     return (
-        <nav className="navbar">
+        <nav className={styles.navbar}>
             <Link to="/" >
                 <h2>School Tribe</h2>
             </Link> 
-            <div className="desktop">
-                <Row className="buttons" gutter={24}>
-                    <Link style={{color :"#fff"}} to="/login" > <Col className="button">
+            <div className={styles.desktop}>
+                <Row className={styles.buttons} gutter={24}>
+                    <Link style={{color :"#fff"}} to="/login" > <Col className={styles.button}>
                         <UserOutlined style={{ color: '#fff' }} /> Login
                     </Col>
                     </Link>
-                    <Link style={{color :"#fff"}}to="/signup" ><Col className="button" >
+                    <Link style={{color :"#fff"}}to="/signup" ><Col className={styles.button} >
                         <UserAddOutlined style={{ color: '#fff' }} /> Signup
                     </Col>
                     </Link>
                 </Row>
             </div>
-            <div className="mobile">
-                <Button className="barsMenu" onClick={showDrawer}>
+            <div className={styles.mobile}>
+                <Button className={styles.barMenu} onClick={showDrawer}>
                     <MenuOutlined style={{ color: '#08c',outline :"none" }} />
                 </Button>
                 <Drawer 
@@ -69,19 +69,18 @@ const Navbar = (props) =>{
                 onClose={onClose}
                 visible={isVisible}
                 onClick={onClose}
-
                 >
-                    <div className="links">
+                    <div className={styles.links}>
                         <Row className="row" gutter={24}>
                             <Col className="col" span={24} >
                                 <UserOutlined style={{ color: '#08c' }} /> 
-                                <Link className="link" to="/login">
+                                <Link className={styles.link} to="/login">
                                 Login
                                 </Link>
                             </Col>
                             <Col className="col" span={24} >
                                 <UserAddOutlined style={{ color: '#08c' }} />
-                                <Link className="link" to="/signup" >Signup</Link>
+                                <Link className={styles.link} to="/signup" >Signup</Link>
                             </Col>
                         </Row>
                     </div>

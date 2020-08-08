@@ -7,7 +7,7 @@ export function* registerSaga(payload) {
     try {
         const response = yield call(registerUserService, payload);
     
-        if (response.status >= 200 && response.status < 300) {
+        if (response.code >= 200 && response.code < 300) {
             // const response  = yield response.json();
       
             yield put({ type: types.REGISTER_USER_SUCCESS, response });
@@ -40,7 +40,7 @@ export function* logoutSaga(payload) {
   try {
     const serverResponse = yield call(logoutUserService, payload);
 
-    if (serverResponse.status >= 200 && serverResponse.status < 300) {
+    if (serverResponse.code >= 200 && serverResponse.code < 300) {
         const response  = yield serverResponse.json();
         localStorage.removeItem("token");
         yield put({ type: types.LOGOUT_USER_SUCCESS, response });

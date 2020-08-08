@@ -44,7 +44,7 @@ export const loginUserService = (request) => {
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin' : "*",
-      'Authorization': 'Bearer ' +request.token.token
+      'Authorization': 'Bearer ' +request.token
     },
     // body: JSON.stringify(request.token)
   };

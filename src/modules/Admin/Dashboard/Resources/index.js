@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Row,Tabs} from 'antd';
-import Videos from './Videos';
+import { Videos }  from "./Videos";
 // import PropTypes from 'prop-types'
 
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 
 const { TabPane } = Tabs;
 

@@ -1,9 +1,9 @@
 
 
-export  function getToken(key){
+export function getToken(key){
 
-    localStorage.getItem(key)
-    
+    return localStorage.getItem(key)
+
 }
 
 export function setToken(key,value){

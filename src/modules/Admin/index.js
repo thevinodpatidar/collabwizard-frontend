@@ -2,9 +2,7 @@ import React from 'react';
 
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
 import LandingPage from '../../components/LandingPage';
-import LoginPage from './Auth/Login';
-import Signup from './Auth/Signup';
-import ForgotPassword from './Auth/ForgotPassword';
+import { Login, Signup, ForgotPassword } from './Auth';
 import ProtectedRoute from '../../components/ProtectedRoute';   
 import Resources from './Dashboard/Resources';
 import Dashboard from './Dashboard/Dashboard';
@@ -15,7 +13,7 @@ export default function AdminModule({routes}) {
     return (
         <Switch>
             <Route exact path={`${match.path}`} component={LandingPage} />
-            <Route exact path={`${match.path}login`} component={LoginPage} />
+            <Route exact path={`${match.path}login`} component={Login} />
             <Route exact path={`${match.path}signup`} component={Signup} />
             <Route exact path={`${match.path}forgotPassword`} component={ForgotPassword} />
             {/* <Route path="*" > <Redirect to="/" /></Route> */}

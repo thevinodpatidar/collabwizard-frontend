@@ -1,4 +1,4 @@
-.signup-form {
+.signupForm {
     margin : 0 auto;
     margin-top: 30px;
     padding: 10px;
@@ -6,16 +6,12 @@
     width: 300px;
     background-color: white
   }
-
-.signup-form-forgot {
-    float: right;
-  }
-
-.ant-col-rtl .signup-form-forgot {
+  
+.ant-col-rtl .signupFormForgot {
     float: left;
   }
 
-.signup-form-button {
+.signupFormButton {
     width: 100%;
   }
 .center {

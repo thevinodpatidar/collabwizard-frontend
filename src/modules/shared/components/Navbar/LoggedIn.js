@@ -3,14 +3,16 @@ import { Col, Row, Button, Drawer } from 'antd'
 import { Link } from 'react-router-dom'
 import { MenuOutlined, LogoutOutlined } from '@ant-design/icons'
 
+import styles from "./LoggedIn.module.scss";
+
 function LoggedIn({showDrawer,logout,onClose,Visible,props}) {
     return (
-        <nav className="navbar">
+        <nav className={styles.navbar}>
         <Link to="/dashboard" >
             <h2>School Tribe</h2>
         </Link> 
-        <div className="desktop">
-            <Row className="buttons" gutter={24}>
+        <div className={styles.desktop}>
+            <Row className={styles.buttons} gutter={24}>
                 <Col>
                 <Link to="/login" onClick={logout} className="signup-form-button link" >
                     Logout <LogoutOutlined style={{ color: '#08c' }} />
@@ -18,8 +20,8 @@ function LoggedIn({showDrawer,logout,onClose,Visible,props}) {
                 </Col>
             </Row>
         </div>
-        <div className="mobile">
-            <Button className="barsMenu" onClick={showDrawer}>
+        <div className={styles.mobile}>
+            <Button className={styles.barMenu} onClick={showDrawer}>
                 <MenuOutlined style={{ color: '#08c',outline :"none" }} />
             </Button>
             <Drawer
@@ -29,11 +31,11 @@ function LoggedIn({showDrawer,logout,onClose,Visible,props}) {
             visible={Visible}
             onClick={onClose}
             >
-                <div className="links">
-                    <Row className="row" gutter={24}>
-                        <Col className="col" span={24} >
+                <div className={styles.links}>
+                    <Row className={styles.row} gutter={24}>
+                        <Col className={styles.col} span={24} >
                             <LogoutOutlined style={{ color: '#08c' }} /> 
-                            <Link onClick={logout} to="/login"  className="link">
+                            <Link onClick={logout} to="/login"  className={styles.link}>
                                 Logout
                             </Link>
                         </Col>

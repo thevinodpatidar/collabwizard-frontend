@@ -1,5 +1,5 @@
 import React from 'react';
-import "./index.scss";
+import  styles  from "./Login.module.scss";
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Link, Redirect } from 'react-router-dom';
@@ -34,11 +34,11 @@ const Login = props => {
       )
     }else{
   return (
-    <div className="login-form">
+    <div className={styles.loginForm}>
          <div>
-          <h1 className="title">School Tribe</h1>
-          <p className="center"><b>"Teach better, together"</b></p>
-          <h2 className="center">Login</h2>
+          <h1 className={styles.title}>School Tribe</h1>
+          <p className={styles.center}><b>"Teach better, together"</b></p>
+          <h2 className={styles.center}>Login</h2>
         </div>
         {!success ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : <Redirect to='/dashboard' />}
     <Form
@@ -79,17 +79,17 @@ const Login = props => {
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 
-        <Link to="/forgotPassword" className="login-form-forgot" href="">
+        <Link to="/forgotPassword" className={styles.loginFormForgot} href="">
           Forgot password
         </Link>
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
+        <Button type="primary" htmlType="submit" className={styles.loginFormButton}>
           Log in
         </Button>
       </Form.Item>
-      <div className="center">              
+      <div className={styles.center}>              
           <Link to="/signup">Register now!</Link>
         </div>
     </Form>
