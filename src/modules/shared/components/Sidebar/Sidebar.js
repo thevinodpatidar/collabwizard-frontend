@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Menu} from 'antd';
-import { TeamOutlined,FileOutlined, HomeOutlined, UserOutlined } from '@ant-design/icons';
+import { TeamOutlined,FileOutlined, HomeOutlined, UserOutlined, EyeOutlined, SafetyOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 const { Sider } = Layout;
@@ -40,11 +40,21 @@ const SideBar = (props) =>{
                 </a>
               </Menu.Item>
             </SubMenu>
-            <Menu.Item key="4" icon={<FileOutlined />} onSelect={()=>{console.log("selected")}} >
-              <Link to={`/resources`}>
-                Resources
+            <SubMenu key="sub2" icon={<FileOutlined />} title="Resources">
+              <Menu.Item key="4" icon={<EyeOutlined />}>
+              <Link to={`/resources/public`}>
+                Public
               </Link>
-            </Menu.Item>
+              </Menu.Item>
+              <Menu.Item key="5" icon={<SafetyOutlined />}>
+              <Link to={`/resources/private`}>
+                Private
+              </Link>
+              </Menu.Item>
+            </SubMenu>
+            {/* <Menu.Item key="4" icon={<FileOutlined />} onSelect={()=>{console.log("selected")}} >
+             
+            </Menu.Item> */}
           </Menu>
         </Sider>
       </Layout>

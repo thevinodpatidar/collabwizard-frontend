@@ -19,8 +19,9 @@ export default function AdminModule({routes}) {
             {/* <Route path="*" > <Redirect to="/" /></Route> */}
             <Dashboard>
                 <ProtectedRoute exact path={`${match.path}dashboard`} component={Home} />
-                <ProtectedRoute exact path={`${match.path}resources`} component={Resources} />
-                <Route path="/" ><Redirect to="/dashboard" /></Route>
+                <ProtectedRoute exact path={`${match.path}resources/public`} component={Resources} />
+                <ProtectedRoute exact path={`${match.path}resources/private`} component={Resources} />
+                <Route path={`${match.path}`} ><Redirect to="/dashboard" /></Route>
                 <Route path="*" ><Redirect to="/dashboard" /></Route>
             </Dashboard>
         </Switch>

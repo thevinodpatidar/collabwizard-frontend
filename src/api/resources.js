@@ -1,7 +1,7 @@
 import url from "../config/apiendpoint";
 
 export const addResourceService = (request) => {
-  const API_ENDPOINT = url.development+'/resource';
+  const API_ENDPOINT = url.local+'/resource';
   // console.log("req",request.resource);
   const parameters = {
     method: 'POST',
@@ -23,7 +23,7 @@ export const addResourceService = (request) => {
 };
 
 export const getResourceService = (request) => {
-  const API_ENDPOINT = url.development+'/resource';
+  const API_ENDPOINT = url.local+'/resource';
 
   const parameters = {
     method: 'GET',

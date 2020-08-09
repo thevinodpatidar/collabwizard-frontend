@@ -8,9 +8,9 @@ import styles from "./LoggedIn.module.scss";
 function LoggedIn({showDrawer,logout,onClose,Visible,props}) {
     return (
         <nav className={styles.navbar}>
-        <Link to="/dashboard" >
+        {/* <Link to="/dashboard" > */}
             <h2>School Tribe</h2>
-        </Link> 
+        {/* </Link>  */}
         <div className={styles.desktop}>
             <Row className={styles.buttons} gutter={24}>
                 <Col>

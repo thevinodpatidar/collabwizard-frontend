@@ -1,4 +1,32 @@
-// .container{
-//     margin: 0;
-//     padding: 0;
-// }
+.playerWrapper {
+    position: relative;
+    padding: 4.5rem; /* Player ratio: 100 / (1280 / 720) */
+    margin: .4rem;
+  }
+  
+  .textWrapper {
+      padding:.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+
+    .resourceHeading {
+        font-size: 1rem;
+        width: 100%;
+    }
+    .resourceBy {
+        font-size: .6rem;
+        width: 100%;
+    }
+  
+    .resourceDate {
+        font-size: .5rem;
+        width: 100%;
+    }
+  }
+
+  .reactPlayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }

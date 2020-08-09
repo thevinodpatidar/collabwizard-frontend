@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Card,Avatar, Row, Col, Button } from 'antd';
+import { Card,Avatar, Row, Col, Button,Spin } from 'antd';
 import { PlusSquareOutlined } from '@ant-design/icons';
+import ReactPlayer from 'react-player'
 // import PropTypes from 'prop-types'
 
 // imports 
@@ -29,8 +30,15 @@ class Videos extends Component {
     componentDidMount(){
         const token = getToken("token");
         this.props.getResources(token);
+        this.getUploadedDays();
     }
 
+    getUploadedDays =(postedAt) =>{
+        var date = Date.now();
+        console.log(postedAt)
+        console.log(date.toString());
+        return date;
+    }
     onCreate = () => {
         this.setState({
             visible : false        
@@ -39,14 +47,14 @@ class Videos extends Component {
 
 
     render() {
-        console.log(this.props.data);
         return (
-            <div className={styles.container}>
-                <Row style={{display:"flex", justifyContent:"center",alignItems : "center", width:"100vw"}}>
-                    <Col span={21}>
+            // <div className={styles.container}>
+            <>
+                <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+                    <Col span={14}>
                         <h1 style={{fontSize:"2rem", paddingLeft:"1rem"}}>Videos</h1>
                     </Col>
-                    <Col span={3}>
+                    <Col span={6} offset={4}>
                         <Button
                             type="primary"
                             onClick={() => {
@@ -67,167 +75,31 @@ class Videos extends Component {
                         />
                     </Col>
                 </Row>
-                <Row>
-                    {
-                        // this.props.data.map(resource => (
-                        //     <Col style={{padding:".2rem"}}>
-                        //     <Card
-                        //         // style={{ width: 300 }}
-                        //         cover={
-                        //         <img
-                        //             alt="example"
-                        //             src={resource.url}
-                        //         />
-                        //         }
-                        //     >
-                        //     <Row gutter={12} justify-content="center" align="middle">
-                        //         <Col span={24}>
-                        //         <Meta 
-                        //         style={{ display:"flex",justifyContent:"center", alignItems:"center"}}
-                        //         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                        //         title={resource.resourceName}
-                        //         description={resource.user.username}
-                        //         />
-                        //         </Col>
-                        //     </Row>
-                        //     </Card>
-                        // </Col>
-                        // ))
+                <Row gutter={[16,16]}>
+                    {   
+                        this.props.data ?
+                        this.props.data.data.map(resource => (
+                        <Col span={6} key={resource.id}>
+                           <div className={styles.playerWrapper}>
+                            <ReactPlayer
+                            className={styles.reactPlayer}
+                            url={resource.resourceLink}
+                            controls
+                            width='100%'
+                            height='100%'
+                            />
+                        </div>
+                        <div className={styles.textWrapper}>
+                            <div className={styles.resourceHeading}>{resource.resourceName}</div>
+                            <div className={styles.resourceby}>{resource.User.username}</div>
+                        <div className={styles.resourceDate} >{this.getUploadedDays(resource.postedAt)}</div>
+                        </div>
+                        </Col>
+                        )) 
+                        : <Spin />
                     }
-                    {/* <Col style={{padding:".2rem"}}>
-                        <Card
-                            // style={{ width: 300 }}
-                            cover={
-                            <img
-                                alt="example"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                            />
-                            }
-                        >
-                        <Row gutter={12} justify-content="center" align="middle">
-                            <Col span={24}>
-                            <Meta 
-                            style={{ display:"flex",justifyContent:"center", alignItems:"center"}}
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title="Resource Name"
-                            description="Vinod Patidar"
-                            />
-                            </Col>
-                        </Row>
-                        </Card>
-                    </Col> */}
-                    {/* <Col style={{padding:".2rem"}}>
-                        <Card
-                            // style={{ width: 300 }}
-                            cover={
-                            <img
-                                alt="example"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                            />
-                            }
-                        >
-                        <Row gutter={12} justify-content="center" align="middle">
-                            <Col span={24}>
-                            <Meta 
-                            style={{ display:"flex",justifyContent:"center", alignItems:"center"}}
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title="Resource Name"
-                            description="Vinod Patidar"
-                            />
-                            </Col>
-                        </Row>
-                        </Card>
-                    </Col>
-                    <Col style={{padding:".2rem"}}>
-                        <Card
-                            // style={{ width: 300 }}
-                            cover={
-                            <img
-                                alt="example"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                            />
-                            }
-                        >
-                        <Row gutter={12} justify-content="center" align="middle">
-                            <Col span={24}>
-                            <Meta 
-                            style={{ display:"flex",justifyContent:"center", alignItems:"center"}}
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title="Resource Name"
-                            description="Vinod Patidar"
-                            />
-                            </Col>
-                        </Row>
-                        </Card>
-                    </Col>
-                    <Col style={{padding:".2rem"}}>
-                        <Card
-                            // style={{ width: 300 }}
-                            cover={
-                            <img
-                                alt="example"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                            />
-                            }
-                        >
-                        <Row gutter={12} justify-content="center" align="middle">
-                            <Col span={24}>
-                            <Meta 
-                            style={{ display:"flex",justifyContent:"center", alignItems:"center"}}
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title="Resource Name"
-                            description="Vinod Patidar"
-                            />
-                            </Col>
-                        </Row>
-                        </Card>
-                    </Col>
-                    <Col style={{padding:".2rem"}}>
-                        <Card
-                            // style={{ width: 300 }}
-                            cover={
-                            <img
-                                alt="example"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                            />
-                            }
-                        >
-                        <Row gutter={12} justify-content="center" align="middle">
-                            <Col span={24}>
-                            <Meta 
-                            style={{ display:"flex",justifyContent:"center", alignItems:"center"}}
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title="Resource Name"
-                            description="Vinod Patidar"
-                            />
-                            </Col>
-                        </Row>
-                        </Card>
-                    </Col>
-                    <Col style={{padding:".2rem"}}>
-                        <Card
-                            // style={{ width: 300 }}
-                            cover={
-                            <img
-                                alt="example"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                            />
-                            }
-                        >
-                        <Row gutter={12} justify-content="center" align="middle">
-                            <Col span={24}>
-                            <Meta 
-                            style={{ display:"flex",justifyContent:"center", alignItems:"center"}}
-                            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                            title="Resource Name"
-                            description="Vinod Patidar"
-                            />
-                            </Col>
-                        </Row>
-                        </Card>
-                    </Col> */}
                 </Row>
-            </div>
+            </>
         )
     }
 }
