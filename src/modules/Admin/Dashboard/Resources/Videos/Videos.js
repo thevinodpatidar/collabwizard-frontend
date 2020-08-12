@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Card,Avatar, Row, Col, Button,Spin } from 'antd';
-import { PlusSquareOutlined } from '@ant-design/icons';
+import { Card,Avatar, Row, Col, Button,Spin, Popconfirm } from 'antd';
+import { PlusSquareOutlined,EditOutlined, QuestionCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import ReactPlayer from 'react-player'
 // import PropTypes from 'prop-types'
 
@@ -9,9 +9,10 @@ import UploadForm from './VideoUploadForm';
 
 // styles
 import styles from  "./Videos.module.scss";
-import { addResourceAction, getResourceAction } from '../actions';
+import { addResourceAction, getResourceAction, deleteResourceAction } from '../actions';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
@@ -30,15 +31,21 @@ class Videos extends Component {
     componentDidMount(){
         const token = getToken("token");
         this.props.getResources(token);
-        this.getUploadedDays();
+        // this.getUploadedDays();
     }
 
     getUploadedDays =(postedAt) =>{
-        var date = Date.now();
-        console.log(postedAt)
-        console.log(date.toString());
-        return date;
+        // var date = new Date()   ;
+        // console.log(postedAt)
+        // console.log(date.toDateString());
+        return postedAt;
     }
+
+    // deleteResources = e =>{
+    //     console.log(e);
+    //     const token = getToken("token");
+    //     this.props.deleteResource(id,token);
+    // }
     onCreate = () => {
         this.setState({
             visible : false        
@@ -51,10 +58,10 @@ class Videos extends Component {
             // <div className={styles.container}>
             <>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-                    <Col span={14}>
+                    <Col xs={24} sm={24} md={16} lg={18} xl={20}>
                         <h1 style={{fontSize:"2rem", paddingLeft:"1rem"}}>Videos</h1>
                     </Col>
-                    <Col span={6} offset={4}>
+                    <Col xs={24} sm={24} md={8} lg={6} xl={4}>
                         <Button
                             type="primary"
                             onClick={() => {
@@ -78,9 +85,10 @@ class Videos extends Component {
                 <Row gutter={[16,16]}>
                     {   
                         this.props.data ?
-                        this.props.data.data.map(resource => (
-                        <Col span={6} key={resource.id}>
-                           <div className={styles.playerWrapper}>
+                        this.props.data.map(resource => (
+                        // <Link to="" >
+                        <Col xs={24} sm={24} md={12} lg={8} xl={6} key={resource.id}>
+                        <div className={styles.playerWrapper}>
                             <ReactPlayer
                             className={styles.reactPlayer}
                             url={resource.resourceLink}
@@ -89,14 +97,27 @@ class Videos extends Component {
                             height='100%'
                             />
                         </div>
+                        <div className={styles.playerBodyWrapper}>
                         <div className={styles.textWrapper}>
                             <div className={styles.resourceHeading}>{resource.resourceName}</div>
                             <div className={styles.resourceby}>{resource.User.username}</div>
-                        <div className={styles.resourceDate} >{this.getUploadedDays(resource.postedAt)}</div>
+                            <div className={styles.resourceDate} >{this.getUploadedDays(resource.postedAt)}</div>
+                        </div>
+                        <div className={styles.actions}>
+                        <Popconfirm
+                        onConfirm={()=>{this.props.deleteResource(resource.id,getToken("token"))}}
+                         title="Are you sure delete this video?" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
+                           <DeleteOutlined style={{ color: 'red' }} />
+                        </Popconfirm>
+                            {/* <EditOutlined /> */}
+                        </div>
                         </div>
                         </Col>
+                        // </Link>
                         )) 
-                        : <Spin />
+                        : <Col style={{margin : "auto 0"}}> 
+                            <Spin />
+                          </Col>
                     }
                 </Row>
             </>
@@ -106,7 +127,7 @@ class Videos extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        data : state.resources.response
+        data : state.resources.data
     }
 }
 
@@ -117,6 +138,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     getResources : (token) => {
         dispatch(getResourceAction(token));
+    },
+    deleteResource : (id,token) =>{
+        dispatch(deleteResourceAction(id,token));
     }
 }
 }

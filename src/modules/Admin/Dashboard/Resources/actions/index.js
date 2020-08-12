@@ -14,3 +14,11 @@ export const getResourceAction = token => {
       token
     }
 };
+
+export const deleteResourceAction = (resourceId,token) =>{
+  return {
+    type : types.DELETE_RESOURCE,
+    resourceId,
+    token
+  }
+}

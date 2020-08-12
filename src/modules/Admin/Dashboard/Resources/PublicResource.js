@@ -8,7 +8,7 @@ import styles from "./index.module.scss";
 const { TabPane } = Tabs;
 
 
-class Resources extends Component {
+class PublicResources extends Component {
     // static propTypes = {
     //     prop: PropTypes
     // }
@@ -20,7 +20,7 @@ class Resources extends Component {
                 <h1 className={styles.heading}>Public Resources</h1>
             </div>
             <Row>
-                <Tabs>
+                <Tabs style={{width:"100%"}}>
                     <TabPane tab="Videos" key="1">
                         <Videos />
                     </TabPane>
@@ -34,4 +34,4 @@ class Resources extends Component {
     }
 }
 
-export default Resources;
+export default PublicResources;

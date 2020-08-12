@@ -40,7 +40,7 @@ export function* logoutSaga(payload) {
   try {
     const serverResponse = yield call(logoutUserService, payload);
 
-    if (serverResponse.code >= 200 && serverResponse.code < 300) {
+    if (serverResponse.code >= 200 && serverResponse.code< 300) {
         const response  = yield serverResponse.json();
         localStorage.removeItem("token");
         yield put({ type: types.LOGOUT_USER_SUCCESS, response });

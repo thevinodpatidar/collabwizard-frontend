@@ -11,9 +11,9 @@ import AdminModule from '../modules/Admin';
 const Error = () => {
   return <div>Error</div>
 }
+
 function App() {
   return (
-      <Col span={24} >
         <AppLayout>
           <Switch>
               <Route path="/" component={AdminModule} />
@@ -21,7 +21,6 @@ function App() {
               <Route path="*" component={Error} />
           </Switch>
         </AppLayout>
-      </Col>
   );
 }
 
