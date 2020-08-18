@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
 import { Row, Col, Button,Spin, Popconfirm } from 'antd';
-import { PlusSquareOutlined,QuestionCircleOutlined, DeleteOutlined } from '@ant-design/icons';
-import ReactPlayer from 'react-player'
-// import PropTypes from 'prop-types'
+import { PlusSquareOutlined, QuestionCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 
 // imports 
-import UploadForm from './VideoUploadForm';
+import UploadForm from './UploadArticleForm';
 
 // styles
-import styles from  "./Videos.module.scss";
+import styles from  "./Articles.module.scss";
 import { addResourceAction, getResourceAction, deleteResourceAction } from '../actions';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
 
-class Videos extends Component {
+class Articles extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -24,9 +22,13 @@ class Videos extends Component {
     componentDidMount(){
         const token = getToken("token");
         this.props.getResources(token);
+        // this.getUploadedDays();
     }
 
     getUploadedDays =(postedAt) =>{
+        // var date = new Date()   ;
+        // console.log(postedAt)
+        // console.log(date.toDateString());
         return postedAt;
     }
 
@@ -42,7 +44,7 @@ class Videos extends Component {
             <div className={styles.container}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingBottom:"2rem"}}>
                     <Col xs={24} sm={24} md={16} lg={18} xl={20}>
-                        <h1 style={{fontSize:"1rem"}}>Videos</h1>
+                        <h1 style={{fontSize:"1rem"}}>Articles</h1>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={6} xl={4}>
                         <Button
@@ -51,7 +53,7 @@ class Videos extends Component {
                             this.setState({visible : true})
                             }}
                         >
-                            <PlusSquareOutlined /> Add Video
+                            <PlusSquareOutlined /> Add Article
                         </Button>
                         <UploadForm
                             visible={this.state.visible}
@@ -71,13 +73,12 @@ class Videos extends Component {
                         this.props.data.map((resource,index) => (
                         <Col xs={24} sm={24} md={12} lg={8} xl={6} key={resource.id}>
                         <div className={styles.playerWrapper}>
-                            <ReactPlayer
-                            className={styles.reactPlayer}
-                            url={resource.resourceLink}
-                            controls
-                            width='100%'
-                            height='100%'
-                            />
+                        {/* <FileViewer
+                            fileType={type}
+                            filePath={file}
+                            // errorComponent={CustomErrorComponent}
+                            onError={this.onError}/> */}
+                        <img src={resource.resourceLink} alt="resource" style={{width:"250px",height:"150px"}} />
                         </div>
                         <div className={styles.playerBodyWrapper}>
                         <div className={styles.textWrapper}>
@@ -126,4 +127,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Videos);
+export default connect(mapStateToProps,mapDispatchToProps)(Articles);

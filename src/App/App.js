@@ -3,7 +3,6 @@ import './App.scss';
 import { Route, Switch } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import AppLayout from '../components/Layout';
-import { Col } from "antd";
 import AdminModule from '../modules/Admin';
 
 // import UserModule from '../modules/index';

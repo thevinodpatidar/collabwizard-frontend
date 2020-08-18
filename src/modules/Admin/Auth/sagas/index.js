@@ -6,7 +6,7 @@ import * as types from '../actions/actionTypes'
 export function* registerSaga(payload) {
     try {
         const response = yield call(registerUserService, payload);
-    
+        
         if (response.code >= 200 && response.code < 300) {
             // const response  = yield response.json();
       
@@ -22,11 +22,7 @@ export function* registerSaga(payload) {
 export function* loginSaga(payload) {
   try {
     const response = yield call(loginUserService, payload);
-    console.log(response);
     if (response.code >= 200 && response.code < 300) {
-        // const response  = yield response.json();
-        response["isAuthenticate"] = true;
-
         yield put({ type: types.LOGIN_USER_SUCCESS, response });
       } else {
         throw response;

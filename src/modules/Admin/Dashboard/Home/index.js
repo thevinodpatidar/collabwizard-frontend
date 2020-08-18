@@ -5,7 +5,7 @@ function Home() {
     return (
        <Row justify="space-around" align="middle">
            <Col>
-           <h1 style={{padding:"30px"}}>Hello</h1>
+           <h1 style={{padding:"1rem"}}>Hello</h1>
            </Col>
        </Row>
     )

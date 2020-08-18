@@ -1,12 +1,20 @@
 import React from 'react';
 import Navbar from "../modules/shared/components/Navbar/Navbar";
+import { Layout } from 'antd';
+
+const { Content } = Layout;
 
 function AppLayout({ children }) {
+
     return (
-        <div>
-            <Navbar></Navbar>
-            <div>{children}</div>
-        </div>
+        <Layout >
+            <Navbar />
+            <div style={{backgroundColor:"#fff",marginTop:"4rem"}}>
+                <Content>
+                        {children}
+                </Content>
+            </div>
+      </Layout>
     )
 }
 

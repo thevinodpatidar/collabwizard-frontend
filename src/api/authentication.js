@@ -46,7 +46,6 @@ export const loginUserService = (request) => {
       'Access-Control-Allow-Origin' : "*",
       'Authorization': 'Bearer ' +request.token
     },
-    // body: JSON.stringify(request.token)
   };
 
   return fetch(LOGOUT_API_ENDPOINT, parameters)

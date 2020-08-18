@@ -16,12 +16,12 @@ const Login = props => {
   };
 
     let success, message;
-    success = props.state.auth.login.response.success;
-    message = props.state.auth.login.response.message;
+    success = props.data.response.success;
+    message = props.data.error.message;
     
     if (success) {
-      localStorage.setItem("token",props.state.auth.login.response.data.token);
-      setCookie("token",props.state.auth.login.response.data.token,{domain:'localhost',path:'/'})
+      localStorage.setItem("token",props.data.response.data.token);
+      setCookie("token",props.data.response.data.token,{domain:'localhost',path:'/'})
 
     }
     let isAuthenticate;
@@ -40,7 +40,7 @@ const Login = props => {
           <p className={styles.center}><b>"Teach better, together"</b></p>
           <h2 className={styles.center}>Login</h2>
         </div>
-        {!success ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : <Redirect to='/dashboard' />}
+        { props.data.error ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : <Redirect to='/dashboard' />}
     <Form
       name="normal_login"
       initialValues={{
@@ -98,6 +98,10 @@ const Login = props => {
   }
 };
 
-const mapStateToProps = (state) => ({state});
+const mapStateToProps = (state) => {
+  return {
+      data : state.auth
+  }
+}
 
 export default connect(mapStateToProps,null)(Login);

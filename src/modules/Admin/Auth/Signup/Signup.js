@@ -9,15 +9,12 @@ import { registerUserAction } from '../actions';
 
 const Signup = props => {
     const onFinish = values => {
-      console.log(values);
       delete values.termsandcondition;
 
       props.dispatch(registerUserAction(values));
       };
     
-      let success, message;
-      success = props.state.auth.signup.response.success;
-      message = props.state.auth.signup.response.message;
+    let message = props.data.error.message;
     
       return (
         <div className={styles.signupForm}>
@@ -26,7 +23,7 @@ const Signup = props => {
           <p className={styles.center}><b>"Teach better, together"</b></p>
           <h2 className={styles.center}>Register</h2>
         </div>
-        {!success ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : <Redirect to='/login' />}
+        { props.data.error ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : <Redirect to='/login' />}
         <Form 
           layout="vertical"
           name="normal_login"
@@ -104,6 +101,9 @@ const Signup = props => {
       );
 };
 
-const mapStateToProps = (state) => ({state});
-
+const mapStateToProps = (state) => {
+  return {
+      data : state.auth
+  }
+}
 export default connect(mapStateToProps,null)(Signup);

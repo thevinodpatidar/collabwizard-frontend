@@ -22,7 +22,8 @@ const SideBar = (props) =>{
         height: '100vh',
         position: 'fixed',
         left: 0,
-      }} theme="light" collapsible collapsed={collapsed} onCollapse={onCollapse}>
+      }} theme="light" breakpoint="md"
+      collapsedWidth="0" collapsible collapsed={collapsed} onCollapse={onCollapse}>
           {/* <div className="logo" /> */}
           <Menu defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1" icon={<HomeOutlined/>}>
@@ -30,31 +31,25 @@ const SideBar = (props) =>{
                 Home
               </Link>
             </Menu.Item>
-            <Menu.Item key="2" icon={<UserOutlined />}>
-              Profile
-            </Menu.Item>
             <SubMenu key="sub1" icon={<TeamOutlined />} title="Community">
-              <Menu.Item key="3">
+              <Menu.Item key="2">
                 <a href="http://localhost:4567" target="blank">
                   Forum
                 </a>
               </Menu.Item>
             </SubMenu>
             <SubMenu key="sub2" icon={<FileOutlined />} title="Resources">
-              <Menu.Item key="4" icon={<EyeOutlined />}>
+              <Menu.Item key="3" icon={<EyeOutlined />}>
               <Link to={`/resources/public`}>
                 Public
               </Link>
               </Menu.Item>
-              <Menu.Item key="5" icon={<SafetyOutlined />}>
+              <Menu.Item key="4" icon={<SafetyOutlined />}>
               <Link to={`/resources/private`}>
                 Private
               </Link>
               </Menu.Item>
             </SubMenu>
-            {/* <Menu.Item key="4" icon={<FileOutlined />} onSelect={()=>{console.log("selected")}} >
-             
-            </Menu.Item> */}
           </Menu>
         </Sider>
       </Layout>

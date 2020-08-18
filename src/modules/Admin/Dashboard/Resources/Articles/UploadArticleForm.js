@@ -4,7 +4,7 @@ import { Upload, Button, message,Modal,Form, Input, Radio } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { getToken } from '../../../../../utils/localStorage';
 
-const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
+const ArticleUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
   
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(false);
@@ -13,7 +13,7 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
 
   const handleUpload = (values) => {
     values.resourceCategory  = "private";
-    values.resourceType = "videos";
+    values.resourceType = "articles";
     parentProps.onUpload({values},token);
   };
   
@@ -23,12 +23,12 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
     headers: {
       authorization: 'Bearer '+token,
     },
-    // beforeUpload: file => {
-    //   if (file.type !== 'video/mp4') {
-    //     message.error(`${file.name} is not a video file`);
-    //   }
-    //   return file.type === 'image/jpeg';
-    // },
+    beforeUpload: file => {
+        if (file.type !== 'image/jpg' || file.type !== 'image/jpeg') {
+          message.error(`${file.name} is not a jpeg file`);
+        }
+        return file.type === 'image/jpeg';
+    },
     onChange(info) {
       if (info.file.status === 'uploading') {
         setUploading(true)
@@ -65,7 +65,6 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
             console.log('Validate Failed:', info);
           });
   }
-
   return (
     <Modal
       visible={visible}
@@ -134,4 +133,4 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
   );
 };
 
-export default VideoUploadForm;
+export default ArticleUploadForm;

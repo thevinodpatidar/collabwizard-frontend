@@ -8,6 +8,7 @@ export default function(state = {
  }
 , action) {
   const response = action.response;
+
   switch(action.type) {
     case types.ADD_RESOURCE_SUCCESS:
       return { ...state, data : [...state.data, response] };
@@ -18,7 +19,9 @@ export default function(state = {
     case types.GET_RESOURCE_ERROR:
       return { ...state,  error : response };
     case types.DELETE_RESOURCE_SUCCESS:
-      return { ...state, data : response}
+      let newState = state.data.slice();
+      newState.splice(action.id, 1);
+      return { ...state , data : newState }
     case types.DELETE_RESOURCE_ERROR:
       return { ...state, error : response };
     default:
