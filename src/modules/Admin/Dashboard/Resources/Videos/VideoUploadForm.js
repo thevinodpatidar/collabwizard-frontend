@@ -19,7 +19,7 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
   
   const props = {
     name: 'file',
-    action: 'http://localhost:4000/api/upload/file',
+    action: 'https://api.schooltribe.co/api/upload/file',
     headers: {
       authorization: 'Bearer '+token,
     },
