@@ -21,7 +21,7 @@ const Login = props => {
     
     if (success) {
       localStorage.setItem("token",props.data.response.data.token);
-      setCookie("token",props.data.response.data.token,{domain:'localhost',path:'/'})
+      setCookie("token",props.data.response.data.token,{domain:'beta.schooltribe.co',path:'/'})
 
     }
     let isAuthenticate;
