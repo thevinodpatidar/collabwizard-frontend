@@ -44,7 +44,7 @@ const NavigationLinks = ({ authentication,logout,user}) => {
               </Link>
             </Menu.Item>
             <Menu.Item key="community"icon={<TeamOutlined />}>
-            <a href="http://localhost:4567" target="blank">
+            <a href="http://ec2-13-234-77-5.ap-south-1.compute.amazonaws.com:4567" target="blank">
                   Forum
                 </a>
             </Menu.Item>
