@@ -24,8 +24,8 @@ const Login = props => {
       setCookie("token",props.data.response.data.token,{domain:'beta.schooltribe.co',path:'/'})
 
     }
-    let isAuthenticate;
-    if(localStorage.getItem("token")){
+    let isAuthenticate = false;
+    if(localStorage.getItem("token") !== null ){
       isAuthenticate = true
     }
     if(isAuthenticate){
@@ -79,7 +79,7 @@ const Login = props => {
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 
-        <Link to="/forgotPassword" className={styles.loginFormForgot} href="">
+        <Link to="/forgotPassword" className={styles.loginFormForgot} >
           Forgot password
         </Link>
       </Form.Item>

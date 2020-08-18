@@ -6,6 +6,7 @@ export const registerUserService = (request) => {
   const parameters = {
     method: 'POST',
     headers: {
+      'Access-Control-Allow-Origin' : "*",
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(request.user)
@@ -26,6 +27,7 @@ export const loginUserService = (request) => {
   const parameters = {
     method: 'POST',
     headers: {
+      'Access-Control-Allow-Origin' : "*",
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(request.user)

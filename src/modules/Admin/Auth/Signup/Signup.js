@@ -14,7 +14,7 @@ const Signup = props => {
       props.dispatch(registerUserAction(values));
       };
     
-    let message = props.data.error.message;
+      let message = props.data.error.message;
     
       return (
         <div className={styles.signupForm}>
@@ -28,7 +28,7 @@ const Signup = props => {
           layout="vertical"
           name="normal_login"
           initialValues={{
-            remember: true,
+            termsandcondition: false,
           }}
           onFinish={onFinish}
         >
