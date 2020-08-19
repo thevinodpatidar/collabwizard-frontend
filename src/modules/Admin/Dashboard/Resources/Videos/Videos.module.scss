@@ -86,9 +86,11 @@
 .viewsContainer{
     display: flex;
     .tags{
-        font-weight: 700;
-        font-size: .8rem;
-    }
+      font-weight: 700;
+      font-size: .8rem;
+      // margin : 1rem 1rem;
+      text-transform : capitalize;
+  }
 }
 .socialContainer{
     display: flex;

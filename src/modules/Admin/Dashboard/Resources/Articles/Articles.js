@@ -109,10 +109,10 @@ class Articles extends Component {
                             </div>
                             <div className={styles.bottomContainer}>
                                 <div className={styles.resourceNameContainer}>
-                                    <span className={styles.resourceName}>JavaScript - Closure</span>
+                                    <span className={styles.resourceName}>{resource.resourceName}</span>
                                 </div>
                                 <div className={styles.viewsContainer}>
-                                    <Badge count={"Private"} className={styles.tags} />
+                                    <Badge count={resource.resourceCategory} className={styles.tags} />
                                     <Badge count={"Article"} className={styles.tags} />
                                 </div>
                                 <div className={styles.socialContainer}>
