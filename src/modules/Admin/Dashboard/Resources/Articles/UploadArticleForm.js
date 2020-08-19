@@ -23,6 +23,7 @@ const ArticleUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
     action: baseUploadURL,
     headers: {
       authorization: 'Bearer '+token,
+      "Access-Control-Allow-Origin" : "*"
     },
     beforeUpload: file => {
         if (file.type !== 'image/jpg' || file.type !== 'image/jpeg') {
