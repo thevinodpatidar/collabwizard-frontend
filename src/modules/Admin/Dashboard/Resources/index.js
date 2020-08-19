@@ -5,7 +5,7 @@ const { Content} = Layout;
 
 export default function Resources({children}) {
     return (
-    <div style={{margin:"3rem",display:"flex"}}>
+    <div style={{display:"flex"}}>
         <Layout style={{background:"#fff"}}>
           <Content>
               {children}

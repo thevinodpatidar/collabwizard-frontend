@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Upload, Button, message,Modal,Form, Input, Radio } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { getToken } from '../../../../../utils/localStorage';
+import { baseUploadURL } from '../../../../../api/baseurl';
 
 const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
   
@@ -19,7 +20,7 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
   
   const props = {
     name: 'file',
-    action: 'https://api.schooltribe.co/api/upload/file',
+    action: baseUploadURL,
     headers: {
       authorization: 'Bearer '+token,
     },

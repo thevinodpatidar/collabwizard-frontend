@@ -1,8 +1,9 @@
-import url from "../config/apiendpoint";
+// import url from "../config/apiendpoint";
+import { baseURL } from "./baseurl";
 
 
 export const getUserDetailService = (request) => {
-    const API_ENDPOINT = url.development+'/user';
+    const API_ENDPOINT =baseURL+'/user';
   
     const parameters = {
       method: 'GET',

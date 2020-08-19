@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Row, Col, Button,Spin, Popconfirm } from 'antd';
-import { PlusSquareOutlined,QuestionCircleOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Row, Col, Button,Spin, Popconfirm, Avatar, Badge } from 'antd';
+import { PlusSquareOutlined,QuestionCircleOutlined, DeleteOutlined, ShareAltOutlined, SendOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
 import ReactPlayer from 'react-player'
 // import PropTypes from 'prop-types'
 
@@ -69,31 +69,66 @@ class Videos extends Component {
                     {   
                         this.props.data ?
                         this.props.data.map((resource,index) => (
-                        <Col xs={24} sm={24} md={12} lg={8} xl={6} key={resource.id}>
-                        <div className={styles.playerWrapper}>
-                            <ReactPlayer
-                            className={styles.reactPlayer}
-                            url={resource.resourceLink}
-                            controls
-                            width='100%'
-                            height='100%'
-                            />
-                        </div>
-                        <div className={styles.playerBodyWrapper}>
-                        <div className={styles.textWrapper}>
-                            <div className={styles.resourceHeading}>{resource.resourceName}</div>
-                            <div className={styles.resourceby}>{resource.User.username}</div>
-                            <div className={styles.resourceDate} >{this.getUploadedDays(resource.postedAt)}</div>
-                        </div>
-                        <div className={styles.actions}>
-                        <Popconfirm
-                        onConfirm={()=>{this.props.deleteResource(index,resource.id,getToken("token"))}}
-                        title="Are you sure delete this video?" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
-                           <DeleteOutlined style={{ color: 'red' }} />
-                        </Popconfirm>
-                            {/* <EditOutlined /> */}
-                        </div>
-                        </div>
+                        // <Col className={styles.cardWrapper} xs={24} sm={24} md={12} lg={8} xl={4} key={resource.id}>
+                        // <div className={styles.playerWrapper}>
+                        //     <ReactPlayer
+                        //     className={styles.reactPlayer}
+                        //     url={resource.resourceLink}
+                        //     controls
+                        //     width='100%'
+                        //     height='100%'
+                        //     />
+                        // </div>
+                        // <div className={styles.playerBodyWrapper}>
+                        // <div className={styles.textWrapper}>
+                        //     <div className={styles.resourceHeading}>{resource.resourceName}</div>
+                        //     <div className={styles.resourceby}>{resource.User.username}</div>
+                        //     <div className={styles.resourceDate} >{this.getUploadedDays(resource.postedAt)}</div>
+                        // </div>
+                        // <div className={styles.actions}>
+                        // <Popconfirm
+                        // onConfirm={()=>{this.props.deleteResource(index,resource.id,getToken("token"))}}
+                        // title="Are you sure delete this video?" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
+                        //    <DeleteOutlined style={{ color: 'red' }} />
+                        // </Popconfirm>
+                        //     {/* <EditOutlined /> */}
+                        // </div>
+                        // </div>
+                        // </Col>
+                        <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key="1">
+                            <div className={styles.infoWrapper}>
+                                <div className={styles.userInfoContainer}>
+                                    <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
+                                    <div className={styles.username}>
+                                        <span>Vinod Patidar</span>
+                                    </div>
+                                </div>
+                                <div className={styles.moreSettings}>
+                                    <EllipsisOutlined />
+                                </div>
+                            </div>
+                            <div className={styles.playerWrapper}>
+                                <img src="https://img.icons8.com/material-outlined/48/000000/video.png"/>
+                            </div>
+                            <div className={styles.bottomContainer}>
+                                <div className={styles.resourceNameContainer}>
+                                    <span className={styles.resourceName}>JavaScript - Closure</span>
+                                </div>
+                                <div className={styles.viewsContainer}>
+                                    <Badge count={"Private"} className={styles.tags} />
+                                    <Badge count={"Video"} className={styles.tags} />
+                                </div>
+                                <div className={styles.socialContainer}>
+                                    <div className={styles.uploadedAt}>
+                                        <span>24 hours ago</span>
+                                    </div>
+                                    <div className={styles.socialIconsContainer}>
+                                        <div className={styles.icons}>
+                                        <ShareAltOutlined size={24}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </Col>
                         )) 
                         : <Col style={{margin : "auto 0"}}> 

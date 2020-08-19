@@ -1,7 +1,8 @@
-import url from "../config/apiendpoint";
+// import url from "../config/apiendpoint";
+import { baseURL } from "./baseurl";
 
 export const registerUserService = (request) => {
-  const REGISTER_API_ENDPOINT = url.development+'/signup';
+  const REGISTER_API_ENDPOINT = baseURL+'/signup';
   
   const parameters = {
     method: 'POST',
@@ -22,7 +23,7 @@ export const registerUserService = (request) => {
 };
 
 export const loginUserService = (request) => {
-  const LOGIN_API_ENDPOINT = url.development+'/login';
+  const LOGIN_API_ENDPOINT = baseURL+'/login';
 
   const parameters = {
     method: 'POST',
@@ -40,7 +41,7 @@ export const loginUserService = (request) => {
 };
 
   export const logoutUserService = (request) => {
-  const LOGOUT_API_ENDPOINT = url.development+'/logout';
+  const LOGOUT_API_ENDPOINT = baseURL+'/logout';
   const parameters = {
     method: 'POST',
     headers: {

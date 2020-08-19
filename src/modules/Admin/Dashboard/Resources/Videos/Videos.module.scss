@@ -1,40 +1,122 @@
-.playerWrapper {
-    position: relative;
-    padding: 4.5rem 0rem; /* Player ratio: 100 / (1280 / 720) */
-    margin: .4rem;
-  }
+// .cardWrapper {
+//   -webkit-box-shadow: 0px 5px 10px 1px rgba(230,227,230,1);
+//   -moz-box-shadow: 0px 5px 10px 1px rgba(230,227,230,1);
+//   box-shadow: 0px 5px 10px 1px rgba(230,227,230,1);
+//   margin : 1rem;
+//   max-width: 500px;
+// }
+// .playerWrapper {
+//     position: relative;
+//     padding: 4.5rem 0rem; /* Player ratio: 100 / (1280 / 720) */
+//     margin: .4rem;
 
-.playerBodyWrapper{
-  display: flex;
-  .textWrapper {
-      padding:.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      width: 80%;
+// .playerBodyWrapper{
+//   display: flex;
+//   .textWrapper {
+//       padding:.5rem;
+//       display: flex;
+//       flex-wrap: wrap;
+//       width: 70%;
 
-    .resourceHeading {
-        font-size: 1.5rem;
-        width: 100%;
-    }
-    .resourceBy {
-        font-size: .8rem;
-        width: 100%;
-    }
+//     .resourceHeading {
+//         font-size: 1.5rem;
+//         width: 100%;
+//     }
+//     .resourceBy {
+//         font-size: .8rem;
+//         width: 100%;
+//     }
   
-    .resourceDate {
-        font-size: .7rem;
-        width: 100%;
-    }
-  }
-  .actions{
-    justify-content: center;
-    align-self: center;
-    width: 20%;
-    padding: 1rem;
-  }
+//     .resourceDate {
+//         font-size: .7rem;
+//         width: 100%;
+//     }
+//   }
+//   .actions{
+//     justify-content: center;
+//     align-self: center;
+//     width: 20%;
+//     padding: 1rem;
+//   }
+// }
+// }
+//   .reactPlayer {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//   }
+
+
+.cardWrapper {
+  -webkit-box-shadow: 0px 5px 10px 1px rgba(230,227,230,1);
+  -moz-box-shadow: 0px 5px 10px 1px rgba(230,227,230,1);
+  box-shadow: 0px 5px 10px 1px rgba(230,227,230,1);
+  margin : 2rem 1rem 2rem 1rem;
+  max-width: 500px;
+  border-radius: .5rem;
 }
-  .reactPlayer {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+.infoWrapper{
+    display: flex;
+    justify-content: space-between;
+    padding : .4rem;
+    .userInfoContainer{
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      .username{
+          font-weight: 700;
+          padding-left: .5rem;
+      }
+    }
+    .moreSettings{
+        align-self: center;
+    }
+}
+.bottomContainer{
+  display: flex;
+  flex-direction: column;
+  padding : .5rem;
+  .resourceNameContainer{
+    margin : .3rem 0rem;
+    .resourceName{
+        font-weight: 700;
+        font-size: 1rem;
+    }
+}
+.viewsContainer{
+    display: flex;
+    .tags{
+        font-weight: 700;
+        font-size: .8rem;
+    }
+}
+.socialContainer{
+    display: flex;
+  //   padding : .5rem;
+    justify-content: space-between;
+    align-items: center;
+    .socialIconsContainer{
+        display: flex;
+        justify-content: space-between;
+        .icons{
+            padding:.6rem;
+            &:first-child{
+                padding :.6rem 0rem;
+            }
+        }
+    }
+    .uploadedAt{
+      text-transform: uppercase;
+      font-size : .7rem;
+      opacity: .7;
+    }
+}
+}
+.playerWrapper {
+  //   position: relative;
+    padding: 4.5rem 0rem; /* Player ratio: 100 / (1280 / 720) */
+  //   margin: .4rem;
+    display: flex;
+    justify-content: center;
+  //   border-top : .001px solid rgba(77, 75, 75, 0.582);
+}

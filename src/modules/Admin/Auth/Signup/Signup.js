@@ -28,7 +28,7 @@ const Signup = props => {
           layout="vertical"
           name="normal_login"
           initialValues={{
-            termsandcondition: false,
+            termsandcondition: true,
           }}
           onFinish={onFinish}
         >
