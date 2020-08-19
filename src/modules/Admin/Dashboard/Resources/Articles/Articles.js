@@ -71,28 +71,7 @@ class Articles extends Component {
                     {   
                         this.props.data ?
                         this.props.data.map((resource,index) => (
-                        // <Col className={styles.cardWrapper} xs={24} sm={24} md={12} lg={8} xl={4} key={resource.id}>
-                        // <div className={styles.playerWrapper}>
-                        // {/* <img src={resource.resourceLink} alt="resource" style={{width:"250px",height:"150px"}} /> */}
-                        // <img src="https://img.icons8.com/ios/50/000000/google-docs.png" />
-                        // </div>
-                        // <div className={styles.playerBodyWrapper}>
-                        // <div className={styles.textWrapper}>
-                        //     <div className={styles.resourceHeading}>{resource.resourceName}</div>
-                        //     <div className={styles.resourceby}>{resource.User.username}</div>
-                        //     <div className={styles.resourceDate} >{this.getUploadedDays(resource.postedAt)}</div>
-                        // </div>
-                        // <div className={styles.actions}>
-                        // <Popconfirm
-                        // onConfirm={()=>{this.props.deleteResource(index,resource.id,getToken("token"))}}
-                        // title="Are you sure delete this video?" icon={<QuestionCircleOutlined style={{ color: 'red' }} />}>
-                        //    <DeleteOutlined style={{ color: 'red' }} />
-                        // </Popconfirm>
-                        //     {/* <EditOutlined /> */}
-                        // </div>
-                        // </div>
-                        // </Col>
-                        <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key="1">
+                        <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key={resource.id}>
                             <div className={styles.infoWrapper}>
                                 <div className={styles.userInfoContainer}>
                                     <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
