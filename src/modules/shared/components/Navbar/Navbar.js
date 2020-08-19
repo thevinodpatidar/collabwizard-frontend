@@ -19,8 +19,8 @@ const Navbar = (props) => {
   useEffect(()=>{
           if(getToken("token") !== null){
               setisAuthenticated(false);
+              props.userDetail(getToken("token"))        
             }   
-          props.userDetail(getToken("token"))        
   },[props.auth,token]);
 
   const logout = () =>{

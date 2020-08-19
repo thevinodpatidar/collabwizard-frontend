@@ -23,6 +23,7 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
     action: baseUploadURL,
     headers: {
       authorization: 'Bearer '+token,
+      "Access-Control-Allow-Origin" : "*"
     },
     // beforeUpload: file => {
     //   if (file.type !== 'video/mp4') {
@@ -38,10 +39,12 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
         if(info.file.response.status === true){
+          console.log(info);
           form.setFieldsValue({resourceLink : info.file.response.image})
         }
         setUploading(false);
       } else if (info.file.status === 'error') {
+        console.log(info);
         message.error(`${info.file.name} file upload failed.`);
       }
     },
