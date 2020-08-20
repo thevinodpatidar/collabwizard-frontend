@@ -131,7 +131,7 @@ class Videos extends Component {
                             height='100%'
                             />
                         </div>
-                         </Modal>
+                        </Modal>
                     </>
                 </Row>
             </div>

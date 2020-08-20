@@ -28,7 +28,7 @@ const Navbar = (props) => {
     removeToken("token");
     props.logout(token);
     setisAuthenticated(false);
-    window.history.go(0);
+    window.location.href = "/";
   }
 
   const showDrawer = () => {
