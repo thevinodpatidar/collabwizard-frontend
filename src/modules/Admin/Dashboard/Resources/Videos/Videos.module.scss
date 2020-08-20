@@ -122,3 +122,14 @@
     justify-content: center;
   //   border-top : .001px solid rgba(77, 75, 75, 0.582);
 }
+  .playerModalWrapper {
+    position: relative;
+    margin: 1rem;
+    padding-top: 60.25% ;/* Player ratio: 100 / (1280 / 720) */
+    .reactPlayer {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+   

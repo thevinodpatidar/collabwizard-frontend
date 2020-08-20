@@ -14,7 +14,7 @@ class PublicResources extends Component {
                     <h1 className={styles.heading}>Public Resources</h1>
                 </div>
                 <Row gutter={[16,16]}>
-                    <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key="1">
+                    <Col className={styles.cardWrapper} xs={24} sm={12} md={12} lg={6} xl={5} key="1">
                         <div className={styles.infoWrapper}>
                             <div className={styles.userInfoContainer}>
                                 <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
@@ -48,7 +48,7 @@ class PublicResources extends Component {
                             </div>
                         </div>
                     </Col>
-                    <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key="1">
+                    <Col className={styles.cardWrapper} xs={24} sm={12} md={12} lg={6} xl={5} key="2">
                         <div className={styles.infoWrapper}>
                             <div className={styles.userInfoContainer}>
                                 <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
@@ -82,7 +82,7 @@ class PublicResources extends Component {
                             </div>
                         </div>
                     </Col>
-                    <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key="1">
+                    <Col className={styles.cardWrapper} xs={24} sm={12} md={12} lg={6} xl={5} key="3">
                         <div className={styles.infoWrapper}>
                             <div className={styles.userInfoContainer}>
                                 <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 

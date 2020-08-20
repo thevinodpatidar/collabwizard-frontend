@@ -1,10 +1,10 @@
 import React from 'react'
+import styles from "./LandingPage.module.scss";
 
 function LandingPage() {
     return (
-        <div>
-            <h1>Landing Page</h1>
-            <img src="http://unsplash.com/photos/N_aihp118p8" alt="" />
+        <div className={styles.heroContainer}>
+           
         </div>
     )
 }

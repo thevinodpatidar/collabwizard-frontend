@@ -76,7 +76,7 @@ class Articles extends Component {
                                 <div className={styles.userInfoContainer}>
                                     <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
                                     <div className={styles.username}>
-                                        <span>Vinod Patidar</span>
+                                        <span>{resource.User.username}</span>
                                     </div>
                                 </div>
                                 <div className={styles.moreSettings}>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col, Button,Spin, Popconfirm, Avatar, Badge } from 'antd';
 import { PlusSquareOutlined,QuestionCircleOutlined, DeleteOutlined, ShareAltOutlined, SendOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
-import ReactPlayer from 'react-player'
+// import ModalVideo from 'react-modal-video'
 // import PropTypes from 'prop-types'
 
 // imports 
@@ -12,15 +12,24 @@ import styles from  "./Videos.module.scss";
 import { addResourceAction, getResourceAction, deleteResourceAction } from '../actions';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
+import Modal from 'antd/lib/modal/Modal';
+import ReactPlayer from 'react-player';
 
 class Videos extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            visible : false
+            visible : false,
+            isOpen: false,
+            url : "",
+            playing : true
         };
+        this.openModal = this.openModal.bind(this)
       }
 
+    openModal (url) {
+        this.setState({isOpen: true,url:url})
+    }
     componentDidMount(){
         const token = getToken("token");
         this.props.getResources(token);
@@ -69,12 +78,12 @@ class Videos extends Component {
                     {   
                         this.props.data ?
                         this.props.data.map((resource,index) => (
-                        <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key={resource.id}>
+                        <Col onClick={() => this.openModal(resource.resourceLink)} className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key={resource.id}>
                             <div className={styles.infoWrapper}>
                                 <div className={styles.userInfoContainer}>
                                     <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
                                     <div className={styles.username}>
-                                        <span>Vinod Patidar</span>
+                                        <span>{resource.User.username}</span>
                                     </div>
                                 </div>
                                 <div className={styles.moreSettings}>
@@ -103,12 +112,27 @@ class Videos extends Component {
                                     </div>
                                 </div>
                             </div>
+                        
                         </Col>
                         )) 
                         : <Col style={{margin : "auto 0"}}> 
                             <Spin />
                           </Col>
                     }
+                     <>
+                         <Modal width="800px" footer={null} visible={this.state.isOpen} onCancel={() => this.setState({isOpen: false,playing : false})} >
+                         <div className={styles.playerModalWrapper}>
+                            <ReactPlayer
+                            className={styles.reactPlayer}
+                            controls
+                            playing={this.state.playing}
+                            url={this.state.url}
+                            width='100%'
+                            height='100%'
+                            />
+                        </div>
+                         </Modal>
+                    </>
                 </Row>
             </div>
         )

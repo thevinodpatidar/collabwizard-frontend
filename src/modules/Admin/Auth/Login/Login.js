@@ -25,9 +25,10 @@ const Login = props => {
 
     }
     let isAuthenticate = false;
-    if(localStorage.getItem("token") !== null ){
+    if(localStorage.getItem("token") !== null){
       isAuthenticate = true
     }
+    console.log("isAuthenticate:",isAuthenticate)
     if(isAuthenticate){
       return (
         <Redirect to="/dashboard" />
@@ -40,7 +41,7 @@ const Login = props => {
           <p className={styles.center}><b>"Teach better, together"</b></p>
           <h2 className={styles.center}>Login</h2>
         </div>
-        { props.data.error ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : <Redirect to='/dashboard' />}
+        { message ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : null}
     <Form
       name="normal_login"
       initialValues={{

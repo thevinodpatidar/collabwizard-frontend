@@ -5,7 +5,7 @@ export default function(state = {
       isAuthenticate : false,
       isLoading : false, 
       error : {},
-      response : {}
+      response : {success:false}
 }
 , action) {
   const response = action.response;
