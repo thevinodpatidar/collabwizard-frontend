@@ -2,7 +2,7 @@
 import { baseURL } from "./baseurl";
 
 export const addResourceService = (request) => {
-  const API_ENDPOINT = baseURL+'/resource';
+  const API_ENDPOINT = baseURL+'/resource/private';
   // console.log("req",request.resource);
   const parameters = {
     method: 'POST',
@@ -22,7 +22,7 @@ export const addResourceService = (request) => {
 };
 
 export const getResourceService = (request) => {
-  const API_ENDPOINT = baseURL+'/resource';
+  const API_ENDPOINT = baseURL+'/resource/private';
 
   const parameters = {
     method: 'GET',
@@ -42,7 +42,7 @@ export const getResourceService = (request) => {
 
 export const deleteResourceService = (request) => {
   // console.log(request.resourceId)
-  const API_ENDPOINT = baseURL+'/resource/'+request.resourceId;
+  const API_ENDPOINT = baseURL+'/resource/private/'+request.resourceId;
 
   const parameters = {
     method: 'DELETE',

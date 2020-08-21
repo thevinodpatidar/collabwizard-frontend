@@ -25,12 +25,12 @@ const ArticleUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
       authorization: 'Bearer '+token,
       "Access-Control-Allow-Origin" : "*"
     },
-    beforeUpload: file => {
-        if (file.type !== 'image/jpg' || file.type !== 'image/jpeg') {
-          message.error(`${file.name} is not a jpeg file`);
-        }
-        return file.type === 'image/jpeg';
-    },
+    // beforeUpload: file => {
+    //     if (file.type !== 'image/jpg' || file.type !== 'image/jpeg') {
+    //       message.error(`${file.name} is not a jpeg file`);
+    //     }
+    //     return file.type === 'image/jpeg';
+    // },
     onChange(info) {
       if (info.file.status === 'uploading') {
         setUploading(true)

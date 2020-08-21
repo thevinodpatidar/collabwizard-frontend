@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Row, Col, Button,Spin, Popconfirm, Avatar, Badge } from 'antd';
-import { PlusSquareOutlined, QuestionCircleOutlined, DeleteOutlined, ShareAltOutlined, SendOutlined, UserOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { Row, Col, Button,Spin, Avatar, Badge, Select, Input, Result } from 'antd';
+import { PlusSquareOutlined, ShareAltOutlined, UserOutlined, EllipsisOutlined } from '@ant-design/icons';
+import emptybox from "../../../../../assets/images/emptybox.svg";
 
 // imports 
 import UploadForm from './UploadArticleForm';
@@ -10,6 +11,8 @@ import styles from  "./Articles.module.scss";
 import { addResourceAction, getResourceAction, deleteResourceAction } from '../actions';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
+const { Search } = Input;
+const { Option } = Select;
 
 class Articles extends Component {
     constructor(props) {
@@ -22,13 +25,9 @@ class Articles extends Component {
     componentDidMount(){
         const token = getToken("token");
         this.props.getResources(token);
-        // this.getUploadedDays();
     }
 
     getUploadedDays =(postedAt) =>{
-        // var date = new Date()   ;
-        // console.log(postedAt)
-        // console.log(date.toDateString());
         return postedAt;
     }
 
@@ -37,14 +36,47 @@ class Articles extends Component {
             visible : false        
         })
     };
-
+    onChange(value) {
+        console.log(`selected ${value}`);
+    }
+      
+    onBlur() {
+        console.log('blur');
+    }
+      
+    onFocus() {
+        console.log('focus');
+    }
+      
+    onSearch(val) {
+        console.log('search:', val);
+    }
 
     render() {
         return (
             <div className={styles.container}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingBottom:"2rem"}}>
                     <Col xs={24} sm={24} md={16} lg={18} xl={20}>
-                        <h1 style={{fontSize:"1rem"}}>Articles</h1>
+                    <div className={styles.searchFilterContainer}>
+                        <Search className={styles.searchBar} placeholder="input search text" onSearch={value => console.log(value)} enterButton />
+                        <Select
+                            // showSearch
+                            style={{ width: 200 }}
+                            placeholder="Select a category"
+                            optionFilterProp="children"
+                            onChange={this.onChange}
+                            onFocus={this.onFocus}
+                            onBlur={this.onBlur}
+                            // onSearch={this.onSearch}
+                            filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            }
+                        >
+                            <Option value="maths">Maths</Option>
+                            <Option value="english">English</Option>
+                            <Option value="science">Science</Option>
+                        </Select>
+                        </div>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={6} xl={4}>
                         <Button
@@ -67,10 +99,11 @@ class Articles extends Component {
                         />
                     </Col>
                 </Row>
-                <Row gutter={[16,16]}>
+                <Row gutter={[16,16]} >
                     {   
-                        this.props.data ?
-                        this.props.data.map((resource,index) => (
+                        this.props.articles ?
+                        this.props.articles.length > 0 ?
+                        this.props.articles.map((resource,index) => (
                         <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key={resource.id}>
                             <div className={styles.infoWrapper}>
                                 <div className={styles.userInfoContainer}>
@@ -84,15 +117,20 @@ class Articles extends Component {
                                 </div>
                             </div>
                             <div className={styles.playerWrapper}>
-                            <img src="https://img.icons8.com/ios/50/000000/google-docs.png" />
+                            <img src="https://img.icons8.com/ios/50/000000/google-docs.png" alt="article icon"/>
                             </div>
                             <div className={styles.bottomContainer}>
                                 <div className={styles.resourceNameContainer}>
                                     <span className={styles.resourceName}>{resource.resourceName}</span>
                                 </div>
                                 <div className={styles.viewsContainer}>
-                                    <Badge count={resource.resourceCategory} className={styles.tags} />
-                                    <Badge count={"Article"} className={styles.tags} />
+                                    <div>
+                                        <Badge count={"Maths"} style={{backgroundColor:"#74b9ff"}} className={styles.leftTags} />
+                                    </div>
+                                    <div>
+                                        <Badge count={resource.resourceCategory} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
+                                        <Badge count={"Video"} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
+                                    </div>
                                 </div>
                                 <div className={styles.socialContainer}>
                                     <div className={styles.uploadedAt}>
@@ -106,10 +144,18 @@ class Articles extends Component {
                                 </div>
                             </div>
                         </Col>
-                        )) 
-                        : <Col style={{margin : "auto 0"}}> 
-                            <Spin />
-                          </Col>
+                        )) :
+                        <Col className={styles.emptyContainer}>
+                            {/* <div > */}
+                                <img src={emptybox} alt="empty box" />
+                                <div>No record found</div>
+                                <h4>Try adding new records.</h4>
+                            {/* </div> */}
+                        </Col>
+                        :
+                        <Col style={{margin : "0 auto"}}> 
+                            <Spin size="large" />
+                        </Col>
                     }
                 </Row>
             </div>
@@ -119,7 +165,7 @@ class Articles extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        data : state.resources.data
+        articles : state.resources.data.articles
     }
 }
 

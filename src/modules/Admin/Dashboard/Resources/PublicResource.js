@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 import styles from "./PublicResource.module.scss";
 import { Row, Col, Avatar } from 'antd';
-import { EllipsisOutlined, UserOutlined, ShareAltOutlined, SendOutlined } from '@ant-design/icons';
+import { EllipsisOutlined, UserOutlined, ShareAltOutlined } from '@ant-design/icons';
 
 class PublicResources extends Component {
 
@@ -27,7 +27,7 @@ class PublicResources extends Component {
                             </div>
                         </div>
                         <div className={styles.playerWrapper}>
-                            <img src="https://img.icons8.com/material-outlined/48/000000/video.png"/>
+                            <img src="https://img.icons8.com/material-outlined/48/000000/video.png" alt="video icon"/>
                         </div>
                         <div className={styles.bottomContainer}>
                             <div className={styles.resourceNameContainer}>
@@ -61,7 +61,7 @@ class PublicResources extends Component {
                             </div>
                         </div>
                         <div className={styles.playerWrapper}>
-                            <img src="https://img.icons8.com/material-outlined/48/000000/video.png"/>
+                            <img src="https://img.icons8.com/material-outlined/48/000000/video.png" alt="video icon" />
                         </div>
                         <div className={styles.bottomContainer}>
                             <div className={styles.resourceNameContainer}>
@@ -95,7 +95,7 @@ class PublicResources extends Component {
                             </div>
                         </div>
                         <div className={styles.playerWrapper}>
-                            <img src="https://img.icons8.com/material-outlined/48/000000/video.png"/>
+                            <img src="https://img.icons8.com/material-outlined/48/000000/video.png" alt="video icon"/>
                         </div>
                         <div className={styles.bottomContainer}>
                             <div className={styles.resourceNameContainer}>

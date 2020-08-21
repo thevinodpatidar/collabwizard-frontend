@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Row, Col, Button,Spin, Popconfirm, Avatar, Badge } from 'antd';
-import { PlusSquareOutlined,QuestionCircleOutlined, DeleteOutlined, ShareAltOutlined, SendOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
+import { Row, Col, Button,Spin, Avatar, Badge, Select, Divider, Input, Menu, Dropdown } from 'antd';
+import { PlusSquareOutlined, ShareAltOutlined, EllipsisOutlined, UserOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 // import ModalVideo from 'react-modal-video'
 // import PropTypes from 'prop-types'
-
+import emptybox from "../../../../../assets/images/emptybox.svg";
 // imports 
 import UploadForm from './VideoUploadForm';
 
@@ -14,6 +14,10 @@ import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
 import ReactPlayer from 'react-player';
+
+const { Search } = Input;
+const { Option } = Select;
+
 
 class Videos extends Component {
     constructor(props) {
@@ -26,6 +30,7 @@ class Videos extends Component {
         };
         this.openModal = this.openModal.bind(this)
       }
+
 
     openModal (url) {
         this.setState({isOpen: true,url:url})
@@ -44,14 +49,63 @@ class Videos extends Component {
             visible : false        
         })
     };
+    onChange(value) {
+        console.log(`selected ${value}`);
+    }
+      
+    onBlur() {
+        console.log('blur');
+    }
+      
+    onFocus() {
+        console.log('focus');
+    }
+      
+    onSearch(val) {
+        console.log('search:', val);
+    }
+
+    
 
 
     render() {
+        const moreDropdown = (
+            <Menu>
+              <Menu.Item key="0" icon={<DeleteOutlined />}>
+                Remove
+              </Menu.Item>
+              {/* <Menu.Item key="1">
+                <a href="http://www.taobao.com/">2nd menu item</a>
+              </Menu.Item> */}
+              {/* <Menu.Item key="3">3rd menu item</Menu.Item> */}
+            </Menu>
+          );
+        const { items, name } = this.state;
         return (
             <div className={styles.container}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingBottom:"2rem"}}>
                     <Col xs={24} sm={24} md={16} lg={18} xl={20}>
-                        <h1 style={{fontSize:"1rem"}}>Videos</h1>
+                        <div className={styles.searchFilterContainer}>
+                        <Search className={styles.searchBar} placeholder="input search text" onSearch={value => console.log(value)} enterButton />
+                        <Select
+                            // showSearch
+                            style={{ width: 200 }}
+                            placeholder="Select a category"
+                            optionFilterProp="children"
+                            onChange={this.onChange}
+                            onFocus={this.onFocus}
+                            onBlur={this.onBlur}
+                            // onSearch={this.onSearch}
+                            filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            }
+                        >
+                            <Option value="maths">Maths</Option>
+                            <Option value="english">English</Option>
+                            <Option value="science">Science</Option>
+                        </Select>
+                        </div>
+                        {/* <h1 style={{fontSize:"1rem"}}>Videos</h1> */}
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={6} xl={4}>
                         <Button
@@ -74,11 +128,12 @@ class Videos extends Component {
                         />
                     </Col>
                 </Row>
-                <Row gutter={[16,16]}>
+                <Row gutter={[16,16]} className={styles.rowContainer}>
                     {   
-                        this.props.data ?
-                        this.props.data.map((resource,index) => (
-                        <Col onClick={() => this.openModal(resource.resourceLink)} className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key={resource.id}>
+                        this.props.videos ?
+                        this.props.videos.length > 0 ?
+                        this.props.videos.map((resource,index) => (
+                        <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key={resource.id}>
                             <div className={styles.infoWrapper}>
                                 <div className={styles.userInfoContainer}>
                                     <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
@@ -87,19 +142,28 @@ class Videos extends Component {
                                     </div>
                                 </div>
                                 <div className={styles.moreSettings}>
+                                <Dropdown overlay={moreDropdown} trigger={['click']}>
+                                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     <EllipsisOutlined />
+                                    </a>
+                                </Dropdown>
                                 </div>
                             </div>
-                            <div className={styles.playerWrapper}>
-                                <img src="https://img.icons8.com/material-outlined/48/000000/video.png"/>
+                            <div onClick={() => this.openModal(resource.resourceLink)} className={styles.playerWrapper}>
+                                <img src="https://img.icons8.com/material-outlined/48/000000/video.png" alt="video icon"/>
                             </div>
                             <div className={styles.bottomContainer}>
                                 <div className={styles.resourceNameContainer}>
                                     <span className={styles.resourceName}>{resource.resourceName}</span>
                                 </div>
                                 <div className={styles.viewsContainer}>
-                                    <Badge count={resource.resourceCategory} className={styles.tags} />
-                                    <Badge count={"Video"} className={styles.tags} />
+                                    <div>
+                                        <Badge count={"Maths"} style={{backgroundColor:"#74b9ff"}} className={styles.leftTags} />
+                                    </div>
+                                    <div>
+                                        <Badge count={resource.resourceCategory} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
+                                        <Badge count={"Video"} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
+                                    </div>
                                 </div>
                                 <div className={styles.socialContainer}>
                                     <div className={styles.uploadedAt}>
@@ -115,8 +179,14 @@ class Videos extends Component {
                         
                         </Col>
                         )) 
-                        : <Col style={{margin : "auto 0"}}> 
-                            <Spin />
+                        :
+                        <Col className={styles.emptyContainer}>
+                            <img src={emptybox} alt="empty box" />
+                            <div>No record found</div>
+                            <h4>Try adding new records.</h4>
+                        </Col>
+                        : <Col style={{margin : "0 auto"}}> 
+                            <Spin size="large" />
                           </Col>
                     }
                      <>
@@ -141,7 +211,7 @@ class Videos extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        data : state.resources.data
+        videos : state.resources.data.videos
     }
 }
 

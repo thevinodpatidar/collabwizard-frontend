@@ -36,11 +36,18 @@
 }
 .viewsContainer{
     display: flex;
-    .tags{
-        font-weight: 700;
-        font-size: .8rem;
-        // margin : 1rem 1rem;
-        text-transform : capitalize;
+    justify-content: space-between;
+    .leftTags{
+      font-weight: 700;
+      font-size: .8rem;
+      // margin : 1rem 1rem;
+      text-transform : capitalize;
+    }
+    .rightTags{
+      font-weight: 700;
+      font-size: .8rem;
+      // margin : 1rem 1rem;
+      text-transform : capitalize;
     }
 }
 .socialContainer{
@@ -73,3 +80,27 @@
     justify-content: center;
   //   border-top : .001px solid rgba(77, 75, 75, 0.582);
 }
+
+.searchFilterContainer{
+  display : flex;
+  .searchBar{
+    width: 40%;
+    padding-right: 2rem;
+  }
+}
+
+.emptyContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin : 0 auto;
+  justify-content: center;
+    img{
+      width: 300px;
+      height: 400px;
+    }
+    div{
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+  }
