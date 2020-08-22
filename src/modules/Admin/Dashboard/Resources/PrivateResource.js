@@ -5,6 +5,7 @@ import { Videos }  from "./Videos";
 
 import styles from "./index.module.scss";
 import Articles from './Articles/Articles';
+import Category from './components/Category';
 
 const { TabPane } = Tabs;
 
@@ -23,6 +24,9 @@ class PrivateResources extends Component {
                         </TabPane>
                         <TabPane tab="Articles" key="2">
                             <Articles />
+                        </TabPane>
+                        <TabPane tab="Category" key="3">
+                            <Category />
                         </TabPane>
                     </Tabs>
                 </Row>
