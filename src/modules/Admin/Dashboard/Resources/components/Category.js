@@ -1,206 +1,132 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Table, Input, Button, Popconfirm, Form } from 'antd';
+import React, { useEffect, useState } from 'react'
+import { Table, Col, Row, Button, Form, Input, Popconfirm } from 'antd';
+import { addCategoryAction, getCategoryAction, deleteCategoryAction } from '../actions/categoryActionTypes';
+import { connect } from 'react-redux';
+import { getToken } from '../../../../../utils/localStorage';
 
-const EditableContext = React.createContext();
 
-const EditableRow = ({ index, ...props }) => {
+function Category(props) {
   const [form] = Form.useForm();
-  return (
-    <Form form={form} component={false}>
-      <EditableContext.Provider value={form}>
-        <tr {...props} />
-      </EditableContext.Provider>
-    </Form>
-  );
-};
+  const [categories,setCategories] = useState([]);
+  const token = getToken("token");
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  ...restProps
-}) => {
-  const [editing, setEditing] = useState(false);
-  const inputRef = useRef();
-  const form = useContext(EditableContext);
   useEffect(() => {
-    if (editing) {
-      inputRef.current.focus();
-    }
-  }, [editing]);
+    props.getCategory(token);
+    // setCategories(props.categories);
+    // console.log(categories)
+  }, []);
 
-  const toggleEdit = () => {
-    setEditing(!editing);
-    form.setFieldsValue({
-      [dataIndex]: record[dataIndex],
-    });
-  };
+  const handleSubmit = ()=>{
+    let values = form.getFieldsValue();
+    // console.log(values);
+    props.addCategory(values,token);
 
-  const save = async e => {
-    try {
-      const values = await form.validateFields();
-      toggleEdit();
-      handleSave({ ...record, ...values });
-    } catch (errInfo) {
-      console.log('Save failed:', errInfo);
-    }
-  };
-
-  let childNode = children;
-
-  if (editable) {
-    childNode = editing ? (
-      <Form.Item
-        style={{
-          margin: 0,
-        }}
-        name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
-      >
-        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
-      </Form.Item>
-    ) : (
-      <div
-        className="editable-cell-value-wrap"
-        style={{
-          paddingRight: 24,
-        }}
-        onClick={toggleEdit}
-      >
-        {children}
-      </div>
-    );
   }
 
-  return <td {...restProps}>{childNode}</td>;
-};
-
-class Category extends React.Component {
-  constructor(props) {
-    super(props);
-    this.columns = [
-        {
-            title: 'Id',
-            dataIndex: 'key',
-            width: '30%',
-            editable: false,
-        },
-      {
-        title: 'Category',
-        dataIndex: 'name',
-        width: '50%',
-        editable: true,
-      },
-      {
-        title: 'Actions',
-        dataIndex: 'operation',
-        render: (text, record) =>
-          this.state.dataSource.length >= 1 ? (
-            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-              <a>Delete</a>
-            </Popconfirm>
-          ) : null,
-      },
-    ];
-    this.state = {
-      dataSource: [
-        {
-          key: '0',
-          name: 'Edward King 0',
-        },
-        {
-          key: '1',
-          name: 'Edward King 1',
-        },
-      ],
-      count: 2,
-    };
+  const handleDelete = (key)=>{
+    console.log("Delete:",key);
+    props.deleteCategory(key,token)
   }
 
-  handleDelete = key => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({
-      dataSource: dataSource.filter(item => item.key !== key),
-    });
-  };
-
-  handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `Edward King ${count}`,
+  const data = [
+    {
+      key: '1',
+      name: 'John Brown',
       age: 32,
-      address: `London, Park Lane no. ${count}`,
-    };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
-  };
+      address: 'New York No. 1 Lake Park',
+    },
+    {
+      key: '2',
+      name: 'Jim Green',
+      age: 42,
+      address: 'London No. 1 Lake Park',
+    },
+    {
+      key: '3',
+      name: 'Joe Black',
+      age: 32,
+      address: 'Sidney No. 1 Lake Park'
+    },
+  ];
+  
+  const columns = [
+    {
+      title: 'Category',
+      dataIndex: 'categoryName',
+      key: 'categoryName',
+    },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      render : (text,record) => (
+        props.categories.length >= 1 ? (
+          <Popconfirm title="Sure to delete?" onConfirm={()=>handleDelete(record.id)}>
+            <Button type="default" color="red">Delete</Button>
+          </Popconfirm>
+        ) : null
+      )
+    },
+  ]
 
-  handleSave = row => {
-    const newData = [...this.state.dataSource];
-    const index = newData.findIndex(item => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, { ...item, ...row });
-    this.setState({
-      dataSource: newData,
-    });
-  };
+  console.log(props.categories);
 
-  render() {
-    const { dataSource } = this.state;
-    const components = {
-      body: {
-        row: EditableRow,
-        cell: EditableCell,
-      },
-    };
-    const columns = this.columns.map(col => {
-      if (!col.editable) {
-        return col;
+  return (
+    <div>
+      <Row gutter={[16,16]} >
+        <Form
+          onFinish={handleSubmit}
+          form={form}
+          layout="inline"
+          name="inline_form"
+          >
+            <Col xs={24} sm={24} md={14} lg={16} xl={18}>
+            <Form.Item
+              name="categoryName"
+              label="Category Name"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input the category name!',
+                },
+              ]}
+              >
+              <Input />
+            </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={8} lg={8} xl={6}>
+            <Form.Item>
+              <Button htmlType="submit" type="primary">Add Category</Button>
+            </Form.Item>
+            </Col>
+        </Form>
+      </Row>
+      {
+        props.categories ?
+        <Table dataSource={props.categories} key={props.categories.map((categoery,index)=>{
+          return index
+        })}  columns={columns} /> : null
       }
-
-      return {
-        ...col,
-        onCell: record => ({
-          record,
-          editable: col.editable,
-          dataIndex: col.dataIndex,
-          title: col.title,
-          handleSave: this.handleSave,
-        }),
-      };
-    });
-    return (
-      <div>
-        <Button
-          onClick={this.handleAdd}
-          type="primary"
-          style={{
-            marginBottom: 16,
-          }}
-        >
-          Add a category
-        </Button>
-        <Table
-          components={components}
-          rowClassName={() => 'editable-row'}
-          bordered
-          dataSource={dataSource}
-          columns={columns}
-        />
-      </div>
-    );
+    </div>
+  )
+}
+const mapStateToProps = (state) => {
+  return {
+      categories : state.categories.data
   }
 }
 
-export default Category;
+const mapDispatchToProps = (dispatch) => {
+  return {
+  addCategory: (category,token) => {
+      dispatch(addCategoryAction(category,token));
+  },
+  getCategory : (token) => {
+    dispatch(getCategoryAction(token));
+  },
+  deleteCategory : (categoryId,token) =>{
+    dispatch(deleteCategoryAction(categoryId,token));
+  }
+}
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Category);

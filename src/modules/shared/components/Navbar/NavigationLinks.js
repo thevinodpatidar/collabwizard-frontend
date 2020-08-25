@@ -27,7 +27,7 @@ const NavigationLinks = ({ authentication,logout,user}) => {
         <Link to="/profile">My Account</Link>
       </Menu.Item>
       <Menu.Item key="2" icon={<LogoutOutlined />}>
-        <Link to="/" onClick={logout} >Sign Out</Link>
+        <Link to="/logout" onClick={logout} >Sign Out</Link>
       </Menu.Item>
     </Menu>
   );

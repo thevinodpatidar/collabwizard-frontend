@@ -162,7 +162,7 @@ class Videos extends Component {
                                     </div>
                                     <div>
                                         <Badge count={resource.resourceCategory} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
-                                        <Badge count={"Video"} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
+                                        <Badge count={resource.resourceType} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
                                     </div>
                                 </div>
                                 <div className={styles.socialContainer}>
