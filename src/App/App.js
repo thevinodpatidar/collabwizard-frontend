@@ -1,6 +1,6 @@
 import React from 'react';
 // import 'antd/dist/antd.css';
-import 'antd/dist/result.css';
+import '../styles/result.css';
 import './App.scss';
 import { Route, Switch } from 'react-router-dom';
 import AppLayout from '../components/Layout';
