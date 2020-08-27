@@ -25,8 +25,8 @@ const Navbar = (props) => {
 
   const logout = () =>{
     const token = getToken("token");
-    removeToken("token");
     props.logout(token);
+    removeToken("token");
     setisAuthenticated(false);
     window.location.href = "/";
   }
@@ -69,7 +69,7 @@ const Navbar = (props) => {
 const mapStateToProps = (state) => {
   return {
       auth : state.auth,
-      data : state.resources.data,
+      // data : state.resources.data,
       user : state.user.data
   }
 }

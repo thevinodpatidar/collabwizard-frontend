@@ -3,7 +3,6 @@ import { baseURL } from "./baseurl";
 
 export const addResourceService = (request) => {
   const API_ENDPOINT = baseURL+'/resource/private';
-  // console.log("req",request.resource);
   const parameters = {
     method: 'POST',
     headers: {
@@ -21,8 +20,66 @@ export const addResourceService = (request) => {
     .catch(error =>{ return error })
 };
 
-export const getResourceService = (request) => {
-  const API_ENDPOINT = baseURL+'/resource/private';
+export const getPrivateArticlesService = (request) => {
+  const API_ENDPOINT = baseURL+'/resource/private/articles';
+
+  const parameters = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : "*",
+      'Authorization': 'Bearer '+request.token
+    },
+    // body: JSON.stringify(request.resource.values)
+  };
+
+  return fetch(API_ENDPOINT, parameters)
+    .then(response => {
+      return response.json();
+    }).catch(error =>{ return error })
+};
+
+export const getPrivateVideosService = (request) => {
+  const API_ENDPOINT = baseURL+'/resource/private/videos';
+
+  const parameters = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : "*",
+      'Authorization': 'Bearer '+request.token
+    },
+    // body: JSON.stringify(request.resource.values)
+  };
+
+  return fetch(API_ENDPOINT, parameters)
+    .then(response => {
+      return response.json();
+    }).catch(error =>{ return error })
+};
+
+export const getPublicResourceService = (request) => {
+  console.log("req")
+  const API_ENDPOINT = baseURL+'/resource/public';
+
+  const parameters = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : "*",
+      'Authorization': 'Bearer '+request.token
+    },
+    // body: JSON.stringify(request.resource.values)
+  };
+
+  return fetch(API_ENDPOINT, parameters)
+    .then(response => {
+      return response.json();
+    }).catch(error =>{ return error })
+};
+
+export const searchResourceService = (request) => {
+  const API_ENDPOINT = baseURL+'/resource/search?searchText='+request.searchText;
 
   const parameters = {
     method: 'GET',
@@ -41,7 +98,6 @@ export const getResourceService = (request) => {
 };
 
 export const deleteResourceService = (request) => {
-  // console.log(request.resourceId)
   const API_ENDPOINT = baseURL+'/resource/private/'+request.resourceId;
 
   const parameters = {

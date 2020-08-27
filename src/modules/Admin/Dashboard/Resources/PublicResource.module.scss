@@ -80,3 +80,19 @@
     //   border-top : .001px solid rgba(77, 75, 75, 0.582);
   }
 }
+
+.emptyContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin : 0 auto;
+    justify-content: center;
+      img{
+        width: 300px;
+        height: 400px;
+      }
+      div{
+          font-size: 1.5rem;
+          font-weight: bold;
+      }
+    }

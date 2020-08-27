@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Button,Spin, Avatar, Badge, Select, Input, Result } from 'antd';
+import { Row, Col, Button,Spin, Avatar, Badge, Select, Input } from 'antd';
 import { PlusSquareOutlined, ShareAltOutlined, UserOutlined, EllipsisOutlined } from '@ant-design/icons';
 import emptybox from "../../../../../assets/images/emptybox.svg";
 
@@ -8,11 +8,15 @@ import UploadForm from './UploadArticleForm';
 
 // styles
 import styles from  "./Articles.module.scss";
-import { addResourceAction, getResourceAction, deleteResourceAction } from '../actions';
+import { addPrivateArticlesAction, getPrivateArticlesAction, deletePrivateArticlesAction, searchPrivateArticlesAction } from '../actions/privateArticlesActionTypes';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
+import { getCategoryAction } from '../actions/categoryActionTypes';
+
 const { Search } = Input;
 const { Option } = Select;
+
+const token = getToken("token");
 
 class Articles extends Component {
     constructor(props) {
@@ -23,8 +27,10 @@ class Articles extends Component {
       }
 
     componentDidMount(){
-        const token = getToken("token");
-        this.props.getResources(token);
+        // if(this.props.articles.length <= 0){
+            this.props.getPrivateArticles(token);
+            this.props.getCategories();
+        // }
     }
 
     getUploadedDays =(postedAt) =>{
@@ -50,6 +56,7 @@ class Articles extends Component {
       
     onSearch(val) {
         console.log('search:', val);
+        this.props.searchPrivateArticles(val,token);
     }
 
     render() {
@@ -58,7 +65,7 @@ class Articles extends Component {
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingBottom:"2rem"}}>
                     <Col xs={24} sm={24} md={16} lg={18} xl={20}>
                     <div className={styles.searchFilterContainer}>
-                        <Search className={styles.searchBar} placeholder="input search text" onSearch={value => console.log(value)} enterButton />
+                        <Search className={styles.searchBar} placeholder="input search text" onSearch={value => this.onSearch(value)} enterButton required />
                         <Select
                             // showSearch
                             style={{ width: 200 }}
@@ -72,9 +79,13 @@ class Articles extends Component {
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
                         >
-                            <Option value="maths">Maths</Option>
-                            <Option value="english">English</Option>
-                            <Option value="science">Science</Option>
+                            {
+                                this.props.categories ? 
+                                this.props.categories.map((category,index)=> (
+                                    <Option key={index} value={category.categoryName}>{category.categoryName}</Option>
+                                ))
+                                : <Option value="">No Category</Option>
+                            }
                         </Select>
                         </div>
                     </Col>
@@ -165,20 +176,27 @@ class Articles extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        articles : state.resources.data.articles
+        articles : state.privateArticles.data,
+        categories : state.categories.data
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
     onUpload: (resource,token) => {
-        dispatch(addResourceAction(resource,token));
+        dispatch(addPrivateArticlesAction(resource,token));
     },
-    getResources : (token) => {
-        dispatch(getResourceAction(token));
+    getPrivateArticles : (token) => {
+        dispatch(getPrivateArticlesAction(token));
     },
-    deleteResource : (id,resourceId,token) =>{
-        dispatch(deleteResourceAction(id,resourceId,token));
+    getCategories : () => {
+        dispatch(getCategoryAction());
+    },
+    deletePrivateArticles : (id,resourceId,token) =>{
+        dispatch(deletePrivateArticlesAction(id,resourceId,token));
+    },
+    searchPrivateArticles : (searchText,token) =>{
+        dispatch(searchPrivateArticlesAction(searchText,token));
     }
 }
 }

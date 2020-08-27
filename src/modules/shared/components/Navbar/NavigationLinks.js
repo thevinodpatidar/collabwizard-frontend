@@ -17,7 +17,7 @@ const NavigationLinks = ({ authentication,logout,user}) => {
   const [current, setCurrent ] = useState("app")
 
   const handleClick = e => {
-    console.log('click ', e);
+    // console.log('click ', e);
     setCurrent(e.key);
   };
 

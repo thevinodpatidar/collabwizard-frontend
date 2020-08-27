@@ -14,9 +14,12 @@ const Signup = props => {
       props.dispatch(registerUserAction(values));
       };
       
-      let success = props.data.response.success;
-      let message = props.data.error.message;
-      console.log("succes:",success);
+      // if(props.data){
+      //   let success = props.data.response.success;
+      //   let message = props.data.error.message;
+
+      // }
+      // console.log("succes:",success);
       return (
         <div className={styles.signupForm}>
         <div>
@@ -24,7 +27,7 @@ const Signup = props => {
           <p className={styles.center}><b>"Teach better, together"</b></p>
           <h2 className={styles.center}>Register</h2>
         </div>
-        { !success ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : <Redirect to='/login' />}
+        { props.data.error ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{props.data.error.message}</div> : <Redirect to='/login' />}
         <Form 
           layout="vertical"
           name="normal_login"
@@ -104,7 +107,7 @@ const Signup = props => {
 
 const mapStateToProps = (state) => {
   return {
-      data : state.auth
+      data : state.auth.signup
   }
 }
 export default connect(mapStateToProps,null)(Signup);

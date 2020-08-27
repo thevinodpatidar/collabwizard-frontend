@@ -1,10 +1,20 @@
 import { combineReducers } from "redux";
 import auth from "../modules/Admin/Auth/reducers/";
-import { ResourceReducer as resources, UserReducer as user, CategoryReducer as categories } from "../modules/Admin/Dashboard/Resources/reducers";
+import { 
+    PrivateArticlesReducer as privateArticles,
+    PrivateVideosReducer as privateVideos, 
+    UserReducer as user, 
+    CategoryReducer as categories, 
+    // SearchReducer as search, 
+    PublicResourceReducer as publicResource 
+} from "../modules/Admin/Dashboard/Resources/reducers";
 
 export default combineReducers({
     auth,
-    resources,
+    privateArticles,
+    privateVideos,
+    publicResource,
     user,
-    categories
+    categories,
+    // search
 })

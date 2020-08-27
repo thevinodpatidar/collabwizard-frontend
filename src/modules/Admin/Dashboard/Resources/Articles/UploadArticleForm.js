@@ -1,9 +1,12 @@
 
 import React, { useState } from 'react';
-import { Upload, Button, message,Modal,Form, Input, Radio } from 'antd';
+import { Upload, Button, message,Modal,Form, Input, Radio, Select } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { getToken } from '../../../../../utils/localStorage';
 import { baseUploadURL } from '../../../../../api/baseurl';
+
+const { Option } = Select;
+
 
 const ArticleUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
   
@@ -17,7 +20,18 @@ const ArticleUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
     values.resourceType = "articles";
     parentProps.onUpload({values},token);
   };
+  const onChange = (value) => {
+    console.log(`selected ${value}`);
+}
   
+  const onBlur = () => {
+      console.log('blur');
+  }
+    
+  const onFocus = () => {
+      console.log('focus');
+  }
+
   const props = {
     name: 'file',
     action: baseUploadURL,
@@ -76,8 +90,8 @@ const ArticleUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
       onCancel={onCancel}
       onOk={handleSubmit}
       footer={[
-        <Button key="back" onClick={onCancel}>
-            Cancel
+        <Button key="back" onClick={()=>{form.resetFields()}}>
+            Reset
         </Button>,
         <Button key="submit" type="primary" loading={uploading} onClick={handleSubmit}>
               Submit
@@ -110,6 +124,35 @@ const ArticleUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
             <Radio value="upload" onClick={()=>{setDisabled(false)}}>Upload</Radio>
             <Radio value="link" onClick={()=>{setDisabled(true)}} >Link</Radio>
           </Radio.Group>
+        </Form.Item>
+        <Form.Item name="caegory" label="Category" 
+        rules={[
+          {
+            required: true,
+            message: 'Please input the category!',
+          },
+        ]} >
+        <Select
+            // showSearch
+            style={{ width: 200 }}
+            placeholder="Select a category"
+            optionFilterProp="children"
+            onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            // onSearch={this.onSearch}
+            filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+        >
+            {
+                parentProps.categories ? 
+                parentProps.categories.map((category,index)=> (
+                    <Option key={index} value={category.categoryName}>{category.categoryName}</Option>
+                ))
+                : <Option value="">No Category</Option>
+            }
+        </Select>
         </Form.Item>
         <Form.Item >
           <Upload {...props}>

@@ -17,7 +17,7 @@ const Login = props => {
 
     let success, message;
     success = props.data.response.success;
-    message = props.data.error.message;
+    // message = props.data.error.message;
     
     if (success) {
       localStorage.setItem("token",props.data.response.data.token);
@@ -41,7 +41,7 @@ const Login = props => {
           <p className={styles.center}><b>"Teach better, together"</b></p>
           <h2 className={styles.center}>Login</h2>
         </div>
-        { message ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{message}</div> : null}
+        { props.data.error.message ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{props.data.error.message}</div> : null}
     <Form
       name="normal_login"
       initialValues={{
@@ -101,7 +101,7 @@ const Login = props => {
 
 const mapStateToProps = (state) => {
   return {
-      data : state.auth
+      data : state.auth.login
   }
 }
 

@@ -1,23 +1,23 @@
 import React, { Component } from 'react'
-import { Row, Col, Button,Spin, Avatar, Badge, Select, Divider, Input, Menu, Dropdown } from 'antd';
-import { PlusSquareOutlined, ShareAltOutlined, EllipsisOutlined, UserOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
-// import ModalVideo from 'react-modal-video'
-// import PropTypes from 'prop-types'
+import { Row, Col, Button,Spin, Avatar, Badge, Select, Input, Menu, Dropdown } from 'antd';
+import { PlusSquareOutlined, ShareAltOutlined, EllipsisOutlined, UserOutlined, DeleteOutlined } from '@ant-design/icons';
 import emptybox from "../../../../../assets/images/emptybox.svg";
 // imports 
 import UploadForm from './VideoUploadForm';
 
 // styles
 import styles from  "./Videos.module.scss";
-import { addResourceAction, getResourceAction, deleteResourceAction } from '../actions';
+import { addPrivateVideosAction, getPrivateVideosAction, deletePrivateVideosAction, searchPrivateVideosAction } from '../actions/privateVideosActionTypes';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
 import ReactPlayer from 'react-player';
+import { getCategoryAction } from '../actions/categoryActionTypes';
 
 const { Search } = Input;
 const { Option } = Select;
 
+const token = getToken("token");
 
 class Videos extends Component {
     constructor(props) {
@@ -28,16 +28,20 @@ class Videos extends Component {
             url : "",
             playing : true
         };
-        this.openModal = this.openModal.bind(this)
+        this.openModal = this.openModal.bind(this);
+
       }
 
 
     openModal (url) {
         this.setState({isOpen: true,url:url})
     }
+    
     componentDidMount(){
-        const token = getToken("token");
-        this.props.getResources(token);
+        // if(this.props.videos.length <= 0 ){
+            this.props.getPrivateVideos(token);
+            this.props.getCategories();
+        // }
     }
 
     getUploadedDays =(postedAt) =>{
@@ -63,9 +67,13 @@ class Videos extends Component {
       
     onSearch(val) {
         console.log('search:', val);
+        this.props.searchPrivateVideos(val,token);
+        // if()
     }
 
-    
+    onReset(){
+        // this.props.getPrivateVideos(token);
+    }
 
 
     render() {
@@ -74,19 +82,18 @@ class Videos extends Component {
               <Menu.Item key="0" icon={<DeleteOutlined />}>
                 Remove
               </Menu.Item>
-              {/* <Menu.Item key="1">
-                <a href="http://www.taobao.com/">2nd menu item</a>
-              </Menu.Item> */}
+              <Menu.Item key="1">
+                Make Public
+              </Menu.Item>
               {/* <Menu.Item key="3">3rd menu item</Menu.Item> */}
             </Menu>
           );
-        const { items, name } = this.state;
         return (
             <div className={styles.container}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingBottom:"2rem"}}>
                     <Col xs={24} sm={24} md={16} lg={18} xl={20}>
                         <div className={styles.searchFilterContainer}>
-                        <Search className={styles.searchBar} placeholder="input search text" onSearch={value => console.log(value)} enterButton />
+                        <Search className={styles.searchBar} placeholder="input search text" onSearch={(value)=> this.onSearch(value)} enterButton />
                         <Select
                             // showSearch
                             style={{ width: 200 }}
@@ -100,10 +107,15 @@ class Videos extends Component {
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
                         >
-                            <Option value="maths">Maths</Option>
-                            <Option value="english">English</Option>
-                            <Option value="science">Science</Option>
+                            {
+                                this.props.categories ? 
+                                this.props.categories.map((category,index)=> (
+                                    <Option key={index} value={category.categoryName}>{category.categoryName}</Option>
+                                ))
+                                : <Option value="">No Category</Option>
+                            }
                         </Select>
+                        <Button className={styles.resetButton} type="default" onClick={this.onReset} >Reset</Button>
                         </div>
                         {/* <h1 style={{fontSize:"1rem"}}>Videos</h1> */}
                     </Col>
@@ -143,7 +155,7 @@ class Videos extends Component {
                                 </div>
                                 <div className={styles.moreSettings}>
                                 <Dropdown overlay={moreDropdown} trigger={['click']}>
-                                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                                       <a href="" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     <EllipsisOutlined />
                                     </a>
                                 </Dropdown>
@@ -158,7 +170,7 @@ class Videos extends Component {
                                 </div>
                                 <div className={styles.viewsContainer}>
                                     <div>
-                                        <Badge count={"Maths"} style={{backgroundColor:"#74b9ff"}} className={styles.leftTags} />
+                                        <Badge count={resource.category} style={{backgroundColor:"#74b9ff"}} className={styles.leftTags} />
                                     </div>
                                     <div>
                                         <Badge count={resource.resourceCategory} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
@@ -211,20 +223,27 @@ class Videos extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        videos : state.resources.data.videos
+        videos : state.privateVideos.data,
+        categories : state.categories.data
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
     onUpload: (resource,token) => {
-        dispatch(addResourceAction(resource,token));
+        dispatch(addPrivateVideosAction(resource,token));
     },
-    getResources : (token) => {
-        dispatch(getResourceAction(token));
+    getPrivateVideos : (token) => {
+        dispatch(getPrivateVideosAction(token));
     },
-    deleteResource : (id,resourceId,token) =>{
-        dispatch(deleteResourceAction(id,resourceId,token));
+    getCategories : () => {
+        dispatch(getCategoryAction());
+    },
+    deletePrivateVideos : (id,resourceId,token) =>{
+        dispatch(deletePrivateVideosAction(id,resourceId,token));
+    },
+    searchPrivateVideos : (searchText,token) =>{
+        dispatch(searchPrivateVideosAction(searchText,token));
     }
 }
 }

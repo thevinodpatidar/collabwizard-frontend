@@ -1,11 +1,24 @@
 import React, { Component } from 'react'
 // import { Videos }  from "./Videos";
 
+import emptybox from "../../../../assets/images/emptybox.svg"
+
 import styles from "./PublicResource.module.scss";
-import { Row, Col, Avatar } from 'antd';
+import { Row, Col, Avatar, Spin } from 'antd';
 import { EllipsisOutlined, UserOutlined, ShareAltOutlined } from '@ant-design/icons';
+import { getPublicResourceAction } from './actions/publicResourceActionTypes';
+import { connect } from 'react-redux';
+import { getToken } from '../../../../utils/localStorage';
 
 class PublicResources extends Component {
+    constructor(props) {
+        super(props)
+
+      }
+    componentDidMount(){
+        const token = getToken("token");
+        this.props.getPublicResources(token);
+    }
 
     render() {
         return (
@@ -14,12 +27,16 @@ class PublicResources extends Component {
                     <h1 className={styles.heading}>Public Resources</h1>
                 </div>
                 <Row gutter={[16,16]}>
+                    {
+                        this.props.publicResource ?
+                        this.props.publicResource.length > 0 ?
+                        this.props.publicResource.map((resource,index) => (
                     <Col className={styles.cardWrapper} xs={24} sm={12} md={12} lg={6} xl={5} key="1">
                         <div className={styles.infoWrapper}>
                             <div className={styles.userInfoContainer}>
                                 <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
                                 <div className={styles.username}>
-                                    <span>Vinod Patidar</span>
+                                    <span>{resource.User.username}</span>
                                 </div>
                             </div>
                             <div className={styles.moreSettings}>
@@ -31,7 +48,7 @@ class PublicResources extends Component {
                         </div>
                         <div className={styles.bottomContainer}>
                             <div className={styles.resourceNameContainer}>
-                                <span className={styles.resourceName}>JavaScript - Closure</span>
+                                <span className={styles.resourceName}>{resource.resourceName}</span>
                             </div>
                             <div className={styles.viewsContainer}>
                                 <span className={styles.views}>2,344 views</span>
@@ -48,78 +65,36 @@ class PublicResources extends Component {
                             </div>
                         </div>
                     </Col>
-                    <Col className={styles.cardWrapper} xs={24} sm={12} md={12} lg={6} xl={5} key="2">
-                        <div className={styles.infoWrapper}>
-                            <div className={styles.userInfoContainer}>
-                                <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
-                                <div className={styles.username}>
-                                    <span>Vinod Patidar</span>
-                                </div>
-                            </div>
-                            <div className={styles.moreSettings}>
-                                <EllipsisOutlined />
-                            </div>
-                        </div>
-                        <div className={styles.playerWrapper}>
-                            <img src="https://img.icons8.com/material-outlined/48/000000/video.png" alt="video icon" />
-                        </div>
-                        <div className={styles.bottomContainer}>
-                            <div className={styles.resourceNameContainer}>
-                                <span className={styles.resourceName}>JavaScript - Closure</span>
-                            </div>
-                            <div className={styles.viewsContainer}>
-                                <span className={styles.views}>144 views</span>
-                            </div>
-                            <div className={styles.socialContainer}>
-                                <div className={styles.uploadedAt}>
-                                    <span>12 hours ago</span>
-                                </div>
-                                <div className={styles.socialIconsContainer}>
-                                    <div className={styles.icons}>
-                                    <ShareAltOutlined size={24}/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    )) 
+                    :
+                    <Col className={styles.emptyContainer}>
+                        <img src={emptybox} alt="empty box" />
+                        <div>No record found</div>
+                        <h4>Try adding new records.</h4>
                     </Col>
-                    <Col className={styles.cardWrapper} xs={24} sm={12} md={12} lg={6} xl={5} key="3">
-                        <div className={styles.infoWrapper}>
-                            <div className={styles.userInfoContainer}>
-                                <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
-                                <div className={styles.username}>
-                                    <span>Vinod Patidar</span>
-                                </div>
-                            </div>
-                            <div className={styles.moreSettings}>
-                                <EllipsisOutlined />
-                            </div>
-                        </div>
-                        <div className={styles.playerWrapper}>
-                            <img src="https://img.icons8.com/material-outlined/48/000000/video.png" alt="video icon"/>
-                        </div>
-                        <div className={styles.bottomContainer}>
-                            <div className={styles.resourceNameContainer}>
-                                <span className={styles.resourceName}>JavaScript - Closure</span>
-                            </div>
-                            <div className={styles.viewsContainer}>
-                                <span className={styles.views}>344 views</span>
-                            </div>
-                            <div className={styles.socialContainer}>
-                                <div className={styles.uploadedAt}>
-                                    <span>24 hours ago</span>
-                                </div>
-                                <div className={styles.socialIconsContainer}>
-                                    <div className={styles.icons}>
-                                    <ShareAltOutlined size={24}/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </Col>
+                    : <Col style={{margin : "0 auto"}}> 
+                        <Spin size="large" />
+                      </Col>
+
+                    }
                 </Row>
             </div>
         )
     }
 }
 
-export default PublicResources;
+const mapStateToProps = (state) => {
+    return {
+        publicResource : state.publicResource.data
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+    getPublicResources : (token) => {   
+        dispatch(getPublicResourceAction(token));
+    }   
+}
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(PublicResources);
