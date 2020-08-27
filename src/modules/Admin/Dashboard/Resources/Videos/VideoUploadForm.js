@@ -18,7 +18,7 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
   const handleUpload = (values) => {
     values.resourceCategory  = "private";
     values.resourceType = "videos";
-    values.category = category;
+    // values.category = category;
     parentProps.onUpload({values},token);
   };
   const onChange = (value) => {
@@ -130,7 +130,7 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
             <Radio value="link" onClick={()=>{setDisabled(true)}} >Link</Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item name="caegory" label="Category" 
+        <Form.Item name="category" label="Category" 
         rules={[
           {
             required: true,

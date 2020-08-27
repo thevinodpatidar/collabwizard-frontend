@@ -1,3 +1,3 @@
-const devEnv = false;
-export const baseURL = devEnv ? `http://localhost:4000/api` : `https://api.schooltribe.co/api`;
-export const baseUploadURL = devEnv ? `http://localhost:4000/api/upload/file`  : 'https://api.schooltribe.co/api/upload/file';
+const devEnv = true;
+export const baseURL = devEnv ? `http://localhost:8000/api` : `https://api.schooltribe.co/api`;
+export const baseUploadURL = devEnv ? `http://localhost:8000/api/upload/file`  : 'https://api.schooltribe.co/api/upload/file';

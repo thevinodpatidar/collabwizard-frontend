@@ -65,7 +65,7 @@ const NavigationLinks = ({ authentication,logout,user}) => {
           </Menu>
           <Dropdown overlay={menu} placement="bottomLeft" >
             <Space size="small">
-            <Avatar style={{ backgroundColor: 'dodgerblue' }} size='default' icon={<UserOutlined />} />
+            <Avatar style={{ backgroundColor: '#aed9b4' }} size='default' icon={<UserOutlined />} />
             {user.username}
             </Space>
           </Dropdown>

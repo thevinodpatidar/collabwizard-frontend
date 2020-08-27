@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Button,Spin, Avatar, Badge, Select, Input, Menu, Dropdown } from 'antd';
+import { Row, Col, Button,Spin, Avatar, Badge, Select, Input, Menu, Dropdown, Switch } from 'antd';
 import { PlusSquareOutlined, ShareAltOutlined, EllipsisOutlined, UserOutlined, DeleteOutlined } from '@ant-design/icons';
 import emptybox from "../../../../../assets/images/emptybox.svg";
 // imports 
@@ -7,7 +7,7 @@ import UploadForm from './VideoUploadForm';
 
 // styles
 import styles from  "./Videos.module.scss";
-import { addPrivateVideosAction, getPrivateVideosAction, deletePrivateVideosAction, searchPrivateVideosAction } from '../actions/privateVideosActionTypes';
+import { addPrivateVideosAction, getPrivateVideosAction, deletePrivateVideosAction, searchPrivateVideosAction, filterPrivateVideosAction } from '../actions/privateVideosActionTypes';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
@@ -17,7 +17,6 @@ import { getCategoryAction } from '../actions/categoryActionTypes';
 const { Search } = Input;
 const { Option } = Select;
 
-const token = getToken("token");
 
 class Videos extends Component {
     constructor(props) {
@@ -26,7 +25,9 @@ class Videos extends Component {
             visible : false,
             isOpen: false,
             url : "",
-            playing : true
+            playing : true,
+            isPublic : false,
+            token : getToken("token")
         };
         this.openModal = this.openModal.bind(this);
 
@@ -38,10 +39,10 @@ class Videos extends Component {
     }
     
     componentDidMount(){
-        // if(this.props.videos.length <= 0 ){
-            this.props.getPrivateVideos(token);
+        if(this.props.videos.length <= 0 ){
+            this.props.getPrivateVideos(this.state.token);
             this.props.getCategories();
-        // }
+        }
     }
 
     getUploadedDays =(postedAt) =>{
@@ -55,6 +56,7 @@ class Videos extends Component {
     };
     onChange(value) {
         console.log(`selected ${value}`);
+        this.props.filterPrivateVideos(value,this.state.token);
     }
       
     onBlur() {
@@ -67,22 +69,23 @@ class Videos extends Component {
       
     onSearch(val) {
         console.log('search:', val);
-        this.props.searchPrivateVideos(val,token);
+        this.props.searchPrivateVideos(val,this.state.token);
         // if()
     }
 
     onReset(){
-        // this.props.getPrivateVideos(token);
+        this.props.getPrivateVideos(this.state.token);
     }
 
 
     render() {
+        const { isPrivate } = this.state;
         const moreDropdown = (
-            <Menu>
+            <Menu style={{padding:'.2rem 0rem'}}>
               <Menu.Item key="0" icon={<DeleteOutlined />}>
                 Remove
               </Menu.Item>
-              <Menu.Item key="1">
+              <Menu.Item key="1" >
                 Make Public
               </Menu.Item>
               {/* <Menu.Item key="3">3rd menu item</Menu.Item> */}
@@ -93,13 +96,13 @@ class Videos extends Component {
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingBottom:"2rem"}}>
                     <Col xs={24} sm={24} md={16} lg={18} xl={20}>
                         <div className={styles.searchFilterContainer}>
-                        <Search className={styles.searchBar} placeholder="input search text" onSearch={(value)=> this.onSearch(value)} enterButton />
+                        <Search className={styles.searchBar} placeholder="input search text" onSearch={(value)=> this.onSearch(value)} enterButton onReset={()=> this.onReset()}/>
                         <Select
-                            // showSearch
+                            showSearch
                             style={{ width: 200 }}
                             placeholder="Select a category"
                             optionFilterProp="children"
-                            onChange={this.onChange}
+                            onChange={(value)=> this.onChange(value)}
                             onFocus={this.onFocus}
                             onBlur={this.onBlur}
                             // onSearch={this.onSearch}
@@ -115,7 +118,7 @@ class Videos extends Component {
                                 : <Option value="">No Category</Option>
                             }
                         </Select>
-                        <Button className={styles.resetButton} type="default" onClick={this.onReset} >Reset</Button>
+                        <Button className={styles.resetButton} type="default" onClick={()=> this.onReset()} >Reset</Button>
                         </div>
                         {/* <h1 style={{fontSize:"1rem"}}>Videos</h1> */}
                     </Col>
@@ -148,9 +151,9 @@ class Videos extends Component {
                         <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key={resource.id}>
                             <div className={styles.infoWrapper}>
                                 <div className={styles.userInfoContainer}>
-                                    <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
+                                    <Avatar style={{ backgroundColor: '#aed9b4' }} size="small" icon={<UserOutlined />} /> 
                                     <div className={styles.username}>
-                                        <span>{resource.User.username}</span>
+                                        <span>{resource.user.username}</span>
                                     </div>
                                 </div>
                                 <div className={styles.moreSettings}>
@@ -167,14 +170,25 @@ class Videos extends Component {
                             <div className={styles.bottomContainer}>
                                 <div className={styles.resourceNameContainer}>
                                     <span className={styles.resourceName}>{resource.resourceName}</span>
+                                    {/* <span>
+                                        <Switch
+                                            unCheckedChildren="Private"
+                                            checkedChildren="Public"
+                                            size="small"
+                                            checked={isPrivate}
+                                            onChange={val => {
+                                                this.setState({ isPrivate : val });
+                                            }}
+                                            />
+                                    </span> */}
                                 </div>
                                 <div className={styles.viewsContainer}>
                                     <div>
-                                        <Badge count={resource.category} style={{backgroundColor:"#74b9ff"}} className={styles.leftTags} />
+                                        <Badge count={resource.category} style={{backgroundColor:"#f48c06"}} className={styles.leftTags} />
                                     </div>
                                     <div>
-                                        <Badge count={resource.resourceCategory} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
-                                        <Badge count={resource.resourceType} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
+                                        <Badge count={resource.resourceCategory} style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
+                                        <Badge count={resource.resourceType} style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
                                     </div>
                                 </div>
                                 <div className={styles.socialContainer}>
@@ -244,6 +258,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     searchPrivateVideos : (searchText,token) =>{
         dispatch(searchPrivateVideosAction(searchText,token));
+    },
+    filterPrivateVideos : (category,token) =>{
+        dispatch(filterPrivateVideosAction(category,token));
     }
 }
 }

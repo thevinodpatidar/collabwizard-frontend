@@ -10,6 +10,10 @@ export const SEARCH_PRIVATE_ARTICLES = 'SEARCH_PRIVATE_ARTICLES';
 export const SEARCH_PRIVATE_ARTICLES_SUCCESS = 'SEARCH_PRIVATE_ARTICLES_SUCCESS';
 export const SEARCH_PRIVATE_ARTICLES_ERROR = 'SEARCH_PRIVATE_ARTICLES_ERROR';
 
+export const FILTER_PRIVATE_ARTICLES = 'FILTER_PRIVATE_ARTICLES';
+export const FILTER_PRIVATE_ARTICLES_SUCCESS = 'FILTER_PRIVATE_ARTICLES_SUCCESS';
+export const FILTER_PRIVATE_ARTICLES_ERROR = 'FILTER_PRIVATE_ARTICLES_ERROR';
+
 export const DELETE_PRIVATE_ARTICLES = 'DELETE_PRIVATE_ARTICLES';
 export const DELETE_PRIVATE_ARTICLES_SUCCESS = 'DELETE_PRIVATE_ARTICLES_SUCCESS';
 export const DELETE_PRIVATE_ARTICLES_ERROR = 'DELETE_RESOURCE_ERROR';
@@ -34,6 +38,14 @@ export const searchPrivateArticlesAction = (searchText,token) => {
   return {
     type: SEARCH_PRIVATE_ARTICLES,
     searchText,
+    token
+  }
+};
+
+export const filterPrivateArticlesAction = (category,token) => {
+  return {
+    type:FILTER_PRIVATE_ARTICLES,
+    category,
     token
   }
 };

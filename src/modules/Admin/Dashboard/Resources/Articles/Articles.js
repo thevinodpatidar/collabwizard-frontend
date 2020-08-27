@@ -8,7 +8,7 @@ import UploadForm from './UploadArticleForm';
 
 // styles
 import styles from  "./Articles.module.scss";
-import { addPrivateArticlesAction, getPrivateArticlesAction, deletePrivateArticlesAction, searchPrivateArticlesAction } from '../actions/privateArticlesActionTypes';
+import { addPrivateArticlesAction, getPrivateArticlesAction, deletePrivateArticlesAction, searchPrivateArticlesAction, filterPrivateArticlesAction } from '../actions/privateArticlesActionTypes';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
 import { getCategoryAction } from '../actions/categoryActionTypes';
@@ -16,21 +16,19 @@ import { getCategoryAction } from '../actions/categoryActionTypes';
 const { Search } = Input;
 const { Option } = Select;
 
-const token = getToken("token");
 
 class Articles extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            visible : false
+            visible : false,
+            token : getToken("token")
         };
-      }
-
+    }
+    
     componentDidMount(){
-        // if(this.props.articles.length <= 0){
-            this.props.getPrivateArticles(token);
-            this.props.getCategories();
-        // }
+        this.props.getPrivateArticles(this.state.token);
+        this.props.getCategories();
     }
 
     getUploadedDays =(postedAt) =>{
@@ -44,6 +42,7 @@ class Articles extends Component {
     };
     onChange(value) {
         console.log(`selected ${value}`);
+        this.props.filterPrivateArticles(value,this.state.token);
     }
       
     onBlur() {
@@ -56,7 +55,10 @@ class Articles extends Component {
       
     onSearch(val) {
         console.log('search:', val);
-        this.props.searchPrivateArticles(val,token);
+        this.props.searchPrivateArticles(val,this.state.token);
+    }
+    onReset(){
+        this.props.getPrivateArticles(this.state.token);
     }
 
     render() {
@@ -71,7 +73,7 @@ class Articles extends Component {
                             style={{ width: 200 }}
                             placeholder="Select a category"
                             optionFilterProp="children"
-                            onChange={this.onChange}
+                            onChange={(value)=> this.onChange(value)}
                             onFocus={this.onFocus}
                             onBlur={this.onBlur}
                             // onSearch={this.onSearch}
@@ -87,6 +89,7 @@ class Articles extends Component {
                                 : <Option value="">No Category</Option>
                             }
                         </Select>
+                        <Button className={styles.resetButton} type="default" onClick={()=> this.onReset()} >Reset</Button>
                         </div>
                     </Col>
                     <Col xs={24} sm={24} md={8} lg={6} xl={4}>
@@ -118,9 +121,9 @@ class Articles extends Component {
                         <Col className={styles.cardWrapper} xs={24} sm={12} md={8} lg={8} xl={5} key={resource.id}>
                             <div className={styles.infoWrapper}>
                                 <div className={styles.userInfoContainer}>
-                                    <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 
+                                    <Avatar style={{ backgroundColor: '#aed9b4' }} size="small" icon={<UserOutlined />} /> 
                                     <div className={styles.username}>
-                                        <span>{resource.User.username}</span>
+                                        <span>{resource.user.username}</span>
                                     </div>
                                 </div>
                                 <div className={styles.moreSettings}>
@@ -136,11 +139,11 @@ class Articles extends Component {
                                 </div>
                                 <div className={styles.viewsContainer}>
                                     <div>
-                                        <Badge count={"Maths"} style={{backgroundColor:"#74b9ff"}} className={styles.leftTags} />
+                                        <Badge count={resource.category} style={{backgroundColor:"#f48c06"}} className={styles.leftTags} />
                                     </div>
                                     <div>
-                                        <Badge count={resource.resourceCategory} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
-                                        <Badge count={resource.resourceType} style={{backgroundColor:"#0984e3"}} className={styles.rightTags} />
+                                        <Badge count={resource.resourceCategory} style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
+                                        <Badge count={resource.resourceType} style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
                                     </div>
                                 </div>
                                 <div className={styles.socialContainer}>
@@ -197,6 +200,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     searchPrivateArticles : (searchText,token) =>{
         dispatch(searchPrivateArticlesAction(searchText,token));
+    },
+    filterPrivateArticles : (category,token) =>{
+        dispatch(filterPrivateArticlesAction(category,token));
     }
 }
 }

@@ -2,7 +2,7 @@ import { put, call, takeLatest } from 'redux-saga/effects';
 
 import * as types from '../actions/privateArticlesActionTypes';
 
-import { addResourceService,deleteResourceService, getPrivateArticlesService, searchResourceService } from '../../../../../api/resources';
+import { addResourceService,deleteResourceService, getPrivateArticlesService, searchResourceService, filterResourceService } from '../../../../../api/resources';
 
 export function* addResourceSaga(payload) {
     try {
@@ -45,6 +45,21 @@ export function* searchPrivateArticlesSaga(payload) {
 }
 
 
+export function* filterPrivateArticlesSaga(payload) {
+  try {
+      const response = yield call(filterResourceService, payload);
+      if (response.code >= 200 && response.code < 300) {
+        yield put({ type: types.FILTER_PRIVATE_ARTICLES_SUCCESS, response : response.data});
+        } else {
+          throw response;
+        }
+    } catch(response) {
+        yield put({ type: types.FILTER_PRIVATE_ARTICLES_ERROR, response})
+    }
+}
+  
+
+
 export function* deleteResourceSaga(payload) {
   try {
       const response = yield call(deleteResourceService, payload);
@@ -65,4 +80,5 @@ export default function* watchResource() {
     yield takeLatest(types.GET_PRIVATE_ARTICLES, getPrivateArticlesSaga)
     yield takeLatest(types.DELETE_PRIVATE_ARTICLES, deleteResourceSaga)
     yield takeLatest(types.SEARCH_PRIVATE_ARTICLES, searchPrivateArticlesSaga)
+    yield takeLatest(types.FILTER_PRIVATE_ARTICLES, filterPrivateArticlesSaga)
 }

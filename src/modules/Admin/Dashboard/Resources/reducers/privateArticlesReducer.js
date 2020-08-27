@@ -22,6 +22,10 @@ export default function(state = {
       return { ...state, data : response } ;
     case types.SEARCH_PRIVATE_ARTICLES_ERROR:
       return { ...state,  error : response };
+    case types.FILTER_PRIVATE_ARTICLES_SUCCESS:
+      return { ...state, data : response } ;
+    case types.FILTER_PRIVATE_ARTICLES_ERROR:
+      return { ...state,  error : response };
     case types.DELETE_PRIVATE_ARTICLES_SUCCESS:
       let newState = state.data.slice();
       newState.splice(action.id, 1);

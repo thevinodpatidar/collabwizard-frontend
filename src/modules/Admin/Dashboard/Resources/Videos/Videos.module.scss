@@ -29,6 +29,8 @@ display: flex;
 flex-direction: column;
 padding : .5rem;
 .resourceNameContainer{
+  display: flex;
+  justify-content: space-between;
   margin : .3rem 0rem;
   .resourceName{
       font-weight: 700;

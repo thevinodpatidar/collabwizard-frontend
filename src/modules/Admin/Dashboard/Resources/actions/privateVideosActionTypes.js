@@ -10,6 +10,10 @@ export const SEARCH_PRIVATE_VIDEOS = 'SEARCH_PRIVATE_VIDEOS';
 export const SEARCH_PRIVATE_VIDEOS_SUCCESS = 'SEARCH_PRIVATE_VIDEOS_SUCCESS';
 export const SEARCH_PRIVATE_VIDEOS_ERROR = 'SEARCH_PRIVATE_VIDEOS_ERROR';
 
+export const FILTER_PRIVATE_VIDEOS = 'FILTER_PRIVATE_VIDEOS';
+export const FILTER_PRIVATE_VIDEOS_SUCCESS = 'FILTER_PRIVATE_VIDEOS_SUCCESS';
+export const FILTER_PRIVATE_VIDEOS_ERROR = 'FILTER_PRIVATE_VIDEOS_ERROR';
+
 export const DELETE_PRIVATE_VIDEOS = 'DELETE_PRIVATE_VIDEOS';
 export const DELETE_PRIVATE_VIDEOS_SUCCESS = 'DELETE_PRIVATE_VIDEOS_SUCCESS';
 export const DELETE_PRIVATE_VIDEOS_ERROR = 'DELETE_PRIVATE_VIDEOS_ERROR';
@@ -36,6 +40,14 @@ export const searchPrivateVideosAction = (searchText,token) => {
   return {
     type:SEARCH_PRIVATE_VIDEOS,
     searchText,
+    token
+  }
+};
+
+export const filterPrivateVideosAction = (category,token) => {
+  return {
+    type:FILTER_PRIVATE_VIDEOS,
+    category,
     token
   }
 };

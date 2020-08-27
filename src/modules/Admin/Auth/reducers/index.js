@@ -6,15 +6,15 @@ export default function(state = {
       isLoading : false, 
       signup: {
         error : {},
-        response : {success:false}
+        response : {}
       },
       login : {
         error : {},
-        response : {success:false}
+        response : {}
       },
       logout : {
         error : {},
-        response : {success:false}
+        response : {}
       }
 }
 , action) {
@@ -22,17 +22,17 @@ export default function(state = {
 
   switch(action.type) {
     case types.LOGIN_USER_SUCCESS:
-      return { ...state, isAuthenticate : true, isLoading: true, login : {response : response }};
+      return { ...state, isAuthenticate : true, isLoading: true, login : { response : response }};
     case types.LOGIN_USER_ERROR:
-      return { ...state, isLoading : false,  login : { error : response }};
+      return { ...state, isLoading : false,  login : { response : false, error : response }};
     case types.REGISTER_USER_SUCCESS:
       return { ...state, isLoading : true,  signup : {response : response } };
     case types.REGISTER_USER_ERROR:
-      return { ...state, isLoading : false,  signup : {error : response } };
+      return { ...state, isLoading : false,  signup : {response : false, error : response } };
     case types.LOGOUT_USER_SUCCESS:
       return { ...state, isAuthenticate : false, logout : {response : response } };
     case types.LOGOUT_USER_ERROR:
-      return { ...state, isLoading : false, logout : {error : response } };
+      return { ...state, isLoading : false, logout : {response : false, error : response } };
     default:
       return state;
   }
