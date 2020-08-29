@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Upload, Button, message,Modal,Form, Input, Radio, Select } from 'antd';
+import { Upload, Button, message,Modal,Form, Input, Radio, Select, Row } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { getToken } from '../../../../../utils/localStorage';
 import { baseUploadURL } from '../../../../../api/baseurl';
@@ -16,7 +16,7 @@ const ArticleUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
   const token = getToken("token");
 
   const handleUpload = (values) => {
-    values.resourceCategory  = "private";
+    // values.resourceCategory  = "private";
     values.resourceType = "articles";
     parentProps.onUpload({values},token);
   };
@@ -105,6 +105,7 @@ const ArticleUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
         name="form_in_modal"
         initialValues={{
           resourceSubType: 'upload',
+          resourceCategory: 'private'
         }}
       >
         <Form.Item
@@ -119,12 +120,20 @@ const ArticleUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
         >
         <Input />
         </Form.Item>
-        <Form.Item name="resourceSubType" label="Resource Subtype" className="collection-create-form_last-form-item">
-          <Radio.Group>
-            <Radio value="upload" onClick={()=>{setDisabled(false)}}>Upload</Radio>
-            <Radio value="link" onClick={()=>{setDisabled(true)}} >Link</Radio>
-          </Radio.Group>
-        </Form.Item>
+        <Row >
+          <Form.Item name="resourceSubType" label="Resource Subtype" >
+            <Radio.Group>
+              <Radio value="upload" onClick={()=>{setDisabled(false)}}>Upload</Radio>
+              <Radio value="link" onClick={()=>{setDisabled(true)}} >Link</Radio>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item name="resourceCategory" label="Resource Visibility" style={{paddingLeft:"4rem"}}>
+            <Radio.Group>
+              <Radio value="private" >Private</Radio>
+              <Radio value="public" >Public</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </Row>
         <Form.Item name="category" label="Category" 
         rules={[
           {
