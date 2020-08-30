@@ -72,14 +72,15 @@
     }
 }
 }
-.playerWrapper {
+.articleWrapper {
   //   position: relative;
     padding: 4.5rem 0rem; /* Player ratio: 100 / (1280 / 720) */
   //   margin: .4rem;
     display: flex;
     justify-content: center;
+    cursor: pointer;
   //   border-top : .001px solid rgba(77, 75, 75, 0.582);
-}
+  }
 
 .searchFilterContainer{
   display : flex;

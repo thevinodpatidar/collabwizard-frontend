@@ -9,12 +9,38 @@ import { EllipsisOutlined, UserOutlined, ShareAltOutlined } from '@ant-design/ic
 import { getPublicResourceAction } from './actions/publicResourceActionTypes';
 import { connect } from 'react-redux';
 import { getToken } from '../../../../utils/localStorage';
+import ResourceDetails from './components/ResourceDetails';
 
 class PublicResources extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            visible : false,
+            isOpen: false,
+            playing : true,
+            isPublic : false,
+            token : getToken("token"),
+            resourceDetail : {},
+            isVideo : false
+        };
+        this.openModal = this.openModal.bind(this);
+    }
 
-      }
+    openModal (resource) {
+        if(resource.resourceType === 'videos'){
+            this.setState({
+                isVideo : true
+            }) 
+        }else{
+            this.setState({
+                isVideo : false 
+            })
+        }
+        this.setState({
+            isOpen: true,
+            resourceDetail: resource
+        })
+    }
     componentDidMount(){
         const token = getToken("token");
         this.props.getPublicResources(token);
@@ -43,7 +69,7 @@ class PublicResources extends Component {
                                 <EllipsisOutlined />
                             </div>
                         </div>
-                        <div className={styles.playerWrapper}>
+                        <div onClick={() => this.openModal(resource)}  className={styles.playerWrapper}>
                             <img src="https://img.icons8.com/material-outlined/48/000000/video.png" alt="video icon"/>
                         </div>
                         <div className={styles.bottomContainer}>
@@ -77,6 +103,27 @@ class PublicResources extends Component {
                       </Col>
 
                     }
+                     <>
+                         {/* <Modal width="800px" footer={null} visible={this.state.isOpen} onCancel={() => this.setState({isOpen: false,playing : false})} >
+                         <div className={styles.playerModalWrapper}>
+                            <ReactPlayer
+                            className={styles.reactPlayer}
+                            controls
+                            playing={this.state.playing}
+                            url={this.state.url}
+                            width='100%'
+                            height='100%'
+                            />
+                        </div>
+                        </Modal> */}
+                        <ResourceDetails
+                        resource={this.state.resourceDetail}
+                        toggleResourceDetailModal={this.state.isOpen}
+                        onCancel={() => this.setState({isOpen: false,playing : false})}
+                        playing={this.state.playing}
+                        isVideo={this.state.isVideo}
+                        />
+                    </>
                 </Row>
             </div>
         )

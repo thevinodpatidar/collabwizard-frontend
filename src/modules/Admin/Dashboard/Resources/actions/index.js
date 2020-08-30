@@ -30,14 +30,13 @@ import * as types from "./actionTypes";
 //   }
 // };
 
-// export const deleteResourceAction = (id,resourceId,token) =>{
-//   return {
-//     type : types.DELETE_RESOURCE,
-//     id,
-//     resourceId,
-//     token
-//   }
-// }
+export const makeResourcePublicOrPrivateAction = (id,check) =>{
+  return {
+    type : types.MAKE_RESOURCE_PUBLIC_OR_PRIVATE,
+    check,
+    id
+  }
+}
 
 export const getUserDetailAction = token => {
   return {

@@ -12,6 +12,7 @@ import { addPrivateArticlesAction, getPrivateArticlesAction, deletePrivateArticl
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
 import { getCategoryAction } from '../actions/categoryActionTypes';
+import ResourceDetails from '../components/ResourceDetails';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -22,10 +23,22 @@ class Articles extends Component {
         super(props)
         this.state = {
             visible : false,
-            token : getToken("token")
+            isOpen: false,
+            playing : true,
+            isPublic : false,
+            token : getToken("token"),
+            resourceDetail : {}
         };
+        this.openModal = this.openModal.bind(this);
     }
-    
+
+    openModal (resource) {
+        this.setState({
+            isOpen: true,
+            resourceDetail: resource
+        })
+    }
+
     componentDidMount(){
         this.props.getPrivateArticles(this.state.token);
         this.props.getCategories();
@@ -130,7 +143,7 @@ class Articles extends Component {
                                     <EllipsisOutlined />
                                 </div>
                             </div>
-                            <div className={styles.playerWrapper}>
+                            <div onClick={() => this.openModal(resource)}    className={styles.articleWrapper}>
                             <img src="https://img.icons8.com/ios/50/000000/google-docs.png" alt="article icon"/>
                             </div>
                             <div className={styles.bottomContainer}>
@@ -142,7 +155,12 @@ class Articles extends Component {
                                         <Badge count={resource.category} style={{backgroundColor:"#f48c06"}} className={styles.leftTags} />
                                     </div>
                                     <div>
-                                        <Badge count={resource.resourceCategory} style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
+                                        {
+                                            resource.isPublic ?
+                                            <Badge count="Public" style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
+                                            :
+                                            <Badge count="Private" style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
+                                        }
                                         <Badge count={resource.resourceType} style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
                                     </div>
                                 </div>
@@ -171,6 +189,28 @@ class Articles extends Component {
                             <Spin size="large" />
                         </Col>
                     }
+                     <>
+                         {/* <Modal width="800px" footer={null} visible={this.state.isOpen} onCancel={() => this.setState({isOpen: false,playing : false})} >
+                         <div className={styles.playerModalWrapper}>
+                            <ReactPlayer
+                            className={styles.reactPlayer}
+                            controls
+                            playing={this.state.playing}
+                            url={this.state.url}
+                            width='100%'
+                            height='100%'
+                            />
+                        </div>
+                        </Modal> */}
+                        <ResourceDetails
+                        resource={this.state.resourceDetail}
+                        toggleResourceDetailModal={this.state.isOpen}
+                        onCancel={() => this.setState({isOpen: false,playing : false})}
+                        playing={this.state.playing}
+                        privateSection={false}
+                        isVideo={false}
+                        />
+                    </>
                 </Row>
             </div>
         )

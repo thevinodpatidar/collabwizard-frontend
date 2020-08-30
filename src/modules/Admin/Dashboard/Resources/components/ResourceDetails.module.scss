@@ -1,0 +1,89 @@
+.resourceDetailsContainer{
+    display: flex;
+    
+    .playerModalWrapper {
+        display: flex;
+        align-self: center;
+        height: 50vh;
+        width: 30vw;
+
+        .reactPlayer {
+        //   position: absolute;
+        //   top: 0;
+        //   left: 0;
+        }
+      }
+    .articleWrapper {
+        display: flex;
+        height: 50vh;
+        width: 30vw;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .imgContainer{
+            
+        }
+        .downloadContainer{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem 1rem;
+            margin-top: 3rem;
+            cursor: pointer;
+            background-color: #aed9b4;
+            a{
+                color : #000;
+                &:hover &:active &:visited{
+                    color : #000000
+                }
+            }
+        }
+    //   border-top : .001px solid rgba(77, 75, 75, 0.582);
+    }
+    .detailsContainer{
+        display: flex;
+        flex-direction: column;
+        margin: 0rem 2rem;
+        .badges{
+            display: flex;
+            // justify-content: space-around;
+            .tag{
+                font-weight: 700;
+                margin-right: .4rem;
+                font-size: .8rem;
+                text-transform : capitalize;
+            }
+        }
+    .resourceVisibility{
+        display: flex;
+        flex-direction: column;
+        margin-top: 1rem;
+        .switch{
+            display: flex;
+            align-items: center;
+            width: 30%;
+            .public{
+                padding-right : .5rem;
+            }
+            .private{
+                padding-left: .5rem;
+            }
+        }
+       }
+       a{
+            color : #000;
+            &:hover &:active &:visited{
+                color : #000000
+            }
+        }
+       .downloadContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 1rem;
+        margin-top: 3rem;
+        cursor: pointer;
+        background-color: #aed9b4;
+    }
+    }
+}

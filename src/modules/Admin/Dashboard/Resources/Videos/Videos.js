@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Button,Spin, Avatar, Badge, Select, Input, Menu, Dropdown, Switch } from 'antd';
+import { Row, Col, Button,Spin, Avatar, Badge, Select, Input, Menu, Dropdown } from 'antd';
 import { PlusSquareOutlined, ShareAltOutlined, EllipsisOutlined, UserOutlined, DeleteOutlined } from '@ant-design/icons';
 import emptybox from "../../../../../assets/images/emptybox.svg";
 // imports 
@@ -10,9 +10,9 @@ import styles from  "./Videos.module.scss";
 import { addPrivateVideosAction, getPrivateVideosAction, deletePrivateVideosAction, searchPrivateVideosAction, filterPrivateVideosAction } from '../actions/privateVideosActionTypes';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
-import Modal from 'antd/lib/modal/Modal';
-import ReactPlayer from 'react-player';
 import { getCategoryAction } from '../actions/categoryActionTypes';
+import ResourceDetails from '../components/ResourceDetails';
+import { makeResourcePublicOrPrivateAction } from '../actions';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -24,18 +24,21 @@ class Videos extends Component {
         this.state = {
             visible : false,
             isOpen: false,
-            url : "",
             playing : true,
             isPublic : false,
-            token : getToken("token")
+            token : getToken("token"),
+            resourceDetail : {}
         };
         this.openModal = this.openModal.bind(this);
 
       }
 
 
-    openModal (url) {
-        this.setState({isOpen: true,url:url})
+    openModal (resource) {
+        this.setState({
+            isOpen: true,
+            resourceDetail: resource
+        })
     }
     
     componentDidMount(){
@@ -59,13 +62,13 @@ class Videos extends Component {
         this.props.filterPrivateVideos(value,this.state.token);
     }
       
-    onBlur() {
-        console.log('blur');
-    }
+    // onBlur() {
+    //     console.log('blur');
+    // }
       
-    onFocus() {
-        console.log('focus');
-    }
+    // onFocus() {
+    //     console.log('focus');
+    // }
       
     onSearch(val) {
         console.log('search:', val);
@@ -103,8 +106,8 @@ class Videos extends Component {
                             placeholder="Select a category"
                             optionFilterProp="children"
                             onChange={(value)=> this.onChange(value)}
-                            onFocus={this.onFocus}
-                            onBlur={this.onBlur}
+                            // onFocus={this.onFocus}
+                            // onBlur={this.onBlur}
                             // onSearch={this.onSearch}
                             filterOption={(input, option) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -164,7 +167,7 @@ class Videos extends Component {
                                 </Dropdown>
                                 </div>
                             </div>
-                            <div onClick={() => this.openModal(resource.resourceLink)} className={styles.playerWrapper}>
+                            <div onClick={() => this.openModal(resource)} className={styles.playerWrapper}>
                                 <img src="https://img.icons8.com/material-outlined/48/000000/video.png" alt="video icon"/>
                             </div>
                             <div className={styles.bottomContainer}>
@@ -187,7 +190,12 @@ class Videos extends Component {
                                         <Badge count={resource.category} style={{backgroundColor:"#f48c06"}} className={styles.leftTags} />
                                     </div>
                                     <div>
-                                        <Badge count={resource.resourceCategory} style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
+                                        {
+                                            resource.isPublic ?
+                                            <Badge count="Public" style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
+                                            :
+                                            <Badge count="Private" style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
+                                        }
                                         <Badge count={resource.resourceType} style={{backgroundColor:"#f48c06"}} className={styles.rightTags} />
                                     </div>
                                 </div>
@@ -216,7 +224,7 @@ class Videos extends Component {
                           </Col>
                     }
                      <>
-                         <Modal width="800px" footer={null} visible={this.state.isOpen} onCancel={() => this.setState({isOpen: false,playing : false})} >
+                         {/* <Modal width="800px" footer={null} visible={this.state.isOpen} onCancel={() => this.setState({isOpen: false,playing : false})} >
                          <div className={styles.playerModalWrapper}>
                             <ReactPlayer
                             className={styles.reactPlayer}
@@ -227,7 +235,15 @@ class Videos extends Component {
                             height='100%'
                             />
                         </div>
-                        </Modal>
+                        </Modal> */}
+                        <ResourceDetails
+                        resource={this.state.resourceDetail}
+                        toggleResourceDetailModal={this.state.isOpen}
+                        onCancel={() => this.setState({isOpen: false,playing : false})}
+                        playing={this.state.playing}
+                        privateSection={true}
+                        isVideo={true}
+                        />
                     </>
                 </Row>
             </div>
@@ -261,6 +277,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     filterPrivateVideos : (category,token) =>{
         dispatch(filterPrivateVideosAction(category,token));
+    },
+    makeResourcePublicOrPrivate :(id,check) =>{
+        dispatch(makeResourcePublicOrPrivateAction(id,check));
     }
 }
 }
