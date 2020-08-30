@@ -103,27 +103,13 @@ class PublicResources extends Component {
                       </Col>
 
                     }
-                     <>
-                         {/* <Modal width="800px" footer={null} visible={this.state.isOpen} onCancel={() => this.setState({isOpen: false,playing : false})} >
-                         <div className={styles.playerModalWrapper}>
-                            <ReactPlayer
-                            className={styles.reactPlayer}
-                            controls
-                            playing={this.state.playing}
-                            url={this.state.url}
-                            width='100%'
-                            height='100%'
-                            />
-                        </div>
-                        </Modal> */}
-                        <ResourceDetails
+                    <ResourceDetails
                         resource={this.state.resourceDetail}
                         toggleResourceDetailModal={this.state.isOpen}
                         onCancel={() => this.setState({isOpen: false,playing : false})}
                         playing={this.state.playing}
                         isVideo={this.state.isVideo}
-                        />
-                    </>
+                    />
                 </Row>
             </div>
         )

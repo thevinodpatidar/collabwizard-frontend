@@ -9,7 +9,7 @@ function ResourceDetails(props) {
     const [isPublic, setisPublic] = useState(props.resource.isPublic)
     
     return (
-        // <div>
+        <div>
             <Modal
                 visible={props.toggleResourceDetailModal}
                 title="Resource Details"
@@ -73,7 +73,7 @@ function ResourceDetails(props) {
                     </div>
                 </div> 
                 </Modal>
-        // </div>
+        </div>
     )
 }
 

@@ -189,20 +189,7 @@ class Articles extends Component {
                             <Spin size="large" />
                         </Col>
                     }
-                     <>
-                         {/* <Modal width="800px" footer={null} visible={this.state.isOpen} onCancel={() => this.setState({isOpen: false,playing : false})} >
-                         <div className={styles.playerModalWrapper}>
-                            <ReactPlayer
-                            className={styles.reactPlayer}
-                            controls
-                            playing={this.state.playing}
-                            url={this.state.url}
-                            width='100%'
-                            height='100%'
-                            />
-                        </div>
-                        </Modal> */}
-                        <ResourceDetails
+                    <ResourceDetails
                         resource={this.state.resourceDetail}
                         toggleResourceDetailModal={this.state.isOpen}
                         onCancel={() => this.setState({isOpen: false,playing : false})}
@@ -210,7 +197,6 @@ class Articles extends Component {
                         privateSection={false}
                         isVideo={false}
                         />
-                    </>
                 </Row>
             </div>
         )
