@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { Modal, Button, Badge, Switch, Checkbox } from 'antd'
+import React, { useState } from 'react'
+import { Modal, Badge, Switch } from 'antd'
 import styles from "./ResourceDetails.module.scss";
 import ReactPlayer from 'react-player';
 
-
 function ResourceDetails(props) {
     // console.log(props)
-    const [isPublic, setisPublic] = useState(props.resource.isPublic)
+    // const [isPublic, setisPublic] = useState(props.resource.isPublic)
     
     return (
         <div>
@@ -21,7 +20,7 @@ function ResourceDetails(props) {
                 width="800px"
                 >
                 <div className={styles.resourceDetailsContainer}>
-                    {
+                    {   
                         props.isVideo ?
                         <div className={styles.playerModalWrapper}>
                             <ReactPlayer
@@ -65,11 +64,15 @@ function ResourceDetails(props) {
                                 </div>
                             </div>
                         }
-                        <a href={props.resource.resourceLink} target="blank" download>
-                            <div className={styles.downloadContainer}>
-                                <span>Download</span>
-                            </div>
-                        </a>
+                        {
+                            !props.isVideo ?
+                            <a href={props.resource.resourceLink} target="blank" download>
+                                <div className={styles.downloadContainer}>
+                                    <span>Download</span>
+                                </div>
+                            </a>
+                            : null
+                        }
                     </div>
                 </div> 
                 </Modal>

@@ -82,7 +82,6 @@ class Videos extends Component {
 
 
     render() {
-        const { isPrivate } = this.state;
         const moreDropdown = (
             <Menu style={{padding:'.2rem 0rem'}}>
               <Menu.Item key="0" icon={<DeleteOutlined />}>
