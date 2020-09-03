@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-// import { Videos }  from "./Videos";
-
-import emptybox from "../../../../assets/images/emptybox.svg"
 
 import styles from "./PublicResource.module.scss";
 import { Row, Col, Avatar, Spin } from 'antd';
@@ -10,6 +7,7 @@ import { getPublicResourceAction } from './actions/publicResourceActionTypes';
 import { connect } from 'react-redux';
 import { getToken } from '../../../../utils/localStorage';
 import ResourceDetails from './components/ResourceDetails';
+import EmptyBox from './components/EmptyBox';
 
 class PublicResources extends Component {
     constructor(props) {
@@ -70,7 +68,12 @@ class PublicResources extends Component {
                             </div>
                         </div>
                         <div onClick={() => this.openModal(resource)}  className={styles.playerWrapper}>
-                            <img src="https://img.icons8.com/material-outlined/48/000000/video.png" alt="video icon"/>
+                            {
+                                resource.resourceType === 'videos' ? 
+                                    <img src="https://img.icons8.com/material-outlined/48/000000/video.png" alt="video icon"/>
+                                :
+                                    <img src="https://img.icons8.com/ios/50/000000/google-docs.png" alt="article icon"/>
+                            }
                         </div>
                         <div className={styles.bottomContainer}>
                             <div className={styles.resourceNameContainer}>
@@ -93,11 +96,7 @@ class PublicResources extends Component {
                     </Col>
                     )) 
                     :
-                    <Col className={styles.emptyContainer}>
-                        <img src={emptybox} alt="empty box" />
-                        <div>No record found</div>
-                        <h4>Try adding new records.</h4>
-                    </Col>
+                    <EmptyBox />
                     : <Col style={{margin : "0 auto"}}> 
                         <Spin size="large" />
                       </Col>
@@ -108,7 +107,7 @@ class PublicResources extends Component {
                         toggleResourceDetailModal={this.state.isOpen}
                         onCancel={() => this.setState({isOpen: false,playing : false})}
                         playing={this.state.playing}
-                        isVideo={this.state.isVideo}
+                        isVideo={ this.state.resourceDetail.resourceType === 'videos' ? true : false}
                     />
                 </Row>
             </div>

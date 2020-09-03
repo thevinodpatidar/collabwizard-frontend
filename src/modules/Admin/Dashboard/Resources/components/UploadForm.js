@@ -7,7 +7,7 @@ import { baseUploadURL } from '../../../../../api/baseurl';
 
 const { Option } = Select;
 
-const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
+const UploadForm = (props) =>{
   
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(false);
@@ -16,25 +16,16 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
   const token = getToken("token");
 
   const handleUpload = (values) => {
-    // values.resourceCategory  = "private";
-    values.resourceType = "videos";
-    // values.category = category;
-    parentProps.onUpload({values},token);
+    if(props.isVideo) values.resourceType = 'videos'
+    else values.resourceType = 'articles'
+    props.onUpload({values},token);
   };
   const onChange = (value) => {
     console.log(`selected ${value}`);
     setCategory(value);
 }
-  
-  const onBlur = () => {
-      console.log('blur');
-  }
-    
-  const onFocus = () => {
-      console.log('focus');
-  }
 
-  const props = {
+  const formProps = {
     name: 'file',
     action: baseUploadURL,
     headers: {
@@ -79,7 +70,7 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
           .then(values => {
             form.resetFields();
             handleUpload(values)
-            onCreate()
+            props.onCreate()
           })
           .catch(info => {
             console.log('Validate Failed:', info);
@@ -88,11 +79,11 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
 
   return (
     <Modal
-      visible={visible}
+      visible={props.visible}
       title="Upload new video"
       okText="Upload"
       cancelText="Cancel"
-      onCancel={onCancel}
+      onCancel={props.onCancel}
       onOk={handleSubmit}
       footer={[
         <Button key="back" onClick={()=>{form.resetFields()}}>
@@ -152,16 +143,13 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
             placeholder="Select a category"
             optionFilterProp="children"
             onChange={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            // onSearch={this.onSearch}
             filterOption={(input, option) =>
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
         >
             {
-                parentProps.categories ? 
-                parentProps.categories.map((category,index)=> (
+                props.categories ? 
+                props.categories.map((category,index)=> (
                     <Option key={index} value={category.categoryName}>{category.categoryName}</Option>
                 ))
                 : <Option value="">No Category</Option>
@@ -169,7 +157,7 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
         </Select>
         </Form.Item>
         <Form.Item >
-          <Upload {...props}>
+          <Upload {...formProps}>
             <Button disabled={disabled}>
               <UploadOutlined /> Select File
             </Button>
@@ -192,4 +180,4 @@ const VideoUploadForm = ({visible,onCreate,onCancel,parentProps}) =>{
   );
 };
 
-export default VideoUploadForm;
+export default UploadForm;

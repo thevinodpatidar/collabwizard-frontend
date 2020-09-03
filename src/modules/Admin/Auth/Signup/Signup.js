@@ -5,6 +5,7 @@ import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUserAction } from '../actions';
+import notificationWithIcon from '../../../../utils/notify';
 
 
 const Signup = props => {
@@ -27,8 +28,9 @@ const Signup = props => {
           <p className={styles.center}><b>"Teach better, together"</b></p>
           <h2 className={styles.center}>Register</h2>
         </div>
-        { props.data.error ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{props.data.error.message}</div> : <Redirect to='/login' />}
-        <Form 
+        { !props.data.status ? 
+          props.data.error.message ? notificationWithIcon('error',props.data.error.message) : null : <Redirect to='/login' /> }
+        <Form  
           layout="vertical"
           name="normal_login"
           initialValues={{

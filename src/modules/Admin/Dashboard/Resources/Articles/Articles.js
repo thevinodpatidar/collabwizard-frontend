@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import { Row, Col, Button,Spin, Avatar, Badge, Select, Input } from 'antd';
 import { PlusSquareOutlined, ShareAltOutlined, UserOutlined, EllipsisOutlined } from '@ant-design/icons';
-import emptybox from "../../../../../assets/images/emptybox.svg";
-
-// imports 
-import UploadForm from './UploadArticleForm';
 
 // styles
 import styles from  "./Articles.module.scss";
@@ -13,6 +9,8 @@ import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
 import { getCategoryAction } from '../actions/categoryActionTypes';
 import ResourceDetails from '../components/ResourceDetails';
+import UploadForm from '../components/UploadForm';
+import EmptyBox from '../components/EmptyBox';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -57,15 +55,7 @@ class Articles extends Component {
         console.log(`selected ${value}`);
         this.props.filterPrivateArticles(value,this.state.token);
     }
-      
-    onBlur() {
-        console.log('blur');
-    }
-      
-    onFocus() {
-        console.log('focus');
-    }
-      
+
     onSearch(val) {
         console.log('search:', val);
         this.props.searchPrivateArticles(val,this.state.token);
@@ -82,14 +72,10 @@ class Articles extends Component {
                     <div className={styles.searchFilterContainer}>
                         <Search className={styles.searchBar} placeholder="input search text" onSearch={value => this.onSearch(value)} enterButton required />
                         <Select
-                            // showSearch
                             style={{ width: 200 }}
                             placeholder="Select a category"
                             optionFilterProp="children"
                             onChange={(value)=> this.onChange(value)}
-                            onFocus={this.onFocus}
-                            onBlur={this.onBlur}
-                            // onSearch={this.onSearch}
                             filterOption={(input, option) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
@@ -116,13 +102,15 @@ class Articles extends Component {
                         </Button>
                         <UploadForm
                             visible={this.state.visible}
+                            isVideo={false}
                             onCreate={this.onCreate}
                             onCancel={() => {
                             this.setState({
                                 visible : false
                             })
                             }}
-                            parentProps={this.props}
+                            onUpload={this.props.onUpload}
+                            categories={this.props.categories}
                         />
                     </Col>
                 </Row>
@@ -144,7 +132,7 @@ class Articles extends Component {
                                 </div>
                             </div>
                             <div onClick={() => this.openModal(resource)}    className={styles.articleWrapper}>
-                            <img src="https://img.icons8.com/ios/50/000000/google-docs.png" alt="article icon"/>
+                                <img src="https://img.icons8.com/ios/50/000000/google-docs.png" alt="article icon"/>
                             </div>
                             <div className={styles.bottomContainer}>
                                 <div className={styles.resourceNameContainer}>
@@ -176,14 +164,9 @@ class Articles extends Component {
                                 </div>
                             </div>
                         </Col>
-                        )) :
-                        <Col className={styles.emptyContainer}>
-                            {/* <div > */}
-                                <img src={emptybox} alt="empty box" />
-                                <div>No record found</div>
-                                <h4>Try adding new records.</h4>
-                            {/* </div> */}
-                        </Col>
+                        )) 
+                        :
+                        <EmptyBox />
                         :
                         <Col style={{margin : "0 auto"}}> 
                             <Spin size="large" />

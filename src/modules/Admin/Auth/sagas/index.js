@@ -3,6 +3,7 @@ import { registerUserService, loginUserService, logoutUserService } from "../../
 
 import * as types from '../actions/actionTypes'
 
+
 export function* registerSaga(payload) {
     try {
         const response = yield call(registerUserService, payload);
@@ -11,6 +12,7 @@ export function* registerSaga(payload) {
             // const response  = yield response.json();
       
             yield put({ type: types.REGISTER_USER_SUCCESS, response });
+
           } else {
             throw response;
           }

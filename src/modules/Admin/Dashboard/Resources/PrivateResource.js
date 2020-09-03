@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Row,Tabs} from 'antd';
-import { Videos }  from "./Videos";
+import Videos  from "./Videos/Videos";
+import Articles from './Articles/Articles';
 // import PropTypes from 'prop-types'
 
 import styles from "./index.module.scss";
-import Articles from './Articles/Articles';
 // import Category from './components/Category';
 
 const { TabPane } = Tabs;

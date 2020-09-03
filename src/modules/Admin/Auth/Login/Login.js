@@ -6,6 +6,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loginUserAction } from '../actions';
 import { setCookie } from "../../../../utils/cookies";
+import notificationWithIcon from '../../../../utils/notify';
 
 const Login = props => {
 
@@ -15,12 +16,13 @@ const Login = props => {
     props.dispatch(loginUserAction(values));
   };
 
-    let success, message;
+    let success;
 
     success = props.data.response.success;
     // message = props.data.error.message;
     
     if (success) {
+      notificationWithIcon('success',"Login Successful");
       localStorage.setItem("token",props.data.response.data.token);
       setCookie("token",props.data.response.data.token,{domain:'beta.schooltribe.co',path:'/'})
 
@@ -42,7 +44,7 @@ const Login = props => {
           <p className={styles.center}><b>"Teach better, together"</b></p>
           <h2 className={styles.center}>Login</h2>
         </div>
-        { props.data.error.message ? <div style={{color:"red",textAlign:"center",padding:"10px"}}>{props.data.error.message}</div> : null}
+        { props.data.error.message ? notificationWithIcon('error',props.data.error.message) : null}
     <Form
       name="normal_login"
       initialValues={{

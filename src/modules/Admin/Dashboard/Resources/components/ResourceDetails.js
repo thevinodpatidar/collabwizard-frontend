@@ -1,21 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Modal, Badge, Switch } from 'antd'
 import styles from "./ResourceDetails.module.scss";
 import ReactPlayer from 'react-player';
 
 function ResourceDetails(props) {
-    // console.log(props)
-    // const [isPublic, setisPublic] = useState(props.resource.isPublic)
-    
     return (
         <div>
             <Modal
                 visible={props.toggleResourceDetailModal}
                 title="Resource Details"
-                // okText="Upload"
-                // cancelText="Cancel"
                 onCancel={props.onCancel}
-                // onOk={handleSubmit}
                 footer={null}
                 width="800px"
                 >
@@ -35,7 +29,7 @@ function ResourceDetails(props) {
                         :
                         <div className={styles.articleWrapper}>
                             <div className={styles.imgContainer}>
-                                <img src="https://img.icons8.com/ios/50/000000/open-document.png" />
+                                <img src="https://img.icons8.com/ios/50/000000/open-document.png" alt="" />
                             </div>
                         </div>
                     }

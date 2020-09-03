@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Row, Col, Button,Spin, Avatar, Badge, Select, Input, Menu, Dropdown } from 'antd';
 import { PlusSquareOutlined, ShareAltOutlined, EllipsisOutlined, UserOutlined, DeleteOutlined } from '@ant-design/icons';
-import emptybox from "../../../../../assets/images/emptybox.svg";
 // imports 
-import UploadForm from './VideoUploadForm';
+// import UploadForm from './VideoUploadForm';
 
 // styles
 import styles from  "./Videos.module.scss";
@@ -13,6 +12,8 @@ import { connect } from 'react-redux';
 import { getCategoryAction } from '../actions/categoryActionTypes';
 import ResourceDetails from '../components/ResourceDetails';
 import { makeResourcePublicOrPrivateAction } from '../actions';
+import UploadForm from '../components/UploadForm';
+import EmptyBox from '../components/EmptyBox';
 
 const { Search } = Input;
 const { Option } = Select;
@@ -62,14 +63,6 @@ class Videos extends Component {
         this.props.filterPrivateVideos(value,this.state.token);
     }
       
-    // onBlur() {
-    //     console.log('blur');
-    // }
-      
-    // onFocus() {
-    //     console.log('focus');
-    // }
-      
     onSearch(val) {
         console.log('search:', val);
         this.props.searchPrivateVideos(val,this.state.token);
@@ -87,10 +80,6 @@ class Videos extends Component {
               <Menu.Item key="0" icon={<DeleteOutlined />}>
                 Remove
               </Menu.Item>
-              <Menu.Item key="1" >
-                Make Public
-              </Menu.Item>
-              {/* <Menu.Item key="3">3rd menu item</Menu.Item> */}
             </Menu>
           );
         return (
@@ -105,9 +94,6 @@ class Videos extends Component {
                             placeholder="Select a category"
                             optionFilterProp="children"
                             onChange={(value)=> this.onChange(value)}
-                            // onFocus={this.onFocus}
-                            // onBlur={this.onBlur}
-                            // onSearch={this.onSearch}
                             filterOption={(input, option) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
@@ -135,13 +121,15 @@ class Videos extends Component {
                         </Button>
                         <UploadForm
                             visible={this.state.visible}
+                            isVideo={true}
                             onCreate={this.onCreate}
                             onCancel={() => {
                             this.setState({
                                 visible : false
                             })
                             }}
-                            parentProps={this.props}
+                            onUpload={this.props.onUpload}
+                            categories={this.props.categories}
                         />
                     </Col>
                 </Row>
@@ -172,17 +160,6 @@ class Videos extends Component {
                             <div className={styles.bottomContainer}>
                                 <div className={styles.resourceNameContainer}>
                                     <span className={styles.resourceName}>{resource.resourceName}</span>
-                                    {/* <span>
-                                        <Switch
-                                            unCheckedChildren="Private"
-                                            checkedChildren="Public"
-                                            size="small"
-                                            checked={isPrivate}
-                                            onChange={val => {
-                                                this.setState({ isPrivate : val });
-                                            }}
-                                            />
-                                    </span> */}
                                 </div>
                                 <div className={styles.viewsContainer}>
                                     <div>
@@ -213,11 +190,7 @@ class Videos extends Component {
                         </Col>
                         )) 
                         :
-                        <Col className={styles.emptyContainer}>
-                            <img src={emptybox} alt="empty box" />
-                            <div>No record found</div>
-                            <h4>Try adding new records.</h4>
-                        </Col>
+                        <EmptyBox />
                         : <Col style={{margin : "0 auto"}}> 
                             <Spin size="large" />
                           </Col>

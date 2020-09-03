@@ -5,6 +5,7 @@ export default function(state = {
       isAuthenticate : false,
       isLoading : false, 
       signup: {
+        status : false,
         error : {},
         response : {}
       },
@@ -26,9 +27,9 @@ export default function(state = {
     case types.LOGIN_USER_ERROR:
       return { ...state, isLoading : false,  login : { response : false, error : response }};
     case types.REGISTER_USER_SUCCESS:
-      return { ...state, isLoading : true,  signup : {response : response } };
+      return { ...state, isLoading : true,  signup : {status : true, response : response } };
     case types.REGISTER_USER_ERROR:
-      return { ...state, isLoading : false,  signup : {response : false, error : response } };
+      return { ...state, isLoading : false,  signup : { status : false ,response : false, error : response } };
     case types.LOGOUT_USER_SUCCESS:
       return { ...state, isAuthenticate : false, logout : {response : response } };
     case types.LOGOUT_USER_ERROR:
