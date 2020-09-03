@@ -80,7 +80,7 @@ const UploadForm = (props) =>{
   return (
     <Modal
       visible={props.visible}
-      title="Upload new video"
+      title="Upload new resource"
       okText="Upload"
       cancelText="Cancel"
       onCancel={props.onCancel}
