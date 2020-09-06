@@ -4,7 +4,7 @@ import { PlusSquareOutlined, ShareAltOutlined, UserOutlined, EllipsisOutlined } 
 
 // styles
 import styles from  "./Articles.module.scss";
-import { addPrivateArticlesAction, getPrivateArticlesAction, deletePrivateArticlesAction, searchPrivateArticlesAction, filterPrivateArticlesAction } from '../actions/privateArticlesActionTypes';
+import { addPrivateArticlesAction, getPrivateArticlesAction, deletePrivateArticlesAction, searchPrivateArticlesAction, filterPrivateArticlesAction, makeArticlesPublicOrPrivateAction } from '../actions/privateArticlesActionTypes';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
 import { getCategoryAction } from '../actions/categoryActionTypes';
@@ -53,12 +53,12 @@ class Articles extends Component {
     };
     onChange(value) {
         console.log(`selected ${value}`);
-        this.props.filterPrivateArticles(value,this.state.token);
+        this.props.filterPrivateArticles(value,this.state.token,'articles');
     }
 
     onSearch(val) {
         console.log('search:', val);
-        this.props.searchPrivateArticles(val,this.state.token);
+        this.props.searchPrivateArticles(val,this.state.token,'articles');
     }
     onReset(){
         this.props.getPrivateArticles(this.state.token);
@@ -179,6 +179,7 @@ class Articles extends Component {
                         playing={this.state.playing}
                         privateSection={false}
                         isVideo={false}
+                        makeArticlesPublicOrPrivate={this.props.makeArticlesPublicOrPrivate}
                         />
                 </Row>
             </div>
@@ -207,11 +208,14 @@ const mapDispatchToProps = (dispatch) => {
     deletePrivateArticles : (id,resourceId,token) =>{
         dispatch(deletePrivateArticlesAction(id,resourceId,token));
     },
-    searchPrivateArticles : (searchText,token) =>{
-        dispatch(searchPrivateArticlesAction(searchText,token));
+    searchPrivateArticles : (searchText,token,resourceType) =>{
+        dispatch(searchPrivateArticlesAction(searchText,token,resourceType));
     },
-    filterPrivateArticles : (category,token) =>{
-        dispatch(filterPrivateArticlesAction(category,token));
+    filterPrivateArticles : (category,token,resourceType) =>{
+        dispatch(filterPrivateArticlesAction(category,token,resourceType));
+    },
+    makeArticlesPublicOrPrivate :(id,check) =>{
+        dispatch(makeArticlesPublicOrPrivateAction(id,check));
     }
 }
 }

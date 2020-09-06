@@ -1,9 +1,19 @@
-import React from 'react'
-import { Modal, Badge, Switch } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Modal, Badge, Switch, Checkbox } from 'antd'
 import styles from "./ResourceDetails.module.scss";
 import ReactPlayer from 'react-player';
+import { getToken } from '../../../../../utils/localStorage';
+
 
 function ResourceDetails(props) {
+    const token = getToken("token");
+    const [isPublic,setIsPublic] = useState(props.resource.isPublic);
+    const makeResourcePublicOrPrivate=(e,id)=>{
+        console.log(e.target.checked);
+        props.makeVideosPublicOrPrivate({id: id, check: e.target.checked},token);
+        setIsPublic(e.target.checked)
+    }
+
     return (
         <div>
             <Modal
@@ -52,9 +62,14 @@ function ResourceDetails(props) {
                                 <h3>Resource Visibility</h3>
                                 <div className={styles.switch}>
                                     <span className={styles.public}>Public</span>
-                                    <Switch
+                                    {/* <Switch
                                     size="small"
-                                    checked={props.resource.isPublic}  />
+                                    checked={props.resource.isPublic} onClick={makeResourcePublicOrPrivate} /> */}
+                                    <Checkbox
+                                        checked={isPublic}
+                                        // disabled={this.state.disabled}
+                                        onChange={(e)=>makeResourcePublicOrPrivate(e,props.resource.id)}
+                                    ></Checkbox>
                                 </div>
                             </div>
                         }

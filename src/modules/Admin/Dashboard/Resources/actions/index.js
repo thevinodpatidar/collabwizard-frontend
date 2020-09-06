@@ -30,13 +30,6 @@ import * as types from "./actionTypes";
 //   }
 // };
 
-export const makeResourcePublicOrPrivateAction = (id,check) =>{
-  return {
-    type : types.MAKE_RESOURCE_PUBLIC_OR_PRIVATE,
-    check,
-    id
-  }
-}
 
 export const getUserDetailAction = token => {
   return {

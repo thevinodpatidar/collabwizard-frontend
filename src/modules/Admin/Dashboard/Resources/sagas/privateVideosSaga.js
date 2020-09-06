@@ -2,7 +2,7 @@ import { put, call, takeLatest } from 'redux-saga/effects';
 
 import * as types from '../actions/privateVideosActionTypes';
 
-import { addResourceService,deleteResourceService,getPrivateVideosService, searchResourceService, filterResourceService } from '../../../../../api/resources';
+import { addResourceService,deleteResourceService,getPrivateVideosService, searchResourceService, filterResourceService, makeResourcePublicOrPrivateService } from '../../../../../api/resources';
 
 export function* addResourceSaga(payload) {
     try {
@@ -72,6 +72,18 @@ export function* deleteResourceSaga(payload) {
     }
 }
 
+export function* makeVideosPublicOrPrivateSaga(payload) {
+  try {
+      const response = yield call(makeResourcePublicOrPrivateService, payload);
+      if (response.code >= 200 && response.code < 300) {
+          yield put({ type: types.MAKE_VIDEOS_PUBLIC_OR_PRIVATE_SUCCESS,response});
+        } else {
+          throw response;
+        }
+    } catch(response) {
+      yield put({ type: types.MAKE_VIDEOS_PUBLIC_OR_PRIVATE_ERROR, response})
+    }
+}
 
 export default function* watchResource() {
     yield takeLatest(types.ADD_PRIVATE_VIDEOS, addResourceSaga)
@@ -79,5 +91,5 @@ export default function* watchResource() {
     yield takeLatest(types.DELETE_PRIVATE_VIDEOS, deleteResourceSaga)
     yield takeLatest(types.SEARCH_PRIVATE_VIDEOS, searchPrivateVideosSaga)
     yield takeLatest(types.FILTER_PRIVATE_VIDEOS, filterPrivateVideosSaga)
-    yield takeLatest(types.FILTER_PRIVATE_VIDEOS, filterPrivateVideosSaga)
+    yield takeLatest(types.MAKE_VIDEOS_PUBLIC_OR_PRIVATE, makeVideosPublicOrPrivateSaga)
 }
