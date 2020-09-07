@@ -101,7 +101,7 @@ const UploadForm = (props) =>{
         name="form_in_modal"
         initialValues={{
           resourceSubType: 'upload',
-          resourceCategory : 'private'
+          isPublic : "false"
         }}
       >
         <Form.Item
@@ -123,10 +123,10 @@ const UploadForm = (props) =>{
               <Radio value="link" onClick={()=>{setDisabled(true)}} >Link</Radio>
             </Radio.Group>
           </Form.Item>
-          <Form.Item name="resourceCategory" label="Resource Visibility" style={{paddingLeft:"4rem"}}>
+          <Form.Item name="isPublic" label="Resource Visibility" style={{paddingLeft:"4rem"}}>
             <Radio.Group>
-              <Radio value="private" >Private</Radio>
-              <Radio value="public" >Public</Radio>
+              <Radio value="false" >Private</Radio>
+              <Radio value="true" >Public</Radio>
             </Radio.Group>
           </Form.Item>
         </Row>
