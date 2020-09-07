@@ -55,7 +55,7 @@ class PublicResources extends Component {
                         this.props.publicResource ?
                         this.props.publicResource.length > 0 ?
                         this.props.publicResource.map((resource,index) => (
-                    <Col className={styles.cardWrapper} xs={24} sm={12} md={12} lg={6} xl={5} key="1">
+                    <Col className={styles.cardWrapper} xs={24} sm={12} md={12} lg={6} xl={5} key={index}>
                         <div className={styles.infoWrapper}>
                             <div className={styles.userInfoContainer}>
                                 <Avatar style={{ backgroundColor: 'dodgerblue' }} size="small" icon={<UserOutlined />} /> 

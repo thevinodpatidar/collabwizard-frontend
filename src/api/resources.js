@@ -79,7 +79,7 @@ export const getPublicResourceService = (request) => {
 };
 
 export const searchResourceService = (request) => {
-  const API_ENDPOINT = baseURL+'/resource/search?searchText='+request.searchText;
+  const API_ENDPOINT = baseURL+'/resource/search?searchText='+request.searchText+'&resourceType='+request.resourceType;
 
   const parameters = {
     method: 'GET',
@@ -98,7 +98,7 @@ export const searchResourceService = (request) => {
 };
 
 export const filterResourceService = (request) => {
-  const API_ENDPOINT = baseURL+'/resource/filter?category='+request.category;
+  const API_ENDPOINT = baseURL+'/resource/filter?category='+request.category+'&resourceType='+request.resourceType;
 
   const parameters = {
     method: 'GET',
@@ -108,6 +108,26 @@ export const filterResourceService = (request) => {
       'Authorization': 'Bearer '+request.token
     },
     // body: JSON.stringify(request.resource.values)
+  };
+
+  return fetch(API_ENDPOINT, parameters)
+    .then(response => {
+      return response.json();
+    }).catch(error =>{ return error })
+};
+
+export const makeResourcePublicOrPrivateService = (request) => {
+  const API_ENDPOINT = baseURL+'/resource/makeResourcePublicOrPrivate';
+  console.log(request);
+
+  const parameters = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin' : "*",
+      'Authorization': 'Bearer '+request.token
+    },
+    body: JSON.stringify(request.data)
   };
 
   return fetch(API_ENDPOINT, parameters)

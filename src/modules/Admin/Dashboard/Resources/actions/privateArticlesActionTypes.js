@@ -18,13 +18,17 @@ export const DELETE_PRIVATE_ARTICLES = 'DELETE_PRIVATE_ARTICLES';
 export const DELETE_PRIVATE_ARTICLES_SUCCESS = 'DELETE_PRIVATE_ARTICLES_SUCCESS';
 export const DELETE_PRIVATE_ARTICLES_ERROR = 'DELETE_RESOURCE_ERROR';
 
+export const MAKE_ARTICLES_PUBLIC_OR_PRIVATE = 'MAKE_ARTICLES_PUBLIC_OR_PRIVATE';
+export const MAKE_ARTICLES_PUBLIC_OR_PRIVATE_SUCCESS = 'MAKE_ARTICLES_PUBLIC_OR_PRIVATE_SUCCESS';
+export const MAKE_ARTICLES_PUBLIC_OR_PRIVATE_ERROR = 'MAKE_ARTICLES_PUBLIC_OR_PRIVATE_ERROR';
+
 
 export const addPrivateArticlesAction = (resource,token) => {
-    return {
-      type: ADD_PRIVATE_ARTICLES,
-      resource,
-      token
-    }
+  return {
+    type: ADD_PRIVATE_ARTICLES,
+    resource,
+    token
+  }
 };
 
 export const getPrivateArticlesAction = token => {
@@ -34,19 +38,21 @@ export const getPrivateArticlesAction = token => {
   }
 };
 
-export const searchPrivateArticlesAction = (searchText,token) => {
+export const searchPrivateArticlesAction = (searchText,token,resourceType) => {
   return {
     type: SEARCH_PRIVATE_ARTICLES,
     searchText,
-    token
+    token,
+    resourceType
   }
 };
 
-export const filterPrivateArticlesAction = (category,token) => {
+export const filterPrivateArticlesAction = (category,token,resourceType) => {
   return {
     type:FILTER_PRIVATE_ARTICLES,
     category,
-    token
+    token,
+    resourceType
   }
 };
 
@@ -55,6 +61,14 @@ export const deletePrivateArticlesAction = (id,resourceId,token) =>{
     type : DELETE_PRIVATE_ARTICLES,
     id,
     resourceId,
+    token
+  }
+}
+
+export const makeArticlesPublicOrPrivateAction = (data,token) =>{
+  return {
+    type : MAKE_ARTICLES_PUBLIC_OR_PRIVATE,
+    data,
     token
   }
 }

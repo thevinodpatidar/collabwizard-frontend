@@ -6,12 +6,11 @@ import { PlusSquareOutlined, ShareAltOutlined, EllipsisOutlined, UserOutlined, D
 
 // styles
 import styles from  "./Videos.module.scss";
-import { addPrivateVideosAction, getPrivateVideosAction, deletePrivateVideosAction, searchPrivateVideosAction, filterPrivateVideosAction } from '../actions/privateVideosActionTypes';
+import { addPrivateVideosAction, getPrivateVideosAction, deletePrivateVideosAction, searchPrivateVideosAction, filterPrivateVideosAction, makeVideosPublicOrPrivateAction } from '../actions/privateVideosActionTypes';
 import { getToken } from '../../../../../utils/localStorage';
 import { connect } from 'react-redux';
 import { getCategoryAction } from '../actions/categoryActionTypes';
 import ResourceDetails from '../components/ResourceDetails';
-import { makeResourcePublicOrPrivateAction } from '../actions';
 import UploadForm from '../components/UploadForm';
 import EmptyBox from '../components/EmptyBox';
 
@@ -43,7 +42,7 @@ class Videos extends Component {
     }
     
     componentDidMount(){
-        if(this.props.videos.length <= 0 ){
+        if(this.props.videos.length <= 0 || Array.isArray(this.props.videos) ){
             this.props.getPrivateVideos(this.state.token);
             this.props.getCategories();
         }
@@ -60,12 +59,12 @@ class Videos extends Component {
     };
     onChange(value) {
         console.log(`selected ${value}`);
-        this.props.filterPrivateVideos(value,this.state.token);
+        this.props.filterPrivateVideos(value,this.state.token,'videos');
     }
       
     onSearch(val) {
         console.log('search:', val);
-        this.props.searchPrivateVideos(val,this.state.token);
+        this.props.searchPrivateVideos(val,this.state.token,'videos');
         // if()
     }
 
@@ -202,6 +201,8 @@ class Videos extends Component {
                         playing={this.state.playing}
                         privateSection={true}
                         isVideo={true}
+                        makeVideosPublicOrPrivate={this.props.makeVideosPublicOrPrivate}
+                        getResources={this.props.getPrivateVideos}
                     />
                 </Row>
             </div>
@@ -230,14 +231,14 @@ const mapDispatchToProps = (dispatch) => {
     deletePrivateVideos : (id,resourceId,token) =>{
         dispatch(deletePrivateVideosAction(id,resourceId,token));
     },
-    searchPrivateVideos : (searchText,token) =>{
-        dispatch(searchPrivateVideosAction(searchText,token));
+    searchPrivateVideos : (searchText,token,resourceType) =>{
+        dispatch(searchPrivateVideosAction(searchText,token,resourceType));
     },
-    filterPrivateVideos : (category,token) =>{
-        dispatch(filterPrivateVideosAction(category,token));
+    filterPrivateVideos : (category,token,resourceType) =>{
+        dispatch(filterPrivateVideosAction(category,token,resourceType));
     },
-    makeResourcePublicOrPrivate :(id,check) =>{
-        dispatch(makeResourcePublicOrPrivateAction(id,check));
+    makeVideosPublicOrPrivate :(data,token) =>{
+        dispatch(makeVideosPublicOrPrivateAction(data,token));
     }
 }
 }
