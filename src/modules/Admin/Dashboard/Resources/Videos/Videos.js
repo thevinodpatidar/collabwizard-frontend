@@ -74,9 +74,9 @@ class Videos extends Component {
 
 
     render() {
-        const moreDropdown = (
+        const moreDropdown = (resource) =>(
             <Menu style={{padding:'.2rem 0rem'}}>
-              <Menu.Item key="0" icon={<DeleteOutlined />}>
+              <Menu.Item key="0" icon={<DeleteOutlined />} onClick={()=> this.props.deletePrivateVideos(resource.id,this.state.token)}>
                 Remove
               </Menu.Item>
             </Menu>
@@ -146,8 +146,8 @@ class Videos extends Component {
                                     </div>
                                 </div>
                                 <div className={styles.moreSettings}>
-                                <Dropdown overlay={moreDropdown} trigger={['click']}>
-                                       <a href="" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                                <Dropdown overlay={()=>moreDropdown(resource)} trigger={['click']}>
+                                    <a href="" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     <EllipsisOutlined />
                                     </a>
                                 </Dropdown>
@@ -201,7 +201,7 @@ class Videos extends Component {
                         playing={this.state.playing}
                         privateSection={true}
                         isVideo={true}
-                        makeVideosPublicOrPrivate={this.props.makeVideosPublicOrPrivate}
+                        makePublicOrPrivate={this.props.makePublicOrPrivate}
                         getResources={this.props.getPrivateVideos}
                     />
                 </Row>
@@ -228,8 +228,8 @@ const mapDispatchToProps = (dispatch) => {
     getCategories : () => {
         dispatch(getCategoryAction());
     },
-    deletePrivateVideos : (id,resourceId,token) =>{
-        dispatch(deletePrivateVideosAction(id,resourceId,token));
+    deletePrivateVideos : (resourceId,token) =>{
+        dispatch(deletePrivateVideosAction(resourceId,token));
     },
     searchPrivateVideos : (searchText,token,resourceType) =>{
         dispatch(searchPrivateVideosAction(searchText,token,resourceType));
@@ -237,7 +237,7 @@ const mapDispatchToProps = (dispatch) => {
     filterPrivateVideos : (category,token,resourceType) =>{
         dispatch(filterPrivateVideosAction(category,token,resourceType));
     },
-    makeVideosPublicOrPrivate :(data,token) =>{
+    makePublicOrPrivate :(data,token) =>{
         dispatch(makeVideosPublicOrPrivateAction(data,token));
     }
 }

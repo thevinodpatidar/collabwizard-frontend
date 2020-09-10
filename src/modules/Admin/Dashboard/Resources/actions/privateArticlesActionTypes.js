@@ -56,10 +56,9 @@ export const filterPrivateArticlesAction = (category,token,resourceType) => {
   }
 };
 
-export const deletePrivateArticlesAction = (id,resourceId,token) =>{
+export const deletePrivateArticlesAction = (resourceId,token) =>{
   return {
     type : DELETE_PRIVATE_ARTICLES,
-    id,
     resourceId,
     token
   }

@@ -63,9 +63,10 @@ export function* filterPrivateArticlesSaga(payload) {
 export function* deleteResourceSaga(payload) {
   try {
       const response = yield call(deleteResourceService, payload);
+      const resourceResponse = yield call(getPrivateArticlesService, payload);
       if (response.code >= 200 && response.code < 300) {
-          
           yield put({ type: types.DELETE_PRIVATE_ARTICLES_SUCCESS,response});
+          yield put({ type: types.GET_PRIVATE_ARTICLES_SUCCESS, response : resourceResponse.data});
         } else {
           throw response;
         }
@@ -77,9 +78,11 @@ export function* deleteResourceSaga(payload) {
 export function* makeArticlesPublicOrPrivateSaga(payload) {
   try {
       const response = yield call(makeResourcePublicOrPrivateService, payload);
+      const resourceResponse = yield call(getPrivateArticlesService, payload);
       if (response.code >= 200 && response.code < 300) {
-          
           yield put({ type: types.MAKE_ARTICLES_PUBLIC_OR_PRIVATE_SUCCESS,response});
+          yield put({ type: types.GET_PRIVATE_ARTICLES_SUCCESS, response : resourceResponse.data});
+
         } else {
           throw response;
         }

@@ -60,12 +60,13 @@ export function* filterPrivateVideosSaga(payload) {
 
 export function* deleteResourceSaga(payload) {
   try {
-      const response = yield call(deleteResourceService, payload);
-      if (response.code >= 200 && response.code < 300) {
-          
-          yield put({ type: types.DELETE_PRIVATE_VIDEOS_SUCCESS,response});
+      const deleteResponse = yield call(deleteResourceService, payload);
+      const resourceResponse = yield call(getPrivateVideosService, payload);
+      if (deleteResponse.code >= 200 && deleteResponse.code < 300) {
+          yield put({ type: types.DELETE_PRIVATE_VIDEOS_SUCCESS, response : deleteResponse});
+          yield put({ type: types.GET_PRIVATE_VIDEOS_SUCCESS, response : resourceResponse.data});
         } else {
-          throw response;
+          throw deleteResponse;
         }
     } catch(response) {
       yield put({ type: types.DELETE_PRIVATE_VIDEOS_ERROR, response})
@@ -75,8 +76,10 @@ export function* deleteResourceSaga(payload) {
 export function* makeVideosPublicOrPrivateSaga(payload) {
   try {
       const response = yield call(makeResourcePublicOrPrivateService, payload);
+      const resourceResponse = yield call(getPrivateVideosService, payload);
       if (response.code >= 200 && response.code < 300) {
           yield put({ type: types.MAKE_VIDEOS_PUBLIC_OR_PRIVATE_SUCCESS,response});
+          yield put({ type: types.GET_PRIVATE_VIDEOS_SUCCESS, response : resourceResponse.data});
         } else {
           throw response;
         }

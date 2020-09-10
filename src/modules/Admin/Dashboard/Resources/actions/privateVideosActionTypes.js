@@ -57,10 +57,9 @@ export const filterPrivateVideosAction = (category,token,resourceType) => {
   }
 };
 
-export const deletePrivateVideosAction = (id,resourceId,token) =>{
+export const deletePrivateVideosAction = (resourceId,token) =>{
   return {
     type :DELETE_PRIVATE_VIDEOS,
-    id,
     resourceId,
     token
   }

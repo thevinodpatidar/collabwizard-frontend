@@ -31,9 +31,9 @@ export default function(state = {
     case types.MAKE_VIDEOS_PUBLIC_OR_PRIVATE_ERROR:
       return { ...state,  error : response };
     case types.DELETE_PRIVATE_VIDEOS_SUCCESS:
-      let newState = state.data.slice();
-      newState.splice(action.id, 1);
-      return { ...state , data : newState }
+      return { ...state , data : response }
+    case types.DELETE_PRIVATE_VIDEOS_ERROR:
+      return { ...state,  error : response };
     default:
       return state;
   }

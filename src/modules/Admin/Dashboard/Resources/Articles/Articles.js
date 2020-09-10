@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Row, Col, Button,Spin, Avatar, Badge, Select, Input } from 'antd';
-import { PlusSquareOutlined, ShareAltOutlined, UserOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { Row, Col, Button,Spin, Avatar, Badge, Select, Input, Menu, Dropdown } from 'antd';
+import { PlusSquareOutlined, ShareAltOutlined, UserOutlined, EllipsisOutlined, DeleteOutlined } from '@ant-design/icons';
 
 // styles
 import styles from  "./Articles.module.scss";
@@ -65,6 +65,13 @@ class Articles extends Component {
     }
 
     render() {
+        const moreDropdown = (resource) =>(
+            <Menu style={{padding:'.2rem 0rem'}}>
+              <Menu.Item key="0" icon={<DeleteOutlined />} onClick={()=> this.props.deletePrivateArticles(resource.id,this.state.token)}>
+                Remove
+              </Menu.Item>
+            </Menu>
+          );
         return (
             <div className={styles.container}>
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} style={{paddingBottom:"2rem"}}>
@@ -128,7 +135,11 @@ class Articles extends Component {
                                     </div>
                                 </div>
                                 <div className={styles.moreSettings}>
+                                <Dropdown overlay={()=>moreDropdown(resource)} trigger={['click']}>
+                                    <a href="" className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                                     <EllipsisOutlined />
+                                    </a>
+                                </Dropdown>
                                 </div>
                             </div>
                             <div onClick={() => this.openModal(resource)}    className={styles.articleWrapper}>
@@ -177,9 +188,10 @@ class Articles extends Component {
                         toggleResourceDetailModal={this.state.isOpen}
                         onCancel={() => this.setState({isOpen: false,playing : false})}
                         playing={this.state.playing}
-                        privateSection={false}
+                        privateSection={true}
                         isVideo={false}
-                        makeArticlesPublicOrPrivate={this.props.makeArticlesPublicOrPrivate}
+                        makePublicOrPrivate={this.props.makePublicOrPrivate}
+                        getResources={this.props.getPrivateArticles}
                         />
                 </Row>
             </div>
@@ -205,8 +217,8 @@ const mapDispatchToProps = (dispatch) => {
     getCategories : () => {
         dispatch(getCategoryAction());
     },
-    deletePrivateArticles : (id,resourceId,token) =>{
-        dispatch(deletePrivateArticlesAction(id,resourceId,token));
+    deletePrivateArticles : (resourceId,token) =>{
+        dispatch(deletePrivateArticlesAction(resourceId,token));
     },
     searchPrivateArticles : (searchText,token,resourceType) =>{
         dispatch(searchPrivateArticlesAction(searchText,token,resourceType));
@@ -214,7 +226,7 @@ const mapDispatchToProps = (dispatch) => {
     filterPrivateArticles : (category,token,resourceType) =>{
         dispatch(filterPrivateArticlesAction(category,token,resourceType));
     },
-    makeArticlesPublicOrPrivate :(id,check) =>{
+    makePublicOrPrivate :(id,check) =>{
         dispatch(makeArticlesPublicOrPrivateAction(id,check));
     }
 }

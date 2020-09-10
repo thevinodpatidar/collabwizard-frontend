@@ -107,6 +107,7 @@ class PublicResources extends Component {
                         toggleResourceDetailModal={this.state.isOpen}
                         onCancel={() => this.setState({isOpen: false,playing : false})}
                         playing={this.state.playing}
+                        privateSection={false}
                         isVideo={ this.state.resourceDetail.resourceType === 'videos' ? true : false}
                     />
                 </Row>

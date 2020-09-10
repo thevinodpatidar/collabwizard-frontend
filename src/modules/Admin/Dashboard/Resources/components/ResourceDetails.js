@@ -10,7 +10,7 @@ function ResourceDetails(props) {
     const [isPublic,setIsPublic] = useState(props.resource.isPublic);
     const makeResourcePublicOrPrivate=(e,id)=>{
         console.log(e.target.checked);
-        props.makeVideosPublicOrPrivate({id: id, check: e.target.checked},token);
+        props.makePublicOrPrivate({id: id, check: e.target.checked},token);
         setIsPublic(e.target.checked)
     }
 
@@ -66,7 +66,7 @@ function ResourceDetails(props) {
                                     size="small"
                                     checked={props.resource.isPublic} onClick={makeResourcePublicOrPrivate} /> */}
                                     <Checkbox
-                                        checked={isPublic}
+                                        checked={props.resource.isPublic}
                                         // disabled={this.state.disabled}
                                         onChange={(e)=>makeResourcePublicOrPrivate(e,props.resource.id)}
                                     ></Checkbox>

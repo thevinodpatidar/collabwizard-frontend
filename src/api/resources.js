@@ -48,8 +48,7 @@ export const getPrivateVideosService = (request) => {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin' : "*",
       'Authorization': 'Bearer '+request.token
-    },
-    // body: JSON.stringify(request.resource.values)
+    }
   };
 
   return fetch(API_ENDPOINT, parameters)
