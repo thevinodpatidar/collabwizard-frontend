@@ -3,13 +3,15 @@ import { put, call, takeLatest } from 'redux-saga/effects';
 import * as types from '../actions/privateVideosActionTypes';
 
 import { addResourceService,deleteResourceService,getPrivateVideosService, searchResourceService, filterResourceService, makeResourcePublicOrPrivateService } from '../../../../../api/resources';
+import notificationWithIcon from '../../../../../utils/notify';
 
 export function* addResourceSaga(payload) {
     try {
         const response = yield call(addResourceService, payload);
         if (response.code >= 200 && response.code < 300) {
-            // response  = response.data
-            yield put({ type: types.ADD_PRIVATE_VIDEOS_SUCCESS, response : response.data});
+          
+          yield put({ type: types.ADD_PRIVATE_VIDEOS_SUCCESS, response : response.data });
+          // notificationWithIcon('success',response.data);
           } else {
             throw response;
           }
@@ -64,12 +66,14 @@ export function* deleteResourceSaga(payload) {
       const resourceResponse = yield call(getPrivateVideosService, payload);
       if (deleteResponse.code >= 200 && deleteResponse.code < 300) {
           yield put({ type: types.DELETE_PRIVATE_VIDEOS_SUCCESS, response : deleteResponse});
+          notificationWithIcon('success',deleteResponse.data);
           yield put({ type: types.GET_PRIVATE_VIDEOS_SUCCESS, response : resourceResponse.data});
         } else {
           throw deleteResponse;
         }
     } catch(response) {
       yield put({ type: types.DELETE_PRIVATE_VIDEOS_ERROR, response})
+      notificationWithIcon('error',response.data);
     }
 }
 

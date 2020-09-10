@@ -27,7 +27,7 @@ export default function(state = {
     case types.FILTER_PRIVATE_VIDEOS_ERROR:
       return { ...state,  error : response };
     case types.MAKE_VIDEOS_PUBLIC_OR_PRIVATE_SUCCESS:
-      return { ...state } ;
+      return { ...state, data : response } ;
     case types.MAKE_VIDEOS_PUBLIC_OR_PRIVATE_ERROR:
       return { ...state,  error : response };
     case types.DELETE_PRIVATE_VIDEOS_SUCCESS:
