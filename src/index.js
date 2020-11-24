@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App/App';
-
-import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './store';
+import axios from "axios";
+import App from './app/App';
+import * as _redux from "./redux";
+import store, { persistor } from "./redux/store";
+
+_redux.setupAxios(axios, store);
 
 ReactDOM.render(
-    <Router>
-      <Provider store={store}>
+    <Provider store={store}>
         <App />
-      </Provider>
-    </Router>,
+    </Provider>,
   document.getElementById('root')
 );

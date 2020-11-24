@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import auth from "../modules/Admin/Auth/reducers/";
+import auth from "../app/modules/Auth/reducers";
 import { 
     PrivateArticlesReducer as privateArticles,
     PrivateVideosReducer as privateVideos, 
@@ -7,7 +7,7 @@ import {
     CategoryReducer as categories, 
     // SearchReducer as search, 
     PublicResourceReducer as publicResource 
-} from "../modules/Admin/Dashboard/Resources/reducers";
+} from "../app/modules/Admin/Dashboard/Resources/reducers";
 
 export default combineReducers({
     auth,
