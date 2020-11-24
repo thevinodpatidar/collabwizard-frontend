@@ -16,9 +16,10 @@ import { shallowEqual, useSelector } from 'react-redux';
 const NavigationLinks = ({ }) => {
   const [current, setCurrent ] = useState("app");
 
-  const { isAuthorized } = useSelector(
-    ({ auth }) => ({
-      isAuthorized: auth.user != null,
+  const { isAuthorized,user } = useSelector(
+    (state) => ({
+      isAuthorized:state.auth.user != null,
+      user : state.auth.user
     }),
     shallowEqual
   );
@@ -30,7 +31,7 @@ const NavigationLinks = ({ }) => {
   const menu = (
     <Menu className={css.menuItem}>
       <Menu.Item key="1" icon={<UserOutlined />}>
-        <Link to="/profile">My Account</Link>
+        <Link to="/user-profile">My Account</Link>
       </Menu.Item>
       <Menu.Item key="2" icon={<LogoutOutlined />}>
         <Link to="/logout" >Sign Out</Link>
@@ -54,11 +55,9 @@ const NavigationLinks = ({ }) => {
                 Friends
               </Link>
             </Menu.Item>
-            <Menu.Item key="profile">
+            <Menu.Item key="profile" style={{justifyContent:"center"}}>
               <Dropdown overlay={menu} placement="bottomCenter" >
-                <Space size="small">
-                <Avatar style={{ backgroundColor: '#aed9b4' }} size='default' icon={<UserOutlined />} />
-                </Space>
+                <Avatar style={{ backgroundColor: '#aed9b4' }} size='default' >{user.username[0]}</Avatar>
               </Dropdown>
             </Menu.Item>
           </Menu>
