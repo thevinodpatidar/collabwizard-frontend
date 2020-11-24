@@ -7,7 +7,7 @@ const { Text, Title } = Typography;
 export default function ProfileCard() {
     return (
         <div>
-            <Card size="small" style={{margin:"2rem", width: 300,borderRadius:".3rem"}}>
+            <Card className="box-shadow" size="small" style={{margin:"2rem", width: 300,borderRadius:".3rem"}}>
                 <div style={{display:"flex",flexDirection : "column",justifyContent:"center",alignItems:"center"}}>
                     <Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                     <Text style={{fontSize:"1rem",fontWeight:"bold"}} >Vinod Patidar</Text>

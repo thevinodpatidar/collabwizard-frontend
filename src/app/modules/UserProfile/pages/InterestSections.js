@@ -1,11 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Row,Tag,Typography } from 'antd'
 import React, { useState } from 'react'
-import ExperienceCard from '../components/ExperienceCard';
 
 const { Title } = Typography;
 
-export default function SkillsSection() {
+export default function InterestSection() {
 
     const [form] = Form.useForm();
     const [visible,setVisible] = useState(false);
@@ -24,7 +23,7 @@ export default function SkillsSection() {
           .then(values => {
             form.resetFields();
             setVisible(false);
-            console.log(values.skill);
+            console.log(values.interest);
           })
           .catch(info => {
             console.log('Validate Failed:', info);
@@ -35,7 +34,7 @@ export default function SkillsSection() {
         <div className="box-shadow" style={{borderRadius:".3rem",padding:"1rem",margin:"1rem"}}>
         <Row justify="space-between" align="middle">
             <Col>
-                <Title level={4}>Skills</Title>
+                <Title level={4}>Interest</Title>
             </Col>
             <Col>
                 <PlusOutlined onClick={showModal} style={{fontSize:"1.4rem"}} />
@@ -47,7 +46,7 @@ export default function SkillsSection() {
             <Tag color="red">Learning</Tag>
         </Row>
         <Modal
-          title="Add Skill"
+          title="Add Interest"
           visible={visible}
           onCancel={handleCancel}
           footer={[
@@ -66,9 +65,9 @@ export default function SkillsSection() {
             // onFinishFailed={onFinishFailed}
             >
             <Form.Item
-                label="Skill"
-                name="skill"
-                rules={[{ required: true, message: 'Please input your skill!' }]}
+                label="Interest"
+                name="interest"
+                rules={[{ required: true, message: 'Please input your interest!' }]}
             >
                 <Input />
             </Form.Item>
