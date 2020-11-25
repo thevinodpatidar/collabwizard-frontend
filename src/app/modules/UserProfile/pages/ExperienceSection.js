@@ -1,6 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Row,Select,Typography,Checkbox } from 'antd'
-import React, { useState } from 'react'
+import React, { useState, useEffect, } from 'react'
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import * as actions from "../_redux/experience/experienceActions";
 import ExperienceCard from '../components/ExperienceCard';
 import { EMPLOYMENT_TYPE, START_YEAR, MONTHS } from "../pages/YearHelper";
 
@@ -14,6 +16,24 @@ export default function ExperienceSection() {
     const [visible,setVisible] = useState(false);
     const [checked,setChecked] = useState(false);
     const [disabled,setDisabled] = useState(false);
+
+    const dispatch = useDispatch();
+    const { actionsLoading, experienceForEdit,entities,listLoading } = useSelector(
+      (state) => ({
+        actionsLoading: state.experiences.actionsLoading,
+        listLoading: state.experiences.listLoading,
+        experienceForEdit: state.experiences.experienceForEdit,
+        entities : state.experiences.entities
+      }),
+      shallowEqual
+    );
+
+
+    useEffect(() => {
+      // server call for getting Customer by id
+      dispatch(actions.fetchExperiences());
+    }, [dispatch]);
+
 
     const showModal = () => {
         setVisible(true);
@@ -29,6 +49,7 @@ export default function ExperienceSection() {
           .then(values => {
             form.resetFields();
             setVisible(false);
+            dispatch(actions.createExperience(values)).then(() => handleCancel());
             console.log(values);
           })
           .catch(info => {
@@ -60,8 +81,13 @@ export default function ExperienceSection() {
                 </Col>
             </Row>
             <Row style={{flexDirection:"column"}}>
-                <ExperienceCard />
-                <ExperienceCard />
+            {
+            !listLoading ?  entities != null ?
+                entities.map((experience,index) => (
+                    <ExperienceCard key={index} listLoading={listLoading} data={experience}/>
+                ))
+            : <span>No Experience</span> : <span>Loading...</span>
+            }
             </Row>
             <Modal
                 title="Add Experience"

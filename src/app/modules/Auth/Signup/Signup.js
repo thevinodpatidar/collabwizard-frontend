@@ -8,7 +8,7 @@ import * as auth from "../_redux/authRedux";
 import { register } from "../_redux/authCrud";
 
 
-const Signup = props => {
+const Signup = ({history,props}) => {
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage ] = useState("");
@@ -19,7 +19,8 @@ const Signup = props => {
     delete values.remember;
     register(values.email,values.password).then(res => {
       setLoading(false);
-      props.login(res.data.data)
+      history.push("/auth/login");
+      // props.login(res.data.data);
     }).catch(err =>{
       setLoading(false);
       setStatus(true);

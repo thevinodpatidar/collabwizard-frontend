@@ -1,6 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Row,Tag,Typography } from 'antd'
-import React, { useState } from 'react'
+import React, { useState, useEffect, } from 'react'
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import * as actions from "../_redux/interest/interestActions";
 
 const { Title } = Typography;
 
@@ -8,6 +10,23 @@ export default function InterestSection() {
 
     const [form] = Form.useForm();
     const [visible,setVisible] = useState(false);
+
+    const dispatch = useDispatch();
+    const { actionsLoading, interestForEdit,entities,listLoading } = useSelector(
+      (state) => ({
+        actionsLoading: state.interests.actionsLoading,
+        listLoading: state.interests.listLoading,
+        interestForEdit: state.interests.interestForEdit,
+        entities : state.interests.entities
+      }),
+      shallowEqual
+    );
+
+
+    useEffect(() => {
+      // server call for getting Customer by id
+      dispatch(actions.fetchInterests());
+    }, [dispatch]);
 
     const showModal = () => {
         setVisible(true);
@@ -23,6 +42,7 @@ export default function InterestSection() {
           .then(values => {
             form.resetFields();
             setVisible(false);
+            dispatch(actions.createInterest(values)).then(() => handleCancel());
             console.log(values.interest);
           })
           .catch(info => {
@@ -41,9 +61,13 @@ export default function InterestSection() {
             </Col>
         </Row>
         <Row style={{flexDirection:"row",marginTop:".5rem"}}>
-            <Tag color="blue">Nodejs</Tag>
-            <Tag color="magenta">React</Tag>
-            <Tag color="red">Learning</Tag>
+        {
+            !listLoading ?  entities != null ?
+                entities.map((interest,index) => (
+                  <Tag key={index} color="blue">{interest.interest}</Tag>
+                ))
+            : <span>No Interest</span> : <span>Loading...</span>
+          }
         </Row>
         <Modal
           title="Add Interest"

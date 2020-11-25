@@ -1,14 +1,32 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Row,Tag,Typography } from 'antd'
-import React, { useState } from 'react'
-import ExperienceCard from '../components/ExperienceCard';
+import React, { useState, useEffect, } from 'react'
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import * as actions from "../_redux/skill/skillActions";
 
 const { Title } = Typography;
 
 export default function SkillsSection() {
 
+
     const [form] = Form.useForm();
     const [visible,setVisible] = useState(false);
+    
+    const dispatch = useDispatch();
+    const { actionsLoading, skillForEdit,entities,listLoading } = useSelector(
+      (state) => ({
+        actionsLoading: state.skills.actionsLoading,
+        listLoading: state.skills.listLoading,
+        skillForEdit: state.skills.skillForEdit,
+        entities : state.skills.entities
+      }),
+      shallowEqual
+    );
+
+    useEffect(() => {
+      // server call for getting Customer by id
+      dispatch(actions.fetchSkills());
+    }, [dispatch]);
 
     const showModal = () => {
         setVisible(true);
@@ -24,6 +42,7 @@ export default function SkillsSection() {
           .then(values => {
             form.resetFields();
             setVisible(false);
+            dispatch(actions.createSkill(values)).then(() => handleCancel())
             console.log(values.skill);
           })
           .catch(info => {
@@ -42,9 +61,13 @@ export default function SkillsSection() {
             </Col>
         </Row>
         <Row style={{flexDirection:"row",marginTop:".5rem"}}>
-            <Tag color="blue">Nodejs</Tag>
-            <Tag color="magenta">React</Tag>
-            <Tag color="red">Learning</Tag>
+          {
+            !listLoading ?  entities != null ?
+                entities.map((skill,index) => (
+                  <Tag key={index} color="blue">{skill.skill}</Tag>
+                ))
+            : <span>No Skills</span> : <span>Loading...</span>
+          }
         </Row>
         <Modal
           title="Add Skill"

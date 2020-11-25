@@ -1,6 +1,7 @@
 import { EditOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Row,Typography } from 'antd'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 const { Title,Paragraph } = Typography;
 const { TextArea } = Input;
@@ -9,6 +10,15 @@ export default function AboutSection() {
 
     const [form] = Form.useForm();
     const [visible,setVisible] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const { user } = useSelector(
+        (state) => ({
+          user: state.auth.user,
+        }),
+        shallowEqual
+    );
 
     const showModal = () => {
         setVisible(true);
@@ -44,7 +54,7 @@ export default function AboutSection() {
             <Row>
                 <Col>
                     <Paragraph style={{color:"#000"}}>
-                    FREE WEBINAR: Join our panel of experts on 3rd December at 16:00 GMT / 17:00 CET / 11am EST for an exclusive online panel discussion on YouGov’s Best Global Brands of 2020.
+                    {user.bio}
                     </Paragraph>
                 </Col>
             </Row>

@@ -1,8 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Row,Select,Typography } from 'antd'
-import React ,{ useState } from 'react'
-import ExperienceCard from '../components/ExperienceCard';
+import React, { useState, useEffect, } from 'react'
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import * as actions from "../_redux/education/educationActions";
 import {START_YEAR} from "../pages/YearHelper";
+import EducationCard from '../components/EducationCard';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -12,6 +14,24 @@ export default function EducationSection() {
 
     const [form] = Form.useForm();
     const [visible,setVisible] = useState(false);
+
+    const dispatch = useDispatch();
+    const { actionsLoading, educationsForEdit,entities,listLoading } = useSelector(
+      (state) => ({
+        actionsLoading: state.educations.actionsLoading,
+        listLoading: state.educations.listLoading,
+        educationsForEdit: state.educations.educationsForEdit,
+        entities : state.educations.entities
+      }),
+      shallowEqual
+    );
+
+
+    useEffect(() => {
+      // server call for getting Customer by id
+      dispatch(actions.fetchEducations());
+    }, [dispatch]);
+
 
     const showModal = () => {
         setVisible(true);
@@ -27,6 +47,7 @@ export default function EducationSection() {
           .then(values => {
             form.resetFields();
             setVisible(false);
+            dispatch(actions.createEducation(values)).then(() => handleCancel());
             console.log(values);
           })
           .catch(info => {
@@ -45,8 +66,13 @@ export default function EducationSection() {
                 </Col>
             </Row>
             <Row style={{flexDirection:"column"}}>
-                <ExperienceCard />
-                <ExperienceCard />
+            {
+            !listLoading ?  entities != null ?
+                entities.map((education,index) => (
+                    <EducationCard key={index} listLoading={listLoading} data={education}/>
+                ))
+            : <span>No Education</span> : <span>Loading...</span>
+            }
             </Row>
             <Modal
                 title="Add Education"

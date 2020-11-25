@@ -20,13 +20,13 @@ export function Routes() {
         }),
         shallowEqual
       );
-
+      
   return (
     <Switch>
       {!isAuthorized ? (
         /*Render auth page when user at `/auth` and not authorized.*/
         <AppLayout >
-          <AuthPage />
+          <AuthPage /> 
         </AppLayout>
       ) : (
         /*Otherwise redirect to root page (`/`)*/
