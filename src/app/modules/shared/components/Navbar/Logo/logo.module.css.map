@@ -1,9 +1,0 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,KAAK,CAAA;EAED,OAAO,EAAG,IACd;CAAC",
-    "sources": [
-        "logo.module.scss"
-    ],
-    "names": [],
-    "file": "logo.module.css"
-}
