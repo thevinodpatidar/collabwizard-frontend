@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function EducationCard(props) {
     const { data,listLoading } = props;
-    console.log(data);
+
     return (
         <>
             {

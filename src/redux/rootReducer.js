@@ -6,13 +6,15 @@ import { skillSlice } from "../app/modules/UserProfile/_redux/skill/skillSlice";
 import { interestSlice } from "../app/modules/UserProfile/_redux/interest/interestSlice";
 import { educationSlice } from "../app/modules/UserProfile/_redux/education/educationSlice";
 import { experienceSlice } from "../app/modules/UserProfile/_redux/experience/experienceSlice";
+import { postSlice } from "../app/modules/Feed/_redux/postsSlice";
 
 export const rootReducer = combineReducers({
   auth: auth.reducer,
   skills : skillSlice.reducer,
   interests : interestSlice.reducer,
   educations : educationSlice.reducer,
-  experiences : experienceSlice.reducer
+  experiences : experienceSlice.reducer,
+  posts : postSlice.reducer
 });
 
 export function* rootSaga() {

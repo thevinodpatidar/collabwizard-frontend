@@ -3,7 +3,8 @@ import React from 'react'
 
 const { Text } = Typography;
 
-export default function FeedsCardTopHeader() {
+export default function FeedsCardTopHeader(props) {
+    const {data} = props;
     return (
         <div>
             <Row style={{display:"flex",alignItems:"center"}}>

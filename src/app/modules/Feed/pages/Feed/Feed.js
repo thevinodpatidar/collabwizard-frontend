@@ -5,14 +5,11 @@ import FeedsCardTopHeader from '../../components/FeedsCardTopHeader';
 
 const Feed = (props) => {
 
-
   return (
     <>
       <Modal 
         width="70vw"
         visible={props.visible}
-        // onOk={props.handleOk}
-        // confirmLoading={confirmLoading}
         onCancel={props.handleCancel}
         footer={null}
       >
