@@ -15,12 +15,11 @@ export default function SkillsSection() {
     const [visible,setVisible] = useState(false);
     
     const dispatch = useDispatch();
-    const { actionsLoading, skillForEdit,entities,listLoading } = useSelector(
+    const { user,entities,listLoading } = useSelector(
       (state) => ({
-        actionsLoading: state.skills.actionsLoading,
         listLoading: state.skills.listLoading,
-        skillForEdit: state.skills.skillForEdit,
-        entities : state.skills.entities
+        entities : state.skills.entities,
+        user : state.auth.user
       }),
       shallowEqual
     );
@@ -58,9 +57,13 @@ export default function SkillsSection() {
             <Col>
                 <Title level={4}>Skills</Title>
             </Col>
-            <Col>
-                <PlusOutlined onClick={showModal} style={{fontSize:"1.4rem"}} />
-            </Col>
+            {
+              !listLoading ? entities != null && match.params.teacherId === user.id ?
+              <Col>
+                  <PlusOutlined onClick={showModal} style={{fontSize:"1.4rem"}} />
+              </Col>
+              : null : null 
+            }
         </Row>
         <Row style={{flexDirection:"row",marginTop:".5rem"}}>
           {

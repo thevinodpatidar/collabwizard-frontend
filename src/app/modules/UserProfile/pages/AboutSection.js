@@ -16,12 +16,11 @@ export default function AboutSection({history}) {
     const [visible,setVisible] = useState(false);
 
     const dispatch = useDispatch();
-    const { actionsLoading, profileForEdit,entities,listLoading } = useSelector(
+    const { user,entities,listLoading } = useSelector(
       (state) => ({
-        actionsLoading: state.profile.actionsLoading,
         listLoading: state.profile.listLoading,
-        profileForEdit: state.profile.profileForEdit,
-        entities : state.profile.entities
+        entities : state.profile.entities,
+        user : state.auth.user
       }),
       shallowEqual
     );
@@ -47,6 +46,7 @@ export default function AboutSection({history}) {
             form.resetFields();
             setVisible(false);
             const id = match.params.teacherId;
+            console.log(id);
             dispatch(actions.updateProfile(id,values)).then(() => handleCancel());
             history.push(`/user-profile/${id}`)
           })
@@ -61,9 +61,13 @@ export default function AboutSection({history}) {
                 <Col>
                     <Title level={4}>About</Title>
                 </Col>
-                <Col>
-                    <EditOutlined style={{fontSize:"1.4rem"}} onClick={showModal}/>
-                </Col>
+                {
+                    !listLoading ? entities != null && entities.id === user.id ?
+                    <Col>
+                        <EditOutlined style={{fontSize:"1.4rem"}} onClick={showModal}/>
+                    </Col>
+                    : null : null 
+                }
             </Row>
             <Row>
                 <Col>

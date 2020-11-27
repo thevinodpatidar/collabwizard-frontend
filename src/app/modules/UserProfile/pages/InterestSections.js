@@ -14,12 +14,11 @@ export default function InterestSection() {
     const [visible,setVisible] = useState(false);
 
     const dispatch = useDispatch();
-    const { actionsLoading, interestForEdit,entities,listLoading } = useSelector(
+    const { user,entities,listLoading } = useSelector(
       (state) => ({
-        actionsLoading: state.interests.actionsLoading,
         listLoading: state.interests.listLoading,
-        interestForEdit: state.interests.interestForEdit,
-        entities : state.interests.entities
+        entities : state.interests.entities,
+        user : state.auth.user
       }),
       shallowEqual
     );
@@ -58,9 +57,13 @@ export default function InterestSection() {
             <Col>
                 <Title level={4}>Interest</Title>
             </Col>
-            <Col>
-                <PlusOutlined onClick={showModal} style={{fontSize:"1.4rem"}} />
-            </Col>
+            {
+              !listLoading ? entities != null && match.params.teacherId === user.id ?
+              <Col>
+                  <PlusOutlined onClick={showModal} style={{fontSize:"1.4rem"}} />
+              </Col>
+              : null : null 
+            }
         </Row>
         <Row style={{flexDirection:"row",marginTop:".5rem"}}>
         {

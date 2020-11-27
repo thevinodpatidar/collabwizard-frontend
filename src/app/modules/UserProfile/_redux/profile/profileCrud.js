@@ -16,5 +16,6 @@ export function updateProfile(id,profile) {
 }
 
 export function findProfiles(queryParams) {
+  console.log(queryParams);
   return axios.get(`${URL}/profile`, { params : queryParams });
 }

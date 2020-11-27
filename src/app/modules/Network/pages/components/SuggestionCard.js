@@ -11,7 +11,6 @@ export default function SuggestionCard({  data, listLoading }) {
 
     const dispatch = useDispatch();
     const history = useHistory();
-    console.log(history);
     // const match = useRouteMatch()
     const { user } = useSelector(
         (state) => ({
@@ -33,10 +32,12 @@ export default function SuggestionCard({  data, listLoading }) {
             {
             !listLoading ? 
             <Card className="box-shadow" size="small" style={{margin:"1rem", width: 200,borderRadius:".3rem"}}>
-                <div style={{display:"flex",flexDirection : "column",justifyContent:"center",alignItems:"center"}}>
-                    <Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    <Text style={{fontSize:"1rem",fontWeight:"bold"}} >{data.fullname}</Text>
-                </div>
+                <Link to={`/user-profile/${data.id}`} >
+                    <div style={{display:"flex",flexDirection : "column",justifyContent:"center",alignItems:"center"}}>
+                        <Avatar size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                        <Text style={{fontSize:"1rem",fontWeight:"bold"}} >{data.fullname}</Text>
+                    </div>
+                </Link>
                 <div style={{textAlign:"center",margin:".5rem"}}>
                 {
                     data.experience.length > 0 ?

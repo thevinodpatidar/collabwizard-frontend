@@ -20,12 +20,11 @@ export default function ExperienceSection() {
     const [disabled,setDisabled] = useState(false);
 
     const dispatch = useDispatch();
-    const { actionsLoading, experienceForEdit,entities,listLoading } = useSelector(
+    const { user,entities,listLoading } = useSelector(
       (state) => ({
-        actionsLoading: state.experiences.actionsLoading,
         listLoading: state.experiences.listLoading,
-        experienceForEdit: state.experiences.experienceForEdit,
-        entities : state.experiences.entities
+        entities : state.experiences.entities,
+        user : state.auth.user
       }),
       shallowEqual
     );
@@ -78,9 +77,13 @@ export default function ExperienceSection() {
                 <Col>
                     <Title level={4}>Experience</Title>
                 </Col>
-                <Col>
-                    <PlusOutlined onClick={showModal} style={{fontSize:"1.4rem"}} />
-                </Col>
+                {
+                    !listLoading ? entities != null && match.params.teacherId === user.id ?
+                    <Col>
+                        <PlusOutlined onClick={showModal} style={{fontSize:"1.4rem"}} />
+                    </Col>
+                    : null : null 
+                }
             </Row>
             <Row style={{flexDirection:"column"}}>
             {
