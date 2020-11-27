@@ -10,7 +10,7 @@ import css from "./navbar.module.scss";
 import { Link } from "react-router-dom";
 import { shallowEqual, useSelector } from 'react-redux';
 
-const NavigationLinks = ({ }) => {
+const NavigationLinks = () => {
   const [current, setCurrent ] = useState("app");
 
   const { isAuthorized,user } = useSelector(
@@ -49,7 +49,7 @@ const NavigationLinks = ({ }) => {
             </Menu.Item>
             <Menu.Item key="community"icon={<TeamOutlined />}>
               <Link to="/friends" >
-                Friends
+                Network
               </Link>
             </Menu.Item>
             <Menu.Item key="profile" style={{justifyContent:"center"}}>

@@ -4,6 +4,7 @@ import React, { useState, useEffect, } from 'react'
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../../_redux/networkActions";
 import { useRouteMatch } from 'react-router-dom';
+
 export default function SuggestionPage() {
 
     const match = useRouteMatch()

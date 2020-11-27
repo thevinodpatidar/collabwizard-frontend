@@ -2,23 +2,30 @@ import { Avatar, Button, Card, Col, Divider, Row, Typography} from 'antd'
 import React from 'react'
 import { Link } from 'react-router-dom';
 import * as actions from "../../_redux/networkActions";
-import { useDispatch } from "react-redux";
-// import { useRouteMatch } from 'react-router-dom';
+import { shallowEqual,useDispatch, useSelector} from "react-redux";
+import { useRouteMatch,useHistory } from 'react-router-dom';
 
 const { Text } = Typography;
 
-export default function SuggestionCard(props) {
+export default function SuggestionCard({  data, listLoading }) {
 
-    const { data, listLoading } = props;
     const dispatch = useDispatch();
+    const history = useHistory();
+    console.log(history);
     // const match = useRouteMatch()
+    const { user } = useSelector(
+        (state) => ({
+          user : state.auth.user
+        }),
+        shallowEqual
+    );
 
     const connect = (values) =>{
         const networkId = Object.assign({},{
             networkId : values
         })
         dispatch(actions.createNetwork(networkId));
-
+        history.push(`/friends`);
     }
 
     return (
@@ -59,9 +66,7 @@ export default function SuggestionCard(props) {
                 <div style={{display:"flex",flexDirection:"column",alignItems:"center"}}>
                     <Row style={{justifyContent:"center"}}>
                         <Col span={24}>
-                        <Link to="/user-profile" >
                            <Button onClick={() => connect(data.id)} >Connect</Button>
-                        </Link>
                         </Col>
                     </Row>
                 </div>
