@@ -5,6 +5,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/experience/experienceActions";
 import ExperienceCard from '../components/ExperienceCard';
 import { EMPLOYMENT_TYPE, START_YEAR, MONTHS } from "../pages/YearHelper";
+import { useRouteMatch } from 'react-router-dom';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -12,6 +13,7 @@ const { Option } = Select;
 
 export default function ExperienceSection() {
 
+    const match = useRouteMatch()
     const [form] = Form.useForm();
     const [visible,setVisible] = useState(false);
     const [checked,setChecked] = useState(false);
@@ -31,7 +33,7 @@ export default function ExperienceSection() {
 
     useEffect(() => {
       // server call for getting Customer by id
-      dispatch(actions.fetchExperiences());
+      dispatch(actions.fetchExperiences(match.params));
     }, [dispatch]);
 
 

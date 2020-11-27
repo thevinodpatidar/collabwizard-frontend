@@ -2,12 +2,14 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Row,Tag,Typography } from 'antd'
 import React, { useState, useEffect, } from 'react'
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useRouteMatch } from 'react-router-dom';
 import * as actions from "../_redux/interest/interestActions";
 
 const { Title } = Typography;
 
 export default function InterestSection() {
 
+    const match = useRouteMatch()
     const [form] = Form.useForm();
     const [visible,setVisible] = useState(false);
 
@@ -25,7 +27,7 @@ export default function InterestSection() {
 
     useEffect(() => {
       // server call for getting Customer by id
-      dispatch(actions.fetchInterests());
+      dispatch(actions.fetchInterests(match.params));
     }, [dispatch]);
 
     const showModal = () => {

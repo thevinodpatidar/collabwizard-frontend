@@ -3,10 +3,7 @@ import { Button, Dropdown, Menu, Avatar, Space } from "antd";
 import {
   UserOutlined,
   LogoutOutlined,
-  SettingOutlined,
   HomeOutlined,
-  EyeOutlined,
-  EyeInvisibleOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
 import css from "./navbar.module.scss";
@@ -30,9 +27,9 @@ const NavigationLinks = ({ }) => {
 
   const menu = (
     <Menu className={css.menuItem}>
-      <Menu.Item key="1" icon={<UserOutlined />}>
+      {/* <Menu.Item key="1" icon={<UserOutlined />}>
         <Link to="/user-profile">My Account</Link>
-      </Menu.Item>
+      </Menu.Item> */}
       <Menu.Item key="2" icon={<LogoutOutlined />}>
         <Link to="/logout" >Sign Out</Link>
       </Menu.Item>
@@ -57,7 +54,7 @@ const NavigationLinks = ({ }) => {
             </Menu.Item>
             <Menu.Item key="profile" style={{justifyContent:"center"}}>
               <Dropdown overlay={menu} placement="bottomCenter" >
-                <Avatar style={{ backgroundColor: '#aed9b4' }} size='default' >{user.username[0]}</Avatar>
+                <Avatar style={{ backgroundColor: '#aed9b4' }} size='default' >{user.fullname[0]}</Avatar>
               </Dropdown>
             </Menu.Item>
           </Menu>

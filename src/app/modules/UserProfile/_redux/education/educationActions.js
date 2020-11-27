@@ -27,7 +27,6 @@ export const fetchEducation = id => dispatch => {
   return requestFromServer
     .getEducationById(id)
     .then(response => {
-      console.log(response);
       const education = response.data.data;
       dispatch(actions.educationFetched({ educationForEdit : education }));
     })

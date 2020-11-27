@@ -2,6 +2,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Row,Tag,Typography } from 'antd'
 import React, { useState, useEffect, } from 'react'
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useRouteMatch } from 'react-router-dom';
 import * as actions from "../_redux/skill/skillActions";
 
 const { Title } = Typography;
@@ -9,6 +10,7 @@ const { Title } = Typography;
 export default function SkillsSection() {
 
 
+    const match = useRouteMatch()
     const [form] = Form.useForm();
     const [visible,setVisible] = useState(false);
     
@@ -25,7 +27,7 @@ export default function SkillsSection() {
 
     useEffect(() => {
       // server call for getting Customer by id
-      dispatch(actions.fetchSkills());
+      dispatch(actions.fetchSkills(match.params));
     }, [dispatch]);
 
     const showModal = () => {

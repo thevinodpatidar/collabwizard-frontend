@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from "./Signup.module.scss";
 import { Form, Input, Button, Checkbox,Alert,Spin } from 'antd';
-import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as auth from "../_redux/authRedux";
@@ -17,7 +17,7 @@ const Signup = ({history,props}) => {
   const onFinish = (values) =>{
     setLoading(true);
     delete values.remember;
-    register(values.email,values.password).then(res => {
+    register(values.fullname,values.email,values.password).then(res => {
       setLoading(false);
       history.push("/auth/login");
       // props.login(res.data.data);
@@ -48,6 +48,19 @@ const Signup = ({history,props}) => {
           }}
           onFinish={onFinish}
         >
+          <Form.Item
+            name="fullname"
+            // label="Email :"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your fullname!',
+              },
+            ]}
+          >
+            {/* <label htmlFor="email">Email :</label> */}
+            <Input type="text"  prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Fullname" />
+          </Form.Item>
           <Form.Item
             name="email"
             // label="Email :"

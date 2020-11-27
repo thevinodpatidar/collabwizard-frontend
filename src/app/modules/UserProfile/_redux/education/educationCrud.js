@@ -16,6 +16,7 @@ export function getEducationById(id) {
 }
 
 export function findEducations(queryParams) {
+  console.log(queryParams);
   return axios.get(`${URL}`, { params : queryParams });
 }
 

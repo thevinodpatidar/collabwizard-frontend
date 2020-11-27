@@ -31,16 +31,17 @@ export default function FeedsCard(props) {
       console.log('Clicked cancel button');
       setVisible(false);
     };
+    
     return (
-        <div>
+        <div >
            {
               !listLoading ? 
               <>
               <Card 
                   hoverable
-                  title={<FeedCardTopHeader data={data}/>}
+                  title={<FeedCardTopHeader data={data} listLoading={listLoading} />}
                   extra={<EllipsisOutlined size={36} />}
-                  style={{ width: 500,margin:"2rem"}}
+                  // style={{ margin:"2rem"}}
                   cover={<img onClick={showModal} alt="example" src={data.postContentUrl} />}
               >
                   <div>

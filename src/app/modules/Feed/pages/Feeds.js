@@ -23,7 +23,7 @@ export default function Feeds() {
     }, [dispatch]);
 
     return (
-        <div>
+        <div style={{ width:"100%" }}>
             {
             !listLoading ?  entities != null ?
                 entities.map((post,index) => (
@@ -31,9 +31,6 @@ export default function Feeds() {
                 ))
             : <span>No Post</span> : <span>Loading...</span>
             }
-            {/* <FeedsCard />
-            <FeedsCard />
-            <FeedsCard /> */}
         </div>
     )
 }

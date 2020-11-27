@@ -16,7 +16,6 @@ export function getInterestById(id) {
 }
 
 export function findInterests(queryParams) {
-  console.log(queryParams);
   return axios.get(`${URL}`, { params : queryParams });
 }
 

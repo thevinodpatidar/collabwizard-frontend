@@ -5,6 +5,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import * as actions from "../_redux/education/educationActions";
 import {START_YEAR} from "../pages/YearHelper";
 import EducationCard from '../components/EducationCard';
+import { useRouteMatch } from 'react-router-dom';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -12,6 +13,7 @@ const { Option } = Select;
 
 export default function EducationSection() {
 
+    const match = useRouteMatch()
     const [form] = Form.useForm();
     const [visible,setVisible] = useState(false);
 
@@ -29,7 +31,7 @@ export default function EducationSection() {
 
     useEffect(() => {
       // server call for getting Customer by id
-      dispatch(actions.fetchEducations());
+      dispatch(actions.fetchEducations(match.params));
     }, [dispatch]);
 
 

@@ -64,7 +64,8 @@ export default function Post({history}) {
     }
 
     return (
-        <Card className="box-shadow" style={{width:400,position:"fixed",marginTop:"2rem",borderRadius:".3rem"}}>
+      <div style={{ width:"25%", position:"fixed" }}>
+        <Card className="box-shadow" style={{ marginTop:"2rem",borderRadius:".3rem" }}>
             <Title level={3}>New Post</Title>
             <Form
               form={form}
@@ -94,5 +95,6 @@ export default function Post({history}) {
             </Row>
           </Form>
         </Card>
+      </div>
     )
 }

@@ -1,24 +1,36 @@
 import { EditOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Modal, Row,Typography } from 'antd'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, } from 'react'
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import * as actions from "../_redux/profile/profileActions";
+import { useRouteMatch } from 'react-router-dom';
+
 
 const { Title,Paragraph } = Typography;
 const { TextArea } = Input;
 
-export default function AboutSection() {
+export default function AboutSection({history}) {
 
     const [form] = Form.useForm();
+    const match = useRouteMatch()
     const [visible,setVisible] = useState(false);
 
     const dispatch = useDispatch();
-
-    const { user } = useSelector(
-        (state) => ({
-          user: state.auth.user,
-        }),
-        shallowEqual
+    const { actionsLoading, profileForEdit,entities,listLoading } = useSelector(
+      (state) => ({
+        actionsLoading: state.profile.actionsLoading,
+        listLoading: state.profile.listLoading,
+        profileForEdit: state.profile.profileForEdit,
+        entities : state.profile.entities
+      }),
+      shallowEqual
     );
+
+    useEffect(() => {
+      // server call for getting Customer by id
+      dispatch(actions.fetchProfiles(match.params));
+    }, [dispatch]);
+
 
     const showModal = () => {
         setVisible(true);
@@ -34,7 +46,9 @@ export default function AboutSection() {
           .then(values => {
             form.resetFields();
             setVisible(false);
-            console.log(values.interest);
+            const id = match.params.teacherId;
+            dispatch(actions.updateProfile(id,values)).then(() => handleCancel());
+            history.push(`/user-profile/${id}`)
           })
           .catch(info => {
             console.log('Validate Failed:', info);
@@ -53,9 +67,13 @@ export default function AboutSection() {
             </Row>
             <Row>
                 <Col>
+                {
+                    !listLoading ? entities != null ?
                     <Paragraph style={{color:"#000"}}>
-                    {user.bio}
+                        {entities.bio}
                     </Paragraph>
+                    : <span>No bio</span> : <span>Loading...</span>
+                }
                 </Col>
             </Row>
             <Modal
@@ -77,12 +95,16 @@ export default function AboutSection() {
                 onFinish={onFinish}
                 // onFinishFailed={onFinishFailed}
                 >
-                <label htmlFor="about" >Summary</label>
+                <label htmlFor="bio" >Summary</label>
                 <Form.Item
-                    name="about"
+                    name="bio"
                     rules={[{ required: true, message: 'Please input about yourself!' }]}
                 >
-                    <TextArea />
+                   {
+                    !listLoading ? entities != null ?
+                        <TextArea value={entities.bio} />
+                    :  <TextArea /> : <span>Loading...</span>
+                    } 
                 </Form.Item>
                 </Form>
             </Modal>

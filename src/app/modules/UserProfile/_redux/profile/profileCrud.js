@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const URL = "https://collabwizard.herokuapp.com/api/details";
+export const URL = "https://collabwizard.herokuapp.com/api";
 
 export function getAllProfiles() {
   return axios.get(URL);
@@ -10,10 +10,11 @@ export function getProfileById(id) {
   return axios.get(`${URL}/${id}`);
 }
 
-export function updateProfile(profile) {
-  return axios.put(`${URL}/${profile.id}`, { ...profile });
+export function updateProfile(id,profile) {
+  console.log(profile);
+  return axios.patch(`${URL}/profile/${id}`, { ...profile });
 }
 
-// export function deleteProfile(id) {
-//   return axios.delete(`${URL}/${id}`);
-// }
+export function findProfiles(queryParams) {
+  return axios.get(`${URL}/profile`, { params : queryParams });
+}
