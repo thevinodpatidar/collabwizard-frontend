@@ -1,5 +1,6 @@
 ## Created by vinod ,Rishabh ,Devang.
-#explanation -
+#explanation -CollabWizard is an social media platform for the teachers to interact ,learn and use to with technology
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
