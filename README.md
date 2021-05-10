@@ -1,4 +1,4 @@
-## Created by - vinod ,Rishabh ,Devang.
+## Created by - Vinod ,Rishabh ,Devang.
 # explanation
 CollabWizard is an social media platform for the teachers to interact ,learn and use to with technology,where teachers can share there notes,lectures,and other resources.
 
